@@ -6,11 +6,12 @@ import type { Rules, TriageInput, TriageResult } from "./types";
 /**
  * Redacts free text and triages it without letting redaction lower the level.
  *
- * Why: the address pattern in `redact` runs to the next comma or period, so
- * "rumah di Jalan Mawar mata kuning" becomes "rumah di [ALAMAT]" and the red
- * flag is lost. The raw text exists only in request memory and is triaged
- * locally here; only `redactedText` may be stored or sent to an LLM. The
- * higher of the two results is returned, so redaction can never lower the level.
+ * Defence in depth: `redact` bounds its address and name patterns and stops
+ * before lexicon terms (fed in below), so "rumah di Jalan Mawar mata kuning"
+ * keeps "mata kuning". Should any future pattern still hide a flag, the raw
+ * text (which exists only in request memory) is triaged locally here as well,
+ * and the higher of the two results is returned, so redaction can never lower
+ * the level. Only `redactedText` may be stored or sent to an LLM.
  */
 export function redactAndTriage(
   input: Omit<TriageInput, "text"> & { rawText: string },
