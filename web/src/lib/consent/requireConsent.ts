@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, type SQL } from "drizzle-orm";
 import { patients } from "@/lib/db/schema";
-import { audit, type AuditExecutor } from "@/lib/audit/audit";
+import { audit, type AuditActor, type AuditExecutor } from "@/lib/audit/audit";
 
 /**
  * Consent storage and enforcement.
@@ -73,7 +73,7 @@ export function drizzleConsentReader(db: {
 export interface ConsentWriter extends AuditExecutor {
   update: (table: typeof patients) => {
     set: (values: { consentAt: Date }) => {
-      where: (cond: unknown) => Promise<unknown>;
+      where: (cond: SQL | undefined) => PromiseLike<unknown>;
     };
   };
 }
@@ -86,10 +86,11 @@ export async function recordConsent(
   tx: ConsentWriter,
   patientId: string,
   now: Date,
+  actor: AuditActor = "system",
 ): Promise<void> {
   await tx.update(patients).set({ consentAt: now }).where(eq(patients.id, patientId));
   await audit(tx, {
-    actor: "system",
+    actor,
     action: "patient.consent",
     target: patientId,
     meta: { recordedAt: now.toISOString() },

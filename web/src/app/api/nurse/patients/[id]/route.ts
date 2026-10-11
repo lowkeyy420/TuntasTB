@@ -5,6 +5,9 @@ import { patients } from "@/lib/db/schema";
 import { config } from "@/lib/config";
 import { requireNurse, UnauthorizedError } from "@/lib/auth/requireNurse";
 import { audit } from "@/lib/audit/audit";
+import { fieldErrors, updateSchema } from "@/lib/patients/schema";
+import { getPatient, updatePatient } from "@/lib/patients/service";
+import { authNurse, isUuid, json, notFound, readJson } from "@/lib/patients/http";
 
 export const dynamic = "force-dynamic";
 
@@ -47,4 +50,33 @@ export async function DELETE(
   });
 
   return NextResponse.json({ ok: true });
+}
+
+
+type Ctx = { params: Promise<{ id: string }> };
+
+export async function GET(request: Request, context: Ctx) {
+  const auth = await authNurse(request);
+  if ("response" in auth) return auth.response;
+  const { id } = await context.params;
+  if (!isUuid(id)) return notFound();
+  const patient = await getPatient(db, auth.session, id);
+  if (!patient) return notFound();
+  return json({ patient });
+}
+
+export async function PATCH(request: Request, context: Ctx) {
+  const auth = await authNurse(request);
+  if ("response" in auth) return auth.response;
+  const { id } = await context.params;
+  if (!isUuid(id)) return notFound();
+
+  const body = await readJson(request);
+  const parsed = updateSchema.safeParse(body);
+  if (!parsed.success) {
+    return json({ error: "validation", fields: fieldErrors(parsed.error) }, 400);
+  }
+  const patient = await updatePatient(db, auth.session, id, parsed.data);
+  if (!patient) return notFound();
+  return json({ patient });
 }

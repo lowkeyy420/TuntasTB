@@ -1,7 +1,10 @@
 import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
 import { fileURLToPath } from "node:url";
 
 export default defineConfig({
+  // Compiles JSX in component tests (tsconfig keeps `jsx: preserve` for Next).
+  plugins: [react()],
   test: {
     environment: "node",
     include: ["src/**/*.test.ts", "src/**/*.test.tsx", "test/**/*.test.ts"],

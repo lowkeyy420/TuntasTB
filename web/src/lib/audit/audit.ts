@@ -19,7 +19,12 @@ export type AuditAction =
   | "patient.read"
   | "patient.create"
   | "patient.delete"
+  | "patient.update"
+  | "patient.list"
   | "patient.consent"
+  | "family_token.rotate"
+  | "family_token.revoke"
+  | "family.open"
   | "checkin.create"
   | "checkin.read";
 

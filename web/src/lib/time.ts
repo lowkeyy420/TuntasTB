@@ -30,3 +30,18 @@ export function toJakartaDate(now: Date): string {
 export function todayJakarta(now: Date = new Date()): string {
   return toJakartaDate(now);
 }
+
+/**
+ * Whole calendar days from `from` to `to` (both `YYYY-MM-DD`). Pure date
+ * arithmetic in UTC, so no time zone or DST can shift the result.
+ */
+export function daysBetween(from: string, to: string): number {
+  const a = Date.parse(`${from}T00:00:00Z`);
+  const b = Date.parse(`${to}T00:00:00Z`);
+  return Math.round((b - a) / 86_400_000);
+}
+
+/** Treatment day number: the start date is day 1. */
+export function treatmentDay(startDate: string, today: string): number {
+  return daysBetween(startDate, today) + 1;
+}

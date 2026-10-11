@@ -1,19 +1,16 @@
 import type { Metadata } from "next";
 import { copy } from "@/copy/family.id";
+import { FamilyGate } from "./FamilyGate";
 
 export const metadata: Metadata = {
   title: copy.home.title,
 };
 
-export default function FamilyHome() {
-  return (
-    <main className="space-y-4">
-      <header>
-        <h1 className="text-xl font-semibold">{copy.home.title}</h1>
-        <p className="text-sm text-black/60">{copy.home.greeting}</p>
-      </header>
-      <p>{copy.home.todayPrompt}</p>
-      <p className="text-xs text-black/50">{copy.home.hintNoPersonalData}</p>
-    </main>
-  );
+export default async function FamilyHome({
+  params,
+}: {
+  params: Promise<{ token: string }>;
+}) {
+  const { token } = await params;
+  return <FamilyGate token={token} />;
 }
