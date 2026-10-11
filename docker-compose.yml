@@ -1,0 +1,63 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: tuntas
+      POSTGRES_PASSWORD: tuntas
+      POSTGRES_DB: tuntas
+    ports:
+      # Host 5433 -> container 5432 (5432 may already be in use on the host).
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tuntas -d tuntas"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      # Build context is the repo root so the image can COPY ./rules.
+      context: .
+      dockerfile: web/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # Inside the compose network postgres listens on its default 5432.
+      DATABASE_URL: postgres://tuntas:tuntas@postgres:5432/tuntas
+      SESSION_SECRET: ${SESSION_SECRET}
+      HASH_PEPPER: ${HASH_PEPPER}
+      APP_BASE_URL: ${APP_BASE_URL:-http://localhost:3000}
+      LANGFLOW_BASE_URL: ${LANGFLOW_BASE_URL:-http://host.docker.internal:7860}
+      LANGFLOW_API_KEY: ${LANGFLOW_API_KEY:-}
+      LANGFLOW_TIMEOUT_MS: ${LANGFLOW_TIMEOUT_MS:-15000}
+      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:-}
+      SEED_NURSE_EMAIL: ${SEED_NURSE_EMAIL:-perawat@demo.id}
+      SEED_NURSE_PASSWORD: ${SEED_NURSE_PASSWORD:-demo12345}
+    ports:
+      - "3000:3000"
+    extra_hosts:
+      # Lets Linux hosts resolve the external Langflow at host.docker.internal.
+      - "host.docker.internal:host-gateway"
+
+  # Optional: only started with `--profile langflow`, for contributors who do
+  # not already run Langflow on the host. When enabled, point LANGFLOW_BASE_URL
+  # at http://langflow:7860 in your .env.
+  langflow:
+    image: langflowai/langflow:1.12.0
+    profiles: ["langflow"]
+    restart: unless-stopped
+    environment:
+      LANGFLOW_AUTO_LOGIN: "false"
+    ports:
+      - "7860:7860"
+    volumes:
+      - langflowdata:/app/langflow
+
+volumes:
+  pgdata:
+  langflowdata:
