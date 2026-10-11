@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: tuntas
+          POSTGRES_PASSWORD: tuntas
+          POSTGRES_DB: tuntas
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U tuntas -d tuntas"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgres://tuntas:tuntas@localhost:5432/tuntas
+      TEST_DATABASE_URL: postgres://tuntas:tuntas@localhost:5432/tuntas
+      SESSION_SECRET: ci-session-secret-ci-session-secret-ci-xx
+      HASH_PEPPER: ci-hash-pepper-ci-hash-pepper-ci-hash-pepp
+      APP_BASE_URL: http://localhost:3000
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Apply database migrations
+        run: npm run db:migrate
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
