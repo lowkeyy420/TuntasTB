@@ -8,7 +8,7 @@ reviewed_by:
 
 > DRAFT — perlu ditinjau klinisi. Teks ini belum diperiksa dokter, apoteker atau perawat TB dan tidak boleh dipakai di luar uji coba.
 
-Keluhan di bawah ini umum terjadi pada minggu-minggu awal pengobatan TBC. Biasanya tidak berbahaya dan sering berkurang sendiri.
+Keluhan di bawah ini umum terjadi pada minggu-minggu awal pengobatan. Biasanya tidak berbahaya dan sering berkurang sendiri.
 
 ## Kencing berwarna merah atau oranye {#urin-merah}
 <!-- codes: urine_orange -->

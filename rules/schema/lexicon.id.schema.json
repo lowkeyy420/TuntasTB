@@ -28,7 +28,19 @@
       }
     },
     "stop_intent": { "$ref": "#/$defs/phrases" },
-    "stigma": { "$ref": "#/$defs/phrases" }
+    "stigma": { "$ref": "#/$defs/phrases" },
+    "forbidden_output": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dosing": { "$ref": "#/$defs/phrases" },
+        "diagnosis": { "$ref": "#/$defs/phrases" },
+        "conditions": { "$ref": "#/$defs/phrases" },
+        "jargon": { "$ref": "#/$defs/phrases" },
+        "stop_instructions": { "$ref": "#/$defs/phrases" },
+        "continue_instructions": { "$ref": "#/$defs/phrases" }
+      }
+    }
   },
   "$defs": {
     "phrases": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },

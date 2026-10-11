@@ -9,7 +9,7 @@
       ],
       "combo": [
         ["kencing", "pipis", "air seni", "air kencing", "bak", "urin", "urine", "kemih"],
-        ["merah", "oranye", "orange", "jingga", "kemerahan"]
+        ["merah", "merah2", "oranye", "orange", "oren", "orens", "jingga", "kemerahan"]
       ]
     },
     "nausea_mild": {
@@ -33,7 +33,7 @@
         "nafsu makan", "napsu makan", "kurang nafsu makan", "tidak nafsu makan", "gak nafsu makan",
         "malas makan", "males makan", "tidak mau makan", "gak mau makan", "ga mau makan",
         "nggak mau makan", "enggan makan", "selera makan", "susah makan", "sulit makan",
-        "tidak doyan", "gak doyan", "ga doyan", "tidak selera"
+        "tidak doyan", "gak doyan", "ga doyan", "tidak selera", "kurang makan"
       ]
     },
     "tingling_feet": {
@@ -57,7 +57,7 @@
     "jaundice": {
       "any": ["sakit kuning", "ikterus", "jaundice"],
       "combo": [
-        ["mata", "kulit", "badan", "muka", "wajah", "putih mata", "bola mata", "telapak", "tangan"],
+        ["mata", "mta", "kulit", "badan", "muka", "wajah", "putih mata", "bola mata", "telapak", "tangan"],
         ["kuning", "menguning", "kekuningan", "kuningg", "kunig", "kunning", "kunin", "kunyit"]
       ]
     },
@@ -69,6 +69,10 @@
         "sakit mata", "nyeri mata", "mata nyeri", "warna berubah", "salah warna",
         "warna pudar", "tidak bisa melihat", "susah melihat", "sulit melihat",
         "tidak jelas melihat", "melihat ganda", "berbayang", "blur", "ngeblur"
+      ],
+      "combo": [
+        ["warna"],
+        ["dibedain", "dibedakan", "membedakan", "bedain", "bedakan", "membedain"]
       ]
     },
     "skin_rash": {
@@ -100,7 +104,9 @@
         "linglung", "ling lung", "bingung", "bingug", "kebingungan", "ngelantur", "melantur",
         "tidak nyambung", "gak nyambung", "ga nyambung", "nggak nyambung", "ngawur", "mengigau",
         "igau", "tidak sadar", "setengah sadar", "pingsan", "kejang", "tidak merespons",
-        "tidak bisa diajak bicara", "disorientasi", "salah orang"
+        "tidak bisa diajak bicara", "disorientasi", "salah orang", "sulit dibangunkan",
+        "susah dibangunkan", "tidak bisa dibangunkan", "susah dibangunin", "gak bisa dibangunin",
+        "nggak bisa dibangunin"
       ]
     }
   },
@@ -145,5 +151,33 @@
     "takut diketahui", "takut tetangga tahu", "jangan sampai tetangga tahu", "dijauhi tetangga",
     "dikucilkan", "minder", "gengsi", "aib", "tidak enak sama tetangga",
     "jangan bilang siapa siapa"
-  ]
+  ],
+  "forbidden_output": {
+    "dosing": [
+      "kurangi", "dikurangi", "tambah dosis", "tambahkan", "ditambah", "gandakan",
+      "dua kali lipat", "lewati", "lewatkan", "ganti obat", "ganti dengan", "ganti jadwal",
+      "setengah butir", "setengah tablet", "mengurangi", "kurangin", "digandakan",
+      "menggandakan", "tambah obat"
+    ],
+    "diagnosis": [
+      "anda menderita", "anda terkena", "anda mengidap", "didiagnosis", "terdiagnosis",
+      "diagnosis", "ini tanda penyakit", "tanda penyakit", "pasti penyakit"
+    ],
+    "conditions": [
+      "hepatitis", "tbc", "tb", "tuberkulosis", "kanker", "diabetes", "sirosis", "gagal hati",
+      "gagal ginjal", "stevens-johnson", "hiv", "covid", "sakit kuning", "sakit liver"
+    ],
+    "jargon": [
+      "hepatotoksik", "hepatotoksisitas", "neuropati", "neuritis", "ikterus", "dermatitis",
+      "anafilaksis", "nefrotoksik", "ototoksik", "toksisitas", "toksik", "metabolit",
+      "farmakologi", "gastritis"
+    ],
+    "stop_instructions": [
+      "berhenti minum", "stop obat", "stop minum", "hentikan obat", "hentikan minum",
+      "jangan minum obat"
+    ],
+    "continue_instructions": [
+      "tetap minum", "lanjutkan minum", "teruskan minum", "lanjut minum", "terus minum obat"
+    ]
+  }
 }

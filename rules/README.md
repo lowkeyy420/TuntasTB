@@ -17,6 +17,9 @@ decision; a shared fixture proves it.
 | `fixtures/parity.jsonl` | Triage cases run by Vitest **and** pytest | both suites |
 | `fixtures/normalise.json` | Normalisation cases run by Vitest **and** pytest | both suites |
 | `fixtures/risk-parity.jsonl` | Risk snapshots run by Vitest **and** pytest | both suites |
+| `fixtures/forbidden-parity.jsonl` | Texts and the violations (`reassurance`, `dosing`, `diagnosis`) the reply filter finds | eval harness (pytest), Vitest (pending, `eval/PENDING_WEB_TASKS.md`) |
+| `fixtures/redaction-parity.jsonl` | Free text and its redacted form with the lexicon as protected terms | eval harness (pytest), Vitest (pending) |
+| `fixtures/combine-parity.jsonl` | Local level + flow output and the final level the app stores (YELLOW floors) | eval harness (pytest), Vitest (pending) |
 
 ## Safety rules the data and engines enforce
 
@@ -59,6 +62,13 @@ once a red flag has decided RED.
 capture group) or `"$1*N"`. Patterns are wrapped in token boundaries
 (`(?<![a-z0-9])(?:pattern)(?![a-z0-9])`) and run per normalised sentence; the longest
 duration found wins. `stop_intent` and `stigma` are consumed by the risk engine.
+
+`forbidden_output` holds the phrase lists of the family-reply filter (`dosing`, `diagnosis`,
+`conditions`, `jargon`, `stop_instructions`, `continue_instructions`). The web filter
+(`web/src/lib/reply/forbidden.ts`) merges them with its built-in defaults, the `ask_guideline`
+Build Answer node adds `dosing`, `diagnosis` and `conditions` to its own patterns, and the eval
+harness counts violations with exactly these lists. Adding a phrase can only make output
+stricter.
 
 ## Normalisation (identical in TypeScript and Python)
 

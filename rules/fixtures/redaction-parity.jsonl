@@ -1,0 +1,23 @@
+{"id": "rp-001", "text": "nama saya Budi Santoso, hp 0812-3456-7890, matanya kuning", "protected": "lexicon", "expected": "nama saya [NAMA], hp [TELEPON], matanya kuning"}
+{"id": "rp-002", "text": "NIK 3174012345678901, kesemutan kaki", "protected": "lexicon", "expected": "NIK [NIK], kesemutan kaki"}
+{"id": "rp-003", "text": "NIK saya 3174 0123 4567 8901 ya", "protected": "lexicon", "expected": "NIK saya [NIK] ya"}
+{"id": "rp-004", "text": "email fatma@example.com nyeri sendi", "protected": "lexicon", "expected": "email [EMAIL] nyeri sendi"}
+{"id": "rp-005", "text": "telepon +62 812 3456 7890 kalau ada apa-apa", "protected": "lexicon", "expected": "telepon [TELEPON] kalau ada apa-apa"}
+{"id": "rp-006", "text": "nomor 6281234567890 muntah terus", "protected": "lexicon", "expected": "nomor [TELEPON] muntah terus"}
+{"id": "rp-007", "text": "rumah di Jalan Melati mata kuning", "protected": "lexicon", "expected": "rumah di [ALAMAT] mata kuning"}
+{"id": "rp-008", "text": "alamat Jl. Mawar No. 12 RT 03/RW 05, ruam merah di badan", "protected": "lexicon", "expected": "alamat [ALAMAT], ruam merah di badan"}
+{"id": "rp-009", "text": "tinggal di jl Kenanga 7 dan kencing merah", "protected": "lexicon", "expected": "tinggal di [ALAMAT] dan kencing merah"}
+{"id": "rp-010", "text": "saya Sinta, kesemutan di kaki", "protected": "lexicon", "expected": "saya [NAMA], kesemutan di kaki"}
+{"id": "rp-011", "text": "saya mual dari pagi", "protected": "lexicon", "expected": "saya mual dari pagi"}
+{"id": "rp-012", "text": "anak saya Rani bilang kencingnya merah", "protected": "lexicon", "expected": "anak saya [NAMA] bilang kencingnya merah"}
+{"id": "rp-013", "text": "Namanya Dimas Pratama sudah sembuh katanya", "protected": "lexicon", "expected": "Namanya [NAMA] sudah sembuh katanya"}
+{"id": "rp-014", "text": "nama ibu saya Siti Aminah, gatal di badan", "protected": "lexicon", "expected": "nama ibu saya [NAMA], gatal di badan"}
+{"id": "rp-015", "text": "jalan sempoyongan, bingung", "protected": "lexicon", "expected": "jalan sempoyongan, bingung"}
+{"id": "rp-016", "text": "RT 4/RW 11 dekat pasar", "protected": "lexicon", "expected": "[ALAMAT] dekat pasar"}
+{"id": "rp-017", "text": "kode 12345 bukan nomor telepon", "protected": "lexicon", "expected": "kode 12345 bukan nomor telepon"}
+{"id": "rp-018", "text": "08123 saja", "protected": "lexicon", "expected": "08123 saja"}
+{"id": "rp-019", "text": "saya Linglung terus", "protected": "lexicon", "expected": "saya Linglung terus"}
+{"id": "rp-020", "text": "nama saya Kuning", "protected": "lexicon", "expected": "nama saya Kuning"}
+{"id": "rp-021", "text": "suami saya Rudi, anaknya Rani 5 tahun, kencing merah", "protected": "lexicon", "expected": "suami saya [NAMA], anaknya Rani 5 tahun, kencing merah"}
+{"id": "rp-022", "text": "JALAN Sudirman Kav 52 lalu muntah", "protected": "lexicon", "expected": "[ALAMAT] lalu muntah"}
+{"id": "rp-023", "text": "tidak ada data pribadi di sini", "protected": "lexicon", "expected": "tidak ada data pribadi di sini"}

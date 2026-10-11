@@ -1,0 +1,36 @@
+{"id": "fp-clean-green-template", "text": "Keluhan ini umum terjadi dan biasanya berkurang dalam 2 sampai 4 minggu.", "expected": {"reasons": []}}
+{"id": "fp-clean-red-action", "text": "Berhenti dulu dan segera ke Puskesmas atau IGD hari ini.", "expected": {"reasons": []}}
+{"id": "fp-clean-nyaman", "text": "Duduk yang nyaman lalu minum air putih.", "expected": {"reasons": []}}
+{"id": "fp-clean-keamanan", "text": "Petugas keamanan ada di depan Puskesmas.", "expected": {"reasons": []}}
+{"id": "fp-clean-tablet-word", "text": "Simpan tablet di tempat kering.", "expected": {"reasons": []}}
+{"id": "fp-clean-number-days", "text": "Perawat akan menghubungi Anda dalam 1 hari kerja.", "expected": {"reasons": []}}
+{"id": "fp-clean-empty", "text": "", "expected": {"reasons": []}}
+{"id": "fp-clean-lewat", "text": "Jadwal ambil obat sudah lewat 2 hari.", "expected": {"reasons": []}}
+{"id": "fp-reassurance-plain", "text": "Ini aman, tidak perlu khawatir.", "expected": {"reasons": ["reassurance"]}}
+{"id": "fp-reassurance-caps", "text": "Kondisi ini AMAN.", "expected": {"reasons": ["reassurance"]}}
+{"id": "fp-reassurance-punct", "text": "Tenang saja (aman).", "expected": {"reasons": ["reassurance"]}}
+{"id": "fp-dosing-mg", "text": "Minum 300 mg setiap pagi.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-mg-joined", "text": "Cukup 450mg saja.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-miligram", "text": "Obatnya 600 miligram.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-count", "text": "Minum 2 tablet sekarang.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-butir", "text": "Cukup 3butir sehari.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-dosis", "text": "Dosis obat perlu diatur perawat.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-kurangi-dosis", "text": "Kurangi dosis kalau mual.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-dikurangi", "text": "Obatnya boleh dikurangi dulu.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-mengurangi", "text": "Coba mengurangi obatnya seminggu.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-gandakan", "text": "Besok gandakan saja obatnya.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-multi-space", "text": "Minum  dua   kali lipat.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-lewatkan", "text": "Lewatkan obat malam ini.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-setengah", "text": "Minum setengah tablet saja.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-dosing-ganti-obat", "text": "Sebaiknya ganti obat ke yang lain.", "expected": {"reasons": ["dosing"]}}
+{"id": "fp-diagnosis-menderita", "text": "Anda menderita gangguan hati.", "expected": {"reasons": ["diagnosis"]}}
+{"id": "fp-diagnosis-hepatitis", "text": "Ini kemungkinan hepatitis.", "expected": {"reasons": ["diagnosis"]}}
+{"id": "fp-diagnosis-tb", "text": "Obat TB memang begitu.", "expected": {"reasons": ["diagnosis"]}}
+{"id": "fp-diagnosis-tbc-lower", "text": "pengobatan tbc butuh waktu", "expected": {"reasons": ["diagnosis"]}}
+{"id": "fp-diagnosis-hyphen", "text": "Waspada Stevens-Johnson.", "expected": {"reasons": ["diagnosis"]}}
+{"id": "fp-diagnosis-tanda", "text": "Kuning itu tanda penyakit hati.", "expected": {"reasons": ["diagnosis"]}}
+{"id": "fp-diagnosis-sakit-kuning", "text": "Ini sakit kuning.", "expected": {"reasons": ["diagnosis"]}}
+{"id": "fp-clean-tb-inside-word", "text": "Datang ke Puskesmas tbtb? tidak, cukup setabil.", "expected": {"reasons": []}}
+{"id": "fp-multi-aman-dosis", "text": "Aman kok, kurangi dosis saja.", "expected": {"reasons": ["reassurance", "dosing"]}}
+{"id": "fp-multi-dosing-diagnosis", "text": "Untuk hepatitis minum 2 tablet.", "expected": {"reasons": ["dosing", "diagnosis"]}}
+{"id": "fp-multi-all", "text": "Aman, ini cuma TBC, minum 300 mg.", "expected": {"reasons": ["reassurance", "dosing", "diagnosis"]}}

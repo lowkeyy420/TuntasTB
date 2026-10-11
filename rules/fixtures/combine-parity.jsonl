@@ -1,0 +1,16 @@
+{"id": "cp-not-called-green", "local": "GREEN", "called": false, "flow": null, "expected": {"level": "GREEN", "fallback": false}}
+{"id": "cp-not-called-yellow", "local": "YELLOW", "called": false, "flow": null, "expected": {"level": "YELLOW", "fallback": false}}
+{"id": "cp-invalid-local-green", "local": "GREEN", "called": true, "flow": null, "expected": {"level": "YELLOW", "fallback": true}}
+{"id": "cp-invalid-local-yellow", "local": "YELLOW", "called": true, "flow": null, "expected": {"level": "YELLOW", "fallback": true}}
+{"id": "cp-invalid-local-red", "local": "RED", "called": true, "flow": null, "expected": {"level": "RED", "fallback": true}}
+{"id": "cp-flow-green-local-red", "local": "RED", "called": true, "flow": {"level": "GREEN", "extracted": {"symptoms": [], "unknown_symptoms": [], "confidence": 0.9}}, "expected": {"level": "RED", "fallback": false}}
+{"id": "cp-flow-yellow-local-red", "local": "RED", "called": true, "flow": {"level": "YELLOW", "extracted": {"symptoms": [], "unknown_symptoms": [], "confidence": 0.9}}, "expected": {"level": "RED", "fallback": false}}
+{"id": "cp-flow-red-local-green", "local": "GREEN", "called": true, "flow": {"level": "RED", "extracted": {"symptoms": [{"code": "jaundice"}], "unknown_symptoms": [], "confidence": 0.9}}, "expected": {"level": "RED", "fallback": false}}
+{"id": "cp-flow-yellow-local-green", "local": "GREEN", "called": true, "flow": {"level": "YELLOW", "extracted": {"symptoms": [{"code": "tingling_feet"}], "unknown_symptoms": [], "confidence": 0.9}}, "expected": {"level": "YELLOW", "fallback": false}}
+{"id": "cp-flow-green-local-green", "local": "GREEN", "called": true, "flow": {"level": "GREEN", "extracted": {"symptoms": [{"code": "urine_orange"}], "unknown_symptoms": [], "confidence": 0.9}}, "expected": {"level": "GREEN", "fallback": false}}
+{"id": "cp-floor-unknown-symptom", "local": "GREEN", "called": true, "flow": {"level": "GREEN", "extracted": {"symptoms": [{"code": "urine_orange"}], "unknown_symptoms": ["telinga berdenging"], "confidence": 0.9}}, "expected": {"level": "YELLOW", "fallback": false}}
+{"id": "cp-floor-code-not-in-table", "local": "GREEN", "called": true, "flow": {"level": "GREEN", "extracted": {"symptoms": [{"code": "tinnitus"}], "unknown_symptoms": [], "confidence": 0.9}}, "expected": {"level": "YELLOW", "fallback": false}}
+{"id": "cp-floor-low-confidence", "local": "GREEN", "called": true, "flow": {"level": "GREEN", "extracted": {"symptoms": [{"code": "nausea_mild"}], "unknown_symptoms": [], "confidence": 0.59}}, "expected": {"level": "YELLOW", "fallback": false}}
+{"id": "cp-confidence-at-threshold", "local": "GREEN", "called": true, "flow": {"level": "GREEN", "extracted": {"symptoms": [{"code": "nausea_mild"}], "unknown_symptoms": [], "confidence": 0.6}}, "expected": {"level": "GREEN", "fallback": false}}
+{"id": "cp-floor-does-not-lower-red", "local": "RED", "called": true, "flow": {"level": "GREEN", "extracted": {"symptoms": [], "unknown_symptoms": ["x"], "confidence": 0.1}}, "expected": {"level": "RED", "fallback": false}}
+{"id": "cp-floor-under-flow-red", "local": "GREEN", "called": true, "flow": {"level": "RED", "extracted": {"symptoms": [], "unknown_symptoms": ["x"], "confidence": 0.1}}, "expected": {"level": "RED", "fallback": false}}
