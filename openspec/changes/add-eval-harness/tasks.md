@@ -15,7 +15,7 @@
 
 - [x] 2.1 Implement `local_rules.py` importing `triage` and `score_risk` from `langflow/components/` and evaluating one case; verify with a pytest test on the three demo cases
 - [x] 2.2 Implement metrics in `scoring.py` (RED recall, YELLOW precision, YELLOW/GREEN accuracy, failing-case list) with pytest tests using hand-built result sets, including 29 of 30 giving 96.7% and over-escalation not affecting recall; verify the tests pass
-- [ ] 2.3 Implement the violation scanner from `forbidden_output` and create `rules/fixtures/forbidden-parity.jsonl`, with pytest and Vitest tests over the same fixture; verify both pass
+- [x] 2.3 Implement the violation scanner from `forbidden_output` and create `rules/fixtures/forbidden-parity.jsonl`, with pytest and Vitest tests over the same fixture; verify both pass
 - [x] 2.4 Scan all static templates and variants in offline mode, with a pytest test that an injected "aman" is counted; verify the test passes
 - [x] 2.5 Add the neutral-wording scan of templates as a reported finding with a pytest test; verify it passes
 
@@ -29,15 +29,15 @@
 
 ## 4. TypeScript engine on the golden set
 
-- [ ] 4.1 Add `web/src/lib/triage/golden.test.ts` loading `eval/golden/checkins.jsonl` and failing when any RED case is scored lower by the TypeScript engine; verify it passes and fails when a red-flag keyword is removed from the lexicon
+- [x] 4.1 Add `web/src/lib/triage/golden.test.ts` loading `eval/golden/checkins.jsonl` and failing when any RED case is scored lower by the TypeScript engine; verify it passes and fails when a red-flag keyword is removed from the lexicon
 
 ## 5. Live mode
 
-- [ ] 5.1 Implement `scoring.combine` (max with local, YELLOW floors) and create `rules/fixtures/combine-parity.jsonl`, with pytest and Vitest tests over the fixture; verify both pass
+- [x] 5.1 Implement `scoring.combine` (max with local, YELLOW floors) and create `rules/fixtures/combine-parity.jsonl`, with pytest and Vitest tests over the fixture; verify both pass
 - [x] 5.2 Implement `rest_client.py` for the run endpoint with pytest tests on a mocked transport for success, timeout and HTTP error; verify the tests pass
 - [x] 5.3 Implement `mcp_client.py` (streamable HTTP, `x-api-key`, `tools/list`, `tools/call`) with a pytest test against a local stub MCP server; verify the test passes
 - [x] 5.4 Implement transport selection (`auto` falls back to REST for the run and records it) and the missing-key error, with pytest tests; verify the tests pass
-- [ ] 5.5 Port the redaction patterns to Python, create `rules/fixtures/redaction-parity.jsonl` and run it in pytest and Vitest; verify both pass
+- [x] 5.5 Port the redaction patterns to Python, create `rules/fixtures/redaction-parity.jsonl` and run it in pytest and Vitest; verify both pass
 - [x] 5.6 Implement live scoring of check-ins (combine, fallback rate, violation scan of `family_message` and `nurse_line`, family citation rate) with pytest tests using recorded flow outputs; verify the tests pass
 - [x] 5.7 Implement live scoring of questions against `ask_guideline` and citation coverage with pytest tests for full coverage and an uncited answer; verify the tests pass
 - [x] 5.8 Run `python eval/run_eval.py --mode live` against the local Langflow; verify the report records MCP as transport, RED recall 100% and 0 violations, and save the report for the release notes

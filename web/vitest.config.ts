@@ -17,9 +17,11 @@ export default defineConfig({
       //  - the triage rules (add-triage-rules 2.7) and the risk score
       //    (add-dropout-risk-score 2.5), including the database-backed
       //    snapshot builder (needs TEST_DATABASE_URL);
-      //  - the pickup date logic (add-pickup-planner 1.3).
+      //  - the pickup date logic (add-pickup-planner 1.3);
+      //  - the answer-or-abstain decision of guideline Q&A (add-guideline-qa 1.4).
       include: [
         "src/lib/reply/filter.ts",
+        "src/lib/ask/decide.ts",
         "src/lib/triage/**",
         "src/lib/risk/**",
         "src/lib/pickups/dates.ts",
