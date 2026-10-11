@@ -210,8 +210,9 @@ Bob (stdio proxy; fill the two placeholders only in the git-ignored `.bob/mcp.js
 ```
 
 Verified on 2026-10-11 by driving this exact command over stdio (`initialize`,
-`tools/list`): it lists `checkin_triage`, `ask_guideline`, `nurse_digest`. Not yet
-tried inside Bob itself (add-eval-harness task 7.2).
+`tools/list`): it lists `checkin_triage`, `ask_guideline`, `nurse_digest`. Bob Shell 2.0.5
+also reads the plain streamable-HTTP form of `.bob/mcp.example.json` (`bob mcp list`
+shows the server as `http`, enabled), so the proxy is a fallback; see `eval/README.md`.
 
 ## Playground results (REST `POST /api/v1/run/<endpoint>`, 2026-10-11)
 
