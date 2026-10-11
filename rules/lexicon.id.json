@@ -1,0 +1,149 @@
+{
+  "version": "0.1.0-draft",
+  "symptoms": {
+    "urine_orange": {
+      "any": [
+        "kencing merah", "kencing oranye", "kencing orange", "pipis merah", "pipis oranye",
+        "air seni merah", "air seni oranye", "air kencing merah", "air kencing oranye",
+        "urin merah", "urin oranye", "urine merah", "bak merah", "kencing kemerahan"
+      ],
+      "combo": [
+        ["kencing", "pipis", "air seni", "air kencing", "bak", "urin", "urine", "kemih"],
+        ["merah", "oranye", "orange", "jingga", "kemerahan"]
+      ]
+    },
+    "nausea_mild": {
+      "any": [
+        "mual", "muall", "eneg", "enek", "mual mual", "perut mual", "mau muntah",
+        "ingin muntah", "pengen muntah", "pingin muntah", "rasa mual"
+      ]
+    },
+    "joint_ache_mild": {
+      "any": [
+        "nyeri sendi", "sakit sendi", "pegal sendi", "linu sendi", "ngilu sendi", "sendi nyeri",
+        "sendi sakit", "sendi pegal", "sendi linu", "linu", "ngilu", "asam urat"
+      ],
+      "combo": [
+        ["sendi", "persendian", "lutut", "pergelangan", "siku", "bahu"],
+        ["nyeri", "sakit", "linu", "ngilu", "pegal"]
+      ]
+    },
+    "appetite_loss": {
+      "any": [
+        "nafsu makan", "napsu makan", "kurang nafsu makan", "tidak nafsu makan", "gak nafsu makan",
+        "malas makan", "males makan", "tidak mau makan", "gak mau makan", "ga mau makan",
+        "nggak mau makan", "enggan makan", "selera makan", "susah makan", "sulit makan",
+        "tidak doyan", "gak doyan", "ga doyan", "tidak selera"
+      ]
+    },
+    "tingling_feet": {
+      "any": [
+        "kesemutan", "kesemutn", "kesemuten", "semutan", "kebas", "baal", "mati rasa",
+        "kaki panas", "kaki terbakar", "rasa terbakar", "terbakar", "tebal tebal"
+      ],
+      "combo": [
+        ["kaki", "telapak", "tangan", "jari"],
+        ["panas", "terbakar", "kebas", "baal", "tebal", "kesemutan", "semutan", "mati rasa"]
+      ]
+    },
+    "itching_no_rash": {
+      "any": [
+        "gatal", "gatel", "gatal gatal", "gatel gatel", "kulit gatal", "badan gatal",
+        "rasa gatal", "gatal sekali", "gatal banget"
+      ]
+    }
+  },
+  "red_flags": {
+    "jaundice": {
+      "any": ["sakit kuning", "ikterus", "jaundice"],
+      "combo": [
+        ["mata", "kulit", "badan", "muka", "wajah", "putih mata", "bola mata", "telapak", "tangan"],
+        ["kuning", "menguning", "kekuningan", "kuningg", "kunig", "kunning", "kunin", "kunyit"]
+      ]
+    },
+    "vision_change": {
+      "any": [
+        "buram", "burem", "kabur", "kabor", "rabun", "buta warna", "penglihatan",
+        "pandangan kabur", "pandangan buram", "pandangan gelap", "pandangan samar",
+        "pandangan berkunang", "berkunang", "mata kabur", "mata buram", "mata sakit",
+        "sakit mata", "nyeri mata", "mata nyeri", "warna berubah", "salah warna",
+        "warna pudar", "tidak bisa melihat", "susah melihat", "sulit melihat",
+        "tidak jelas melihat", "melihat ganda", "berbayang", "blur", "ngeblur"
+      ]
+    },
+    "skin_rash": {
+      "any": [
+        "ruam", "bentol", "bentol bentol", "bercak", "bintik", "bercak merah", "bintik merah",
+        "kulit melepuh", "melepuh", "lepuh", "kulit mengelupas", "mengelupas", "biduran",
+        "kulit merah", "kulit kemerahan", "bibir melepuh", "bibir bengkak", "muka bengkak",
+        "wajah bengkak", "alergi", "reaksi alergi"
+      ]
+    },
+    "vomiting_repeated": {
+      "any": [
+        "muntah terus", "muntah muntah", "muntah2", "muntah berkali", "muntah berkali kali",
+        "muntah terus menerus", "muntah melulu", "muntah mulu", "muntah banyak", "muntah lagi",
+        "muntah sering", "muntah berulang", "berkali kali muntah", "terus muntah",
+        "sering muntah", "muntah hebat", "muntah darah", "muntah trus"
+      ],
+      "combo": [
+        ["muntah", "memuntahkan"],
+        [
+          "terus", "trus", "trs", "tros", "berkali", "mulu", "melulu", "banyak", "sering",
+          "berulang", "lagi", "kali", "tiap", "setiap", "hebat", "darah", "dari pagi",
+          "sepanjang", "seharian"
+        ]
+      ]
+    },
+    "confusion": {
+      "any": [
+        "linglung", "ling lung", "bingung", "bingug", "kebingungan", "ngelantur", "melantur",
+        "tidak nyambung", "gak nyambung", "ga nyambung", "nggak nyambung", "ngawur", "mengigau",
+        "igau", "tidak sadar", "setengah sadar", "pingsan", "kejang", "tidak merespons",
+        "tidak bisa diajak bicara", "disorientasi", "salah orang"
+      ]
+    }
+  },
+  "watch_words": [
+    "kuning", "menguning", "kekuningan", "kunyit", "muntah", "demam", "sesak", "pingsan",
+    "kejang", "darah", "berdarah", "mimisan", "diare", "mencret", "pusing", "lemas",
+    "bengkak", "berdenging", "tuli"
+  ],
+  "durations": [
+    { "pattern": "seminggu", "days": 7 },
+    { "pattern": "sepekan", "days": 7 },
+    { "pattern": "sebulan", "days": 30 },
+    { "pattern": "satu minggu", "days": 7 },
+    { "pattern": "dua minggu", "days": 14 },
+    { "pattern": "tiga minggu", "days": 21 },
+    { "pattern": "empat minggu", "days": 28 },
+    { "pattern": "dua hari", "days": 2 },
+    { "pattern": "tiga hari", "days": 3 },
+    { "pattern": "empat hari", "days": 4 },
+    { "pattern": "lima hari", "days": 5 },
+    { "pattern": "enam hari", "days": 6 },
+    { "pattern": "tujuh hari", "days": 7 },
+    { "pattern": "delapan hari", "days": 8 },
+    { "pattern": "sembilan hari", "days": 9 },
+    { "pattern": "sepuluh hari", "days": 10 },
+    { "pattern": "(\\d{1,3}) ?hari", "days": "$1" },
+    { "pattern": "(\\d{1,3}) ?minggu", "days": "$1*7" },
+    { "pattern": "(\\d{1,3}) ?pekan", "days": "$1*7" },
+    { "pattern": "(\\d{1,3}) ?bulan", "days": "$1*30" }
+  ],
+  "stop_intent": [
+    "sudah sembuh", "udah sembuh", "sudah sehat", "udah sehat", "sudah baikan", "udah baikan",
+    "mau berhenti", "ingin berhenti", "pengen berhenti", "mau stop", "berhenti minum obat",
+    "stop minum obat", "capek minum obat", "cape minum obat", "capek berobat",
+    "bosan minum obat", "bosen minum obat", "lelah minum obat", "jenuh minum obat",
+    "malas minum obat", "males minum obat", "tidak mau minum obat", "gak mau minum obat",
+    "nggak mau minum obat", "ga mau minum obat", "tidak mau minum obat lagi",
+    "tidak perlu minum obat", "tidak usah minum obat", "enggan minum obat"
+  ],
+  "stigma": [
+    "malu", "maluu", "malu ketahuan", "takut ketahuan", "takut dijauhi", "takut dikucilkan",
+    "takut diketahui", "takut tetangga tahu", "jangan sampai tetangga tahu", "dijauhi tetangga",
+    "dikucilkan", "minder", "gengsi", "aib", "tidak enak sama tetangga",
+    "jangan bilang siapa siapa"
+  ]
+}

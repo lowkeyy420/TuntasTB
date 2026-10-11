@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "lexicon.id.schema.json",
+  "title": "TuntasTB Indonesian lexicon",
+  "type": "object",
+  "required": ["version", "symptoms", "red_flags", "durations", "stop_intent", "stigma"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "minLength": 1 },
+    "symptoms": { "type": "object", "additionalProperties": { "$ref": "#/$defs/entry" } },
+    "red_flags": { "type": "object", "additionalProperties": { "$ref": "#/$defs/entry" } },
+    "watch_words": { "$ref": "#/$defs/phrases" },
+    "durations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["pattern", "days"],
+        "additionalProperties": false,
+        "properties": {
+          "pattern": { "type": "string", "minLength": 1 },
+          "days": {
+            "oneOf": [
+              { "type": "integer", "minimum": 1 },
+              { "type": "string", "pattern": "^\\$1(\\*[0-9]+)?$" }
+            ]
+          }
+        }
+      }
+    },
+    "stop_intent": { "$ref": "#/$defs/phrases" },
+    "stigma": { "$ref": "#/$defs/phrases" }
+  },
+  "$defs": {
+    "phrases": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "any": { "$ref": "#/$defs/phrases" },
+        "combo": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/phrases" } }
+      }
+    }
+  }
+}

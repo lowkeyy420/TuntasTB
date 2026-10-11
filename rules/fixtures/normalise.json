@@ -1,0 +1,21 @@
+[
+  { "id": "lowercase", "input": "MATA Kuning", "sentences": ["mata kuning"] },
+  { "id": "punctuation-to-space", "input": "mual, muntah-muntah (sedikit)", "sentences": ["mual muntah muntah sedikit"] },
+  { "id": "repeated-letters-3", "input": "MUALLL banget", "sentences": ["mual banget"] },
+  { "id": "repeated-letters-many", "input": "mualllllll", "sentences": ["mual"] },
+  { "id": "repeated-letters-2-kept", "input": "baal dan ngelantur", "sentences": ["baal dan ngelantur"] },
+  { "id": "digits-not-collapsed", "input": "obat 1000 hari", "sentences": ["obat 1000 hari"] },
+  { "id": "suffix-nya", "input": "kencingnya merah", "sentences": ["kencing merah"] },
+  { "id": "suffix-ku", "input": "kakiku kesemutan", "sentences": ["kaki kesemutan"] },
+  { "id": "suffix-mu", "input": "matamu kuning", "sentences": ["mata kuning"] },
+  { "id": "suffix-kept-when-stem-too-short", "input": "aku tamu buku", "sentences": ["aku tamu buku"] },
+  { "id": "suffix-stripped-once", "input": "penglihatannya", "sentences": ["penglihatan"] },
+  { "id": "sentence-split-dot", "input": "mata baik. kuning", "sentences": ["mata baik", "kuning"] },
+  { "id": "sentence-split-mixed", "input": "mual! kencing merah? pusing; lemas\nbatuk", "sentences": ["mual", "kencing merah", "pusing", "lemas", "batuk"] },
+  { "id": "comma-does-not-split", "input": "mata, kuning", "sentences": ["mata kuning"] },
+  { "id": "empty", "input": "", "sentences": [] },
+  { "id": "only-punctuation", "input": "?!.,;", "sentences": [] },
+  { "id": "whitespace-collapsed", "input": "  mual     terus  ", "sentences": ["mual terus"] },
+  { "id": "non-ascii-replaced", "input": "mual café", "sentences": ["mual caf"] },
+  { "id": "placeholder", "input": "[NAMA] mual", "sentences": ["nama mual"] }
+]
