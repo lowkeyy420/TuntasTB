@@ -43,4 +43,4 @@
 - [x] 6.1 Run `npm run lint`, `npm run typecheck` and `npm test` in `web/`; verify all three exit 0
 - [x] 6.2 Run the impeccable detector over `web/src`, fix the findings that matter and record what remains
 - [x] 6.3 Run `docker compose up -d --build web`; verify `/`, `/login` and `/design` return HTTP 200
-- [ ] 6.4 Check by hand at 320px, 360×640 and 200% zoom that the restyled screens and the preview have no horizontal scroll and that keyboard focus is visible on every control
+- [x] 6.4 Check by hand at 320px, 360×640 and 200% zoom that the restyled screens and the preview have no horizontal scroll and that keyboard focus is visible on every control
