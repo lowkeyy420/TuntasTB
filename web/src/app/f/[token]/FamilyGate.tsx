@@ -14,23 +14,12 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { copy } from "@/copy/family.id";
-import { todayJakarta } from "@/lib/time";
-import {
-  Alert,
-  BottomActionBar,
-  Button,
-  ButtonLink,
-  Card,
-  DateTile,
-  StepIndicator,
-} from "@/components/ui";
+import { daysBetween, todayJakarta, toJakartaDate } from "@/lib/time";
+import { loadSession, saveSession, type CachedSession } from "@/lib/offline/cache";
+import { Alert, Button, ButtonLink, Card, StepIndicator } from "@/components/ui";
+import { CheckinScreen, telHref } from "./CheckinScreen";
 
-interface Session {
-  consented: boolean;
-  treatmentDay: number;
-  puskesmasName: string;
-  puskesmasPhone: string;
-}
+type Session = CachedSession;
 
 type View =
   | { kind: "loading" }
@@ -42,12 +31,7 @@ type View =
 
 const page = "flex flex-1 flex-col gap-6 py-6";
 const h1 = "text-3xl font-bold text-ink";
-const h2 = "text-2xl font-bold text-ink";
 const body = "text-lg text-ink";
-
-function telHref(phone: string): string {
-  return `tel:${phone.replace(/[^\d+]/g, "")}`;
-}
 
 /** Same page for unknown and revoked links: the server cannot tell them apart either. */
 export function InvalidLink() {
@@ -119,70 +103,6 @@ export function ConsentScreen({
   );
 }
 
-/**
- * Shown after consent until the daily check-in exists (S02). It must never be
- * a dead end: it says what is coming, that nothing is due today, and gives
- * one thing to do now.
- */
-export function FamilyHome({ session, today }: { session: Session; today: string }) {
-  const t = copy.home;
-  return (
-    <main className="flex flex-1 flex-col gap-6 pt-6">
-      <header className="flex items-center gap-4">
-        <DateTile date={today} />
-        <div className="min-w-0">
-          <h1 className={h1}>{t.greeting}</h1>
-          <p className="text-lg font-semibold text-ink-muted">{t.dayLabel(session.treatmentDay)}</p>
-        </div>
-      </header>
-
-      <section aria-labelledby="home-today" className="flex flex-col gap-3">
-        <h2 id="home-today" className={h2}>
-          {t.todayPrompt}
-        </h2>
-        <Alert tone="info" title={t.notReadyTitle}>
-          {t.notReadyBody}
-        </Alert>
-      </section>
-
-      <section aria-labelledby="home-next" className="flex flex-col gap-3">
-        <h2 id="home-next" className={h2}>
-          {t.nextTitle}
-        </h2>
-        <ol className="flex flex-col gap-3">
-          {t.nextSteps.map((step, i) => (
-            <li key={step} className="flex items-start gap-3">
-              <span
-                aria-hidden
-                className="grid size-9 shrink-0 place-items-center rounded-full bg-primary text-lg font-bold text-on-solid"
-              >
-                {i + 1}
-              </span>
-              <p className={`${body} min-w-0 pt-0.5`}>{step}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section aria-labelledby="home-help" className="flex flex-col gap-2 pb-6">
-        <h2 id="home-help" className={h2}>
-          {t.helpTitle}
-        </h2>
-        <p className={body}>{t.helpBody}</p>
-        <p className="text-lg font-bold text-ink">
-          {copy.contact(session.puskesmasName, session.puskesmasPhone)}
-        </p>
-      </section>
-
-      <BottomActionBar>
-        <ButtonLink block icon={Phone} href={telHref(session.puskesmasPhone)}>
-          {copy.call}
-        </ButtonLink>
-      </BottomActionBar>
-    </main>
-  );
-}
-
 export function FamilyGate({ token }: { token: string }) {
   const [view, setView] = useState<View>({ kind: "loading" });
   const auth = { authorization: `Bearer ${token}` };
@@ -197,13 +117,19 @@ export function FamilyGate({ token }: { token: string }) {
       if (res.status === 404) return setView({ kind: "invalid" });
       if (!res.ok) return setView({ kind: "error" });
       const session = (await res.json()) as Session;
+      // Keep the last session on the device so the screen opens without signal.
+      void saveSession(token, session).catch(() => undefined);
       setView(
         session.consented
           ? { kind: "home", session }
           : { kind: "consent", session, saving: false, failed: false },
       );
     } catch {
-      setView({ kind: "error" });
+      // No connection: a link that was opened and agreed to before still works.
+      const cached = await loadSession(token, (savedAt) =>
+        daysBetween(toJakartaDate(new Date(savedAt)), todayJakarta()),
+      ).catch(() => null);
+      setView(cached?.consented ? { kind: "home", session: cached } : { kind: "error" });
     }
   }, [token]);
 
@@ -217,6 +143,7 @@ export function FamilyGate({ token }: { token: string }) {
       const res = await fetch("/api/family/consent", { method: "POST", headers: auth });
       if (res.status === 404) return setView({ kind: "invalid" });
       if (!res.ok) throw new Error("consent");
+      void saveSession(token, { ...session, consented: true }).catch(() => undefined);
       setView({ kind: "home", session });
     } catch {
       setView({ kind: "consent", session, saving: false, failed: true });
@@ -287,6 +214,6 @@ export function FamilyGate({ token }: { token: string }) {
         </main>
       );
     case "home":
-      return <FamilyHome session={view.session} today={todayJakarta()} />;
+      return <CheckinScreen token={token} session={view.session} today={todayJakarta()} />;
   }
 }

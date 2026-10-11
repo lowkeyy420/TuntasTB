@@ -15,18 +15,18 @@
 
 ## 3. Filter
 
-- [ ] 3.1 Implement the `reassurance`, `dosing` and `diagnosis` checks with unit tests for every scenario in the spec, including "AMAN", "nyaman", "300 mg", "2 tablet", "kurangi dosis", "ganti obat", "ini tanda hepatitis" and "Anda menderita"; verify the tests pass
-- [ ] 3.2 Implement the `level_mismatch`, `contradiction`, `jargon` and `sentence_length` checks with unit tests for each scenario; verify the tests pass
-- [ ] 3.3 Implement the `citation` and `too_long` checks with unit tests for no citation, unknown id, two citations and the 60-word boundary; verify the tests pass
-- [ ] 3.4 Implement `checkStatic` and a test that runs it over every template and variant and that each template plus action is at most 60 words; verify it passes and fails when "aman" is inserted into a template
-- [ ] 3.5 Set coverage thresholds for `web/src/lib/reply/filter.ts` to 100% lines and branches; verify `npm run test:coverage` passes
+- [x] 3.1 Implement the `reassurance`, `dosing` and `diagnosis` checks with unit tests for every scenario in the spec, including "AMAN", "nyaman", "300 mg", "2 tablet", "kurangi dosis", "ganti obat", "ini tanda hepatitis" and "Anda menderita"; verify the tests pass
+- [x] 3.2 Implement the `level_mismatch`, `contradiction`, `jargon` and `sentence_length` checks with unit tests for each scenario; verify the tests pass
+- [x] 3.3 Implement the `citation` and `too_long` checks with unit tests for no citation, unknown id, two citations and the 60-word boundary; verify the tests pass
+- [x] 3.4 Implement `checkStatic` and a test that runs it over every template and variant and that each template plus action is at most 60 words; verify it passes and fails when "aman" is inserted into a template
+- [x] 3.5 Set coverage thresholds for `web/src/lib/reply/filter.ts` to 100% lines and branches; verify `npm run test:coverage` passes
 
 ## 4. Composition and nurse line
 
-- [ ] 4.1 Implement `composeReply` (explanation or template, fixed action with variants, source label, contact last) with unit tests for the structure scenarios, the fallback warning and demo day 41; verify the tests pass
-- [ ] 4.2 Implement `buildNurseLine` and the selection between generated and deterministic lines, with unit tests for demo day 41, a rejected generated line and the 120-character limit; verify the tests pass
-- [ ] 4.3 Add the migration for `reply_template_used` and `reply_replace_reason` and store them with the composed reply in phase B, with a test for the recorded reason; verify the test passes
-- [ ] 4.4 Replace the reply builder from `add-daily-checkin` with `composeReply` and update the reply screen to show explanation, action, "Sumber:" and contact; verify the existing check-in tests still pass and view the three demo replies in the browser
+- [x] 4.1 Implement `composeReply` (explanation or template, fixed action with variants, source label, contact last) with unit tests for the structure scenarios, the fallback warning and demo day 41; verify the tests pass
+- [x] 4.2 Implement `buildNurseLine` and the selection between generated and deterministic lines, with unit tests for demo day 41, a rejected generated line and the 120-character limit; verify the tests pass
+- [x] 4.3 Add the migration for `reply_template_used` and `reply_replace_reason` and store them with the composed reply in phase B, with a test for the recorded reason; verify the test passes
+- [x] 4.4 Replace the reply builder from `add-daily-checkin` with `composeReply` and update the reply screen to show explanation, action, "Sumber:" and contact; verify the existing check-in tests still pass and view the three demo replies in the browser
 
 ## 5. Flows
 

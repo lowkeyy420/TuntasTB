@@ -151,6 +151,37 @@ export const copy = {
       close: "Selesai",
     },
   },
+  /** The one-line reason a nurse sees for a check-in, built from symptoms and risk reasons. */
+  nurseLine: {
+    separator: " + ",
+    days: (n: number) => `${n} hari`,
+    otherSymptom: "keluhan belum dikenali",
+    /** Short names of the triage-table symptoms, by code. */
+    symptoms: {
+      urine_orange: "kencing merah",
+      nausea_mild: "mual",
+      joint_ache_mild: "nyeri sendi",
+      appetite_loss: "nafsu makan turun",
+      tingling_feet: "kesemutan kaki",
+      itching_no_rash: "gatal",
+      jaundice: "mata atau kulit kuning",
+      vision_change: "penglihatan terganggu",
+      skin_rash: "ruam",
+      vomiting_repeated: "muntah berulang",
+      confusion: "bingung",
+    } as Record<string, string>,
+    /** Short forms of risk reasons, by factor. `{n}` is a day count. Missing means not listed. */
+    factors: {
+      missed_dose_today: "tidak minum obat hari ini",
+      consecutive_missed_day: "tidak minum obat {n} hari berturut-turut",
+      partial_dose: "obat hanya sebagian",
+      stop_intent: "bilang sudah sembuh atau mau berhenti",
+      stigma: "malu atau takut ketahuan",
+      missed_pickup: "jadwal ambil obat terlewat",
+      no_pmo: "tanpa pendamping",
+      no_checkin: "tidak lapor {n} hari",
+    } as Record<string, string>,
+  },
 } as const;
 
 export type NurseCopy = typeof copy;

@@ -13,8 +13,9 @@ export const copy = {
   appName: "Pengingat Harian",
   shortName: "Pengingat",
   description: "Pengingat harian dan catatan singkat untuk keluarga.",
-  /** Last line of every family message. */
-  contact: (name: string, phone: string) => `Puskesmas ${name}, telepon ${phone}.`,
+  /** Last line of every family message. "Puskesmas" is not doubled when the name already has it. */
+  contact: (name: string, phone: string) =>
+    `${/^puskesmas\b/i.test(name) ? name : `Puskesmas ${name}`}, telepon ${phone}.`,
   call: "Telepon Puskesmas",
   landing: {
     title: "Pengingat Harian",
@@ -81,12 +82,40 @@ export const copy = {
     micSample: "mual terus, matanya agak kuning",
     send: "Kirim",
     sendBlocked: "Pilih dulu: sudah, belum, atau sebagian.",
+    sending: "Mengirim...",
+    micHint: "Jangan sebut nama atau alamat.",
+    sendFailed: "Catatan belum bisa dikirim. Coba lagi.",
+    tooMany: "Hari ini sudah terlalu sering mengirim catatan. Hubungi Puskesmas kalau ada keluhan.",
+    offlineNotice: "Tidak ada sinyal. Catatan akan dikirim nanti.",
+    // Exact wording required by the spec.
+    queued: "Belum terkirim, akan dikirim saat ada sinyal",
+    statusSent: "Terkirim",
+    statusQueued: "Belum terkirim",
+    queuedCount: (n: number) => `Ada ${n} catatan yang belum terkirim.`,
+    loadingSymptoms: "Memuat pilihan keluhan...",
+    noRules: "Pilihan keluhan belum bisa dimuat. Hubungkan ke internet satu kali, lalu buka lagi.",
   },
   reply: {
     title: "Jawaban untuk hari ini",
     actionTitle: "Yang perlu dilakukan",
     source: (label: string) => `Sumber: ${label}`,
     sampleSource: "Panduan Kemenkes, bagian efek samping obat",
+    /** Static variants that replace parts of a template (never a dose instruction). */
+    variants: {
+      stopIntentAction:
+        "Jangan berhenti dulu. Tetap minum obat sesuai jadwal. Perawat akan menghubungi Anda dalam 1 hari kerja.",
+      noSymptom: "Terima kasih sudah melapor hari ini.",
+      doseMissed:
+        "Terima kasih sudah jujur melapor. Kalau ada kesulitan minum obat, ceritakan ke perawat.",
+    },
+    /** Shown on the device while the report has not reached the server. */
+    offline: {
+      bannerBody: "Ini jawaban sementara dari telepon Anda. Jawaban resmi datang setelah terkirim.",
+      // The RED text is three short sentences; the screen shows them as action, notice and call line.
+      redAction: "Segera ke Puskesmas atau IGD hari ini.",
+      redNotice: "Laporan ini belum sampai ke perawat.",
+      redCall: (phone: string) => `Telepon Puskesmas: ${phone}.`,
+    },
     GREEN: {
       explanation: "Air kencing merah sering terjadi karena obat ini.",
       action: "Lanjutkan minum obat seperti biasa.",

@@ -100,6 +100,12 @@ export const checkins = pgTable(
     nurseLine: text("nurse_line"),
     citationsJson: jsonb("citations_json"),
     fallbackUsed: boolean("fallback_used").notNull().default(false),
+    // Reply bookkeeping (family-reply): was the static template shown instead
+    // of a generated explanation, why, and the fixed action line that was
+    // shown (kept so a repeated request returns exactly the same reply).
+    replyTemplateUsed: boolean("reply_template_used").notNull().default(true),
+    replyReplaceReason: text("reply_replace_reason"),
+    replyAction: text("reply_action"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),

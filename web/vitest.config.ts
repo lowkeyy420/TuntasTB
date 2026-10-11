@@ -9,6 +9,13 @@ export default defineConfig({
     environment: "node",
     include: ["src/**/*.test.ts", "src/**/*.test.tsx", "test/**/*.test.ts"],
     globals: true,
+    coverage: {
+      provider: "v8",
+      // The reply filter is the last line of defence against unsafe generated
+      // text: every line and branch must be exercised (family-reply 3.5).
+      include: ["src/lib/reply/filter.ts"],
+      thresholds: { lines: 100, branches: 100, functions: 100, statements: 100 },
+    },
   },
   resolve: {
     alias: {
