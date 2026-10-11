@@ -1,17 +1,18 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { copy } from "@/copy/nurse.id";
+import { PageHeader } from "@/components/ui";
 import { PatientForm } from "../PatientForm";
 
 export const metadata: Metadata = { title: `${copy.patients.newTitle} | ${copy.appName}` };
 
 export default function NewPatientPage() {
   return (
-    <main className="mx-auto max-w-md space-y-5 p-4">
-      <Link href="/nurse/patients" className="inline-block py-2 text-lg text-teal-800 underline">
-        {copy.patients.backToList}
-      </Link>
-      <h1 className="text-2xl font-semibold">{copy.patients.newTitle}</h1>
+    <main className="flex w-full max-w-xl flex-col gap-6">
+      <PageHeader
+        title={copy.patients.newTitle}
+        subtitle={copy.patients.newIntro}
+        back={{ href: "/nurse/patients", label: copy.patients.backToList }}
+      />
       <PatientForm />
     </main>
   );

@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Check, Copy } from "lucide-react";
 import { copy } from "@/copy/nurse.id";
+import { Alert, Button, controlClasses } from "@/components/ui";
 
 /**
  * One-time family link dialog. The link lives only in the parent's memory
@@ -41,7 +43,7 @@ export function LinkModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-0 sm:items-center sm:p-4"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-scrim/60 p-0 sm:items-center sm:p-4"
       onKeyDown={(e) => {
         if (e.key === "Escape") onClose();
       }}
@@ -50,14 +52,12 @@ export function LinkModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="link-modal-title"
-        className="w-full max-w-md space-y-4 rounded-t-2xl bg-white p-5 text-black sm:rounded-2xl"
+        className="flex max-h-dvh w-full max-w-md flex-col gap-4 overflow-y-auto rounded-t-card bg-surface p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-ink shadow-raised sm:rounded-card"
       >
-        <h2 id="link-modal-title" className="text-xl font-semibold">
+        <h2 id="link-modal-title" className="text-2xl font-bold">
           {t.title}
         </h2>
-        <p role="alert" className="rounded bg-amber-100 p-3 text-base font-medium text-amber-900">
-          {t.warning}
-        </p>
+        <Alert tone="warning" role="alert" title={t.warning} />
         <p className="text-base">{t.instruction}</p>
         <input
           ref={inputRef}
@@ -65,24 +65,15 @@ export function LinkModal({
           aria-label={t.title}
           value={link}
           onFocus={(e) => e.currentTarget.select()}
-          className="w-full rounded border border-black/30 px-3 py-3 text-base"
+          className={controlClasses}
         />
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <button
-            type="button"
-            onClick={onCopy}
-            className="min-h-12 flex-1 rounded bg-teal-700 px-4 text-lg font-medium text-white"
-          >
+        <div className="flex flex-col gap-3 sm:flex-row-reverse">
+          <Button block icon={copied ? Check : Copy} onClick={onCopy}>
             {copied ? t.copied : t.copy}
-          </button>
-          <button
-            ref={closeRef}
-            type="button"
-            onClick={onClose}
-            className="min-h-12 flex-1 rounded border border-black/30 px-4 text-lg"
-          >
+          </Button>
+          <Button ref={closeRef} block variant="secondary" onClick={onClose}>
             {t.close}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

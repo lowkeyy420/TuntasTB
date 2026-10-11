@@ -2,7 +2,19 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+  Activity,
+  Link2,
+  LoaderCircle,
+  RefreshCw,
+  Unlink,
+  UserCheck,
+  UserPlus,
+  UserX,
+  Users,
+} from "lucide-react";
 import { copy } from "@/copy/nurse.id";
+import { Alert, Button, ButtonLink, Card, EmptyState, StatusPill } from "@/components/ui";
 import { LinkModal } from "./LinkModal";
 
 interface PatientRow {
@@ -16,16 +28,6 @@ interface PatientRow {
 }
 
 const t = copy.patients;
-
-function Badge({ tone, children }: { tone: "ok" | "warn" | "off"; children: React.ReactNode }) {
-  const cls =
-    tone === "ok"
-      ? "bg-teal-100 text-teal-900"
-      : tone === "warn"
-        ? "bg-amber-100 text-amber-900"
-        : "bg-black/10 text-black/70";
-  return <span className={`rounded-full px-3 py-1 text-sm font-medium ${cls}`}>{children}</span>;
-}
 
 export function PatientList() {
   const router = useRouter();
@@ -86,59 +88,94 @@ export function PatientList() {
     }
   }
 
-  if (rows === null && !error) return <p className="text-lg">{t.loading}</p>;
+  if (rows === null && !error) {
+    return (
+      <p role="status" className="flex items-center gap-3 text-lg font-semibold text-ink">
+        <LoaderCircle aria-hidden className="size-7 shrink-0 animate-spin text-primary" />
+        {t.loading}
+      </p>
+    );
+  }
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-5">
       {error && (
-        <p role="alert" className="text-base text-red-700">
-          {error}
-        </p>
+        <Alert tone="danger" role="alert">
+          <p>{error}</p>
+          {rows === null && (
+            <Button variant="secondary" size="md" icon={RefreshCw} className="mt-3" onClick={() => void load()}>
+              {t.retry}
+            </Button>
+          )}
+        </Alert>
       )}
-      {rows && rows.length === 0 && <p className="text-lg">{t.empty}</p>}
-      <ul className="space-y-3">
+      {rows && rows.length === 0 && (
+        <EmptyState
+          icon={Users}
+          title={t.empty}
+          action={
+            <ButtonLink block icon={UserPlus} href="/nurse/patients/new">
+              {copy.console.newPatientLink}
+            </ButtonLink>
+          }
+        >
+          {t.emptyBody}
+        </EmptyState>
+      )}
+      <ul className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
         {rows?.map((p) => (
-          <li key={p.id} className="space-y-3 rounded-lg border border-black/15 p-4">
-            <div className="flex items-baseline justify-between gap-3">
-              <span className="text-xl font-semibold">{p.code}</span>
-              <span className="text-base text-black/70">
+          <Card as="li" key={p.id} className="flex flex-col gap-4">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+              <span className="text-2xl font-bold tabular-nums text-ink">{p.code}</span>
+              <span className="text-base font-semibold text-ink-muted">
                 {t.columns.day} {p.treatmentDay}
               </span>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Badge tone="off">{p.phase === "intensive" ? t.phase.intensive : t.phase.continuation}</Badge>
-              <Badge tone="off">{p.hasPmo ? t.status.pmoYes : t.status.pmoNo}</Badge>
-              <Badge tone={p.consented ? "ok" : "warn"}>
+              <StatusPill tone="off" icon={Activity}>
+                {p.phase === "intensive" ? t.phase.intensive : t.phase.continuation}
+              </StatusPill>
+              <StatusPill tone="off" icon={p.hasPmo ? UserCheck : UserX}>
+                {p.hasPmo ? t.status.pmoYes : t.status.pmoNo}
+              </StatusPill>
+              <StatusPill tone={p.consented ? "ok" : "warn"}>
                 {p.consented ? t.status.consentGiven : t.status.consentPending}
-              </Badge>
-              <Badge tone={p.linkStatus === "active" ? "ok" : "warn"}>
+              </StatusPill>
+              <StatusPill
+                tone={p.linkStatus === "active" ? "ok" : p.linkStatus === "revoked" ? "danger" : "warn"}
+                icon={p.linkStatus === "active" ? Link2 : undefined}
+              >
                 {t.columns.link}:{" "}
                 {p.linkStatus === "active"
                   ? t.status.linkActive
                   : p.linkStatus === "revoked"
                     ? t.status.linkRevoked
                     : t.status.linkNone}
-              </Badge>
+              </StatusPill>
             </div>
-            <div className="flex flex-col gap-2 sm:flex-row">
-              <button
-                type="button"
+            <div className="mt-auto flex flex-col gap-3 sm:flex-row">
+              <Button
+                block
+                size="md"
+                variant="secondary"
+                icon={RefreshCw}
                 disabled={busyId === p.id}
                 onClick={() => rotate(p.id)}
-                className="min-h-12 flex-1 rounded border border-teal-700 px-4 text-lg text-teal-800 disabled:opacity-50"
               >
                 {t.actions.rotate}
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                block
+                size="md"
+                variant="danger"
+                icon={Unlink}
                 disabled={busyId === p.id || p.linkStatus !== "active"}
                 onClick={() => revoke(p.id)}
-                className="min-h-12 flex-1 rounded border border-red-700 px-4 text-lg text-red-800 disabled:opacity-40"
               >
                 {t.actions.revoke}
-              </button>
+              </Button>
             </div>
-          </li>
+          </Card>
         ))}
       </ul>
       {link && <LinkModal link={link} onClose={() => setLink(null)} />}

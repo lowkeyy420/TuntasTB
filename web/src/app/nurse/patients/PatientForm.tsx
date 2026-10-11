@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { copy } from "@/copy/nurse.id";
 import { todayJakarta } from "@/lib/time";
 import { fieldErrors, registrationSchema } from "@/lib/patients/schema";
+import { UserPlus } from "lucide-react";
+import { Alert, Button, Card, TextInput, Select } from "@/components/ui";
 import { LinkModal } from "./LinkModal";
 
 type Errors = Record<string, string>;
@@ -75,74 +77,53 @@ export function PatientForm({ onDone }: { onDone?: () => void }) {
     else router.push("/nurse/patients");
   }
 
-  const inputCls = "mt-1 w-full rounded border border-black/30 px-3 py-3 text-lg";
-  const err = (k: string) =>
-    errors[k] ? (
-      <p id={`${k}-error`} role="alert" className="mt-1 text-base text-red-700">
-        {errors[k]}
-      </p>
-    ) : null;
-
   return (
     <>
-      <form onSubmit={onSubmit} noValidate className="space-y-5">
-        {errors._form && (
-          <p role="alert" className="text-base text-red-700">
-            {errors._form}
-          </p>
-        )}
+      <Card>
+        <form onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
+          {errors._form && (
+            <Alert tone="danger" role="alert">
+              {errors._form}
+            </Alert>
+          )}
 
-        <label className="block text-lg">
-          {t.codeLabel}
-          <input
+          <TextInput
+            label={t.codeLabel}
+            hint={t.codeHint}
+            error={errors.code}
             name="code"
             value={code}
             onChange={(e) => setCode(e.target.value.toUpperCase())}
             autoCapitalize="characters"
             autoComplete="off"
             maxLength={20}
-            aria-describedby="code-hint code-error"
-            aria-invalid={Boolean(errors.code)}
-            className={inputCls}
           />
-          <span id="code-hint" className="block text-sm text-black/60">
-            {t.codeHint}
-          </span>
-        </label>
-        {err("code")}
 
-        <label className="block text-lg">
-          {t.startDateLabel}
-          <input
+          <TextInput
+            label={t.startDateLabel}
+            error={errors.startDate}
             name="startDate"
             type="date"
             max={today}
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            aria-describedby="startDate-error"
-            aria-invalid={Boolean(errors.startDate)}
-            className={inputCls}
           />
-        </label>
-        {err("startDate")}
 
-        <label className="block text-lg">
-          {t.phaseLabel}
-          <select
+          <Select
+            label={t.phaseLabel}
+            error={errors.phase}
             name="phase"
             value={phase}
             onChange={(e) => setPhase(e.target.value)}
-            className={inputCls}
           >
             <option value="intensive">{t.phaseIntensive}</option>
             <option value="continuation">{t.phaseContinuation}</option>
-          </select>
-        </label>
-        {err("phase")}
+          </Select>
 
-        <label className="block text-lg">
-          {t.pickupLabel}
-          <input
+          <TextInput
+            label={t.pickupLabel}
+            hint={t.pickupHint}
+            error={errors.pickupIntervalDays}
             name="pickupIntervalDays"
             type="number"
             inputMode="numeric"
@@ -150,43 +131,25 @@ export function PatientForm({ onDone }: { onDone?: () => void }) {
             max={60}
             value={pickup}
             onChange={(e) => setPickup(e.target.value)}
-            aria-describedby="pickup-hint pickupIntervalDays-error"
-            aria-invalid={Boolean(errors.pickupIntervalDays)}
-            className={inputCls}
           />
-          <span id="pickup-hint" className="block text-sm text-black/60">
-            {t.pickupHint}
-          </span>
-        </label>
-        {err("pickupIntervalDays")}
 
-        <label className="block text-lg">
-          {t.pmoLabel}
-          <input
+          <TextInput
+            label={t.pmoLabel}
+            hint={t.pmoHint}
+            error={errors.pmoPhone}
             name="pmoPhone"
             type="tel"
             inputMode="tel"
             autoComplete="off"
             value={pmoPhone}
             onChange={(e) => setPmoPhone(e.target.value)}
-            aria-describedby="pmo-hint pmoPhone-error"
-            aria-invalid={Boolean(errors.pmoPhone)}
-            className={inputCls}
           />
-          <span id="pmo-hint" className="block text-sm text-black/60">
-            {t.pmoHint}
-          </span>
-        </label>
-        {err("pmoPhone")}
 
-        <button
-          type="submit"
-          disabled={busy}
-          className="min-h-12 w-full rounded bg-teal-700 px-4 text-lg font-medium text-white disabled:opacity-50"
-        >
-          {busy ? t.submitting : t.submit}
-        </button>
-      </form>
+          <Button type="submit" block icon={UserPlus} loading={busy}>
+            {busy ? t.submitting : t.submit}
+          </Button>
+        </form>
+      </Card>
 
       {link && <LinkModal link={link} onClose={closeModal} />}
     </>

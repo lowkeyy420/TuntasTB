@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { copy } from "@/copy/family.id";
+import { FamilyShell } from "@/components/FamilyShell";
 
 // The link token sits in the URL: keep it out of Referer headers and search indexes.
 export const metadata: Metadata = {
@@ -16,5 +17,5 @@ export default function FamilyLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <section className="mx-auto max-w-md p-4">{children}</section>;
+  return <FamilyShell>{children}</FamilyShell>;
 }

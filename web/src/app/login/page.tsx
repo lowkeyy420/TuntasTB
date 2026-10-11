@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { LogIn, Stethoscope } from "lucide-react";
 import { copy } from "@/copy/nurse.id";
+import { Alert, AppBar, Button, Card, TextInput } from "@/components/ui";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -35,54 +37,48 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center p-6">
-      <form
-        onSubmit={onSubmit}
-        className="w-full max-w-sm space-y-4 rounded-lg border border-black/10 p-6"
-      >
-        <div>
-          <h1 className="text-xl font-semibold">{copy.login.title}</h1>
-          <p className="text-sm text-black/60">{copy.login.subtitle}</p>
-        </div>
+    <div className="flex min-h-dvh flex-col">
+      <AppBar title={copy.appName} icon={Stethoscope} className="max-w-md" />
+      <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-6">
+        <Card>
+          <form onSubmit={onSubmit} className="flex flex-col gap-5">
+            <div>
+              <h1 className="text-2xl font-bold text-ink">{copy.login.title}</h1>
+              <p className="mt-1 text-base text-ink-muted">{copy.login.subtitle}</p>
+            </div>
 
-        <label className="block text-sm">
-          {copy.login.emailLabel}
-          <input
-            type="email"
-            autoComplete="username"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded border border-black/20 px-3 py-2"
-          />
-        </label>
+            <TextInput
+              label={copy.login.emailLabel}
+              type="email"
+              inputMode="email"
+              autoComplete="username"
+              autoCapitalize="none"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-        <label className="block text-sm">
-          {copy.login.passwordLabel}
-          <input
-            type="password"
-            autoComplete="current-password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 w-full rounded border border-black/20 px-3 py-2"
-          />
-        </label>
+            <TextInput
+              label={copy.login.passwordLabel}
+              type="password"
+              autoComplete="current-password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-        {error && (
-          <p role="alert" className="text-sm text-red-600">
-            {error}
-          </p>
-        )}
+            {error && (
+              <Alert tone="danger" role="alert">
+                {error}
+              </Alert>
+            )}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full rounded bg-black px-4 py-2 text-white disabled:opacity-50"
-        >
-          {copy.login.submit}
-        </button>
-      </form>
-    </main>
+            <Button type="submit" block icon={LogIn} loading={loading}>
+              {copy.login.submit}
+            </Button>
+          </form>
+        </Card>
+      </main>
+    </div>
   );
 }
