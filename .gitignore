@@ -34,3 +34,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.log
+
+# Claude Code local settings and downloaded skill binaries
+.claude/settings.local.json
+.claude/skills/impeccable/scripts/bin/
