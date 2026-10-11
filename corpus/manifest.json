@@ -1,0 +1,213 @@
+{
+  "generated_by": "corpus/build_manifest.py",
+  "review_status": "draft",
+  "sections": [
+    {
+      "id": "ambil-obat#jadwal-ambil",
+      "label": "Panduan jadwal ambil obat, bagian jadwal ambil obat",
+      "source": "Kemenkes RI, Peraturan Menteri Kesehatan Nomor 67 Tahun 2016 tentang Penanggulangan Tuberkulosis; Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019)",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "ambil-obat#terlambat-ambil",
+      "label": "Panduan jadwal ambil obat, bagian kalau terlambat ambil obat",
+      "source": "Kemenkes RI, Peraturan Menteri Kesehatan Nomor 67 Tahun 2016 tentang Penanggulangan Tuberkulosis; Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019)",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "ambil-obat#bepergian",
+      "label": "Panduan jadwal ambil obat, bagian kalau akan bepergian atau pindah",
+      "source": "Kemenkes RI, Peraturan Menteri Kesehatan Nomor 67 Tahun 2016 tentang Penanggulangan Tuberkulosis; Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019)",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "efek-samping-perlu-perawat#kesemutan-kaki",
+      "label": "Panduan keluhan yang perlu diceritakan ke perawat, bagian kesemutan atau rasa terbakar di kaki",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": [
+        "tingling_feet"
+      ]
+    },
+    {
+      "id": "efek-samping-perlu-perawat#gatal-tanpa-ruam",
+      "label": "Panduan keluhan yang perlu diceritakan ke perawat, bagian gatal tanpa ruam",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": [
+        "itching_no_rash"
+      ]
+    },
+    {
+      "id": "efek-samping-perlu-perawat#mual-lama",
+      "label": "Panduan keluhan yang perlu diceritakan ke perawat, bagian mual atau kurang nafsu makan yang lama",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": [
+        "nausea_mild",
+        "appetite_loss"
+      ]
+    },
+    {
+      "id": "efek-samping-ringan#urin-merah",
+      "label": "Panduan keluhan ringan saat minum obat, bagian kencing berwarna merah atau oranye",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": [
+        "urine_orange"
+      ]
+    },
+    {
+      "id": "efek-samping-ringan#mual-ringan",
+      "label": "Panduan keluhan ringan saat minum obat, bagian mual ringan setelah minum obat",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": [
+        "nausea_mild"
+      ]
+    },
+    {
+      "id": "efek-samping-ringan#nyeri-sendi",
+      "label": "Panduan keluhan ringan saat minum obat, bagian nyeri sendi ringan",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": [
+        "joint_ache_mild"
+      ]
+    },
+    {
+      "id": "efek-samping-ringan#nafsu-makan",
+      "label": "Panduan keluhan ringan saat minum obat, bagian kurang nafsu makan",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": [
+        "appetite_loss"
+      ]
+    },
+    {
+      "id": "minum-obat-teratur#merasa-sehat",
+      "label": "Panduan minum obat sampai tuntas, bagian sudah merasa sehat tetapi pengobatan belum selesai",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "minum-obat-teratur#kenapa-lama",
+      "label": "Panduan minum obat sampai tuntas, bagian kenapa pengobatan memakan waktu lama",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "minum-obat-teratur#obat-terlewat",
+      "label": "Panduan minum obat sampai tuntas, bagian kalau ada obat yang terlewat",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "minum-obat-teratur#supaya-tidak-lupa",
+      "label": "Panduan minum obat sampai tuntas, bagian supaya minum obat tidak lupa",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "minum-obat-teratur#bosan-berobat",
+      "label": "Panduan minum obat sampai tuntas, bagian bosan atau capek berobat",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "peran-pendamping#tugas-pendamping",
+      "label": "Panduan untuk pendamping minum obat, bagian tugas pendamping minum obat",
+      "source": "Kemenkes RI, Peraturan Menteri Kesehatan Nomor 67 Tahun 2016 tentang Penanggulangan Tuberkulosis; WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "peran-pendamping#laporan-harian",
+      "label": "Panduan untuk pendamping minum obat, bagian laporan harian",
+      "source": "Kemenkes RI, Peraturan Menteri Kesehatan Nomor 67 Tahun 2016 tentang Penanggulangan Tuberkulosis; WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "peran-pendamping#rasa-malu",
+      "label": "Panduan untuk pendamping minum obat, bagian saat pasien merasa malu",
+      "source": "Kemenkes RI, Peraturan Menteri Kesehatan Nomor 67 Tahun 2016 tentang Penanggulangan Tuberkulosis; WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "peran-pendamping#menjaga-rahasia",
+      "label": "Panduan untuk pendamping minum obat, bagian menjaga rahasia pasien",
+      "source": "Kemenkes RI, Peraturan Menteri Kesehatan Nomor 67 Tahun 2016 tentang Penanggulangan Tuberkulosis; WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "peran-pendamping#penularan-di-rumah",
+      "label": "Panduan untuk pendamping minum obat, bagian mencegah penularan di rumah",
+      "source": "Kemenkes RI, Peraturan Menteri Kesehatan Nomor 67 Tahun 2016 tentang Penanggulangan Tuberkulosis; WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": []
+    },
+    {
+      "id": "tanda-bahaya#mata-kulit-kuning",
+      "label": "Panduan tanda yang perlu diperiksa hari ini, bagian mata atau kulit kuning",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": [
+        "jaundice"
+      ]
+    },
+    {
+      "id": "tanda-bahaya#penglihatan",
+      "label": "Panduan tanda yang perlu diperiksa hari ini, bagian penglihatan kabur atau warna berubah",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": [
+        "vision_change"
+      ]
+    },
+    {
+      "id": "tanda-bahaya#ruam-kulit",
+      "label": "Panduan tanda yang perlu diperiksa hari ini, bagian ruam kulit",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": [
+        "skin_rash"
+      ]
+    },
+    {
+      "id": "tanda-bahaya#muntah-berulang",
+      "label": "Panduan tanda yang perlu diperiksa hari ini, bagian muntah berulang",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": [
+        "vomiting_repeated"
+      ]
+    },
+    {
+      "id": "tanda-bahaya#bingung",
+      "label": "Panduan tanda yang perlu diperiksa hari ini, bagian bingung atau linglung",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": [
+        "confusion"
+      ]
+    },
+    {
+      "id": "tanda-bahaya#yang-dilakukan",
+      "label": "Panduan tanda yang perlu diperiksa hari ini, bagian yang dilakukan saat ada tanda bahaya",
+      "source": "Kemenkes RI, Pedoman Nasional Pelayanan Kedokteran Tata Laksana Tuberkulosis (KMK HK.01.07/MENKES/755/2019); WHO, Consolidated guidelines on tuberculosis, Module 4: Treatment (2022), https://www.who.int/publications/i/item/9789240048126",
+      "review_status": "draft",
+      "codes": []
+    }
+  ]
+}

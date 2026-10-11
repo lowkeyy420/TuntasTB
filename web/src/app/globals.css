@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. One light, high-contrast theme: there is deliberately no
+ * dark-scheme variant (see openspec/changes/add-design-system).
+ *
+ * The colour values are mirrored in src/design/tokens.ts, which also declares
+ * which text sits on which background. src/design/tokens.test.ts fails when
+ * the two files drift or when a declared pair drops below its WCAG ratio.
+ */
+@theme {
+  /* Only the tokens below exist: Tailwind's default palette is switched off. */
+  --color-*: initial;
+
+  /* Paper and ink */
+  --color-canvas: #f3f6f5;
+  --color-surface: #ffffff;
+  --color-sunken: #e8eeec;
+  --color-ink: #0f1f1d;
+  --color-ink-muted: #3b4b48;
+  --color-line: #c9d3d0;
+  --color-line-strong: #5f706c;
+
+  /* Brand teal: the calendar's binding strip, and the one primary action. */
+  --color-primary: #0b5a54;
+  --color-primary-strong: #084540;
+  --color-primary-soft: #d9efeb;
+  --color-on-primary-soft: #083f3a;
+  --color-on-solid: #ffffff;
+
+  --color-focus: #1a4fd6;
+  --color-scrim: #0f1f1d;
+
+  /* Triage levels. Always shown with an icon and a word, never colour alone. */
+  --color-triage-green-bg: #dff3e4;
+  --color-triage-green-ink: #0d4a24;
+  --color-triage-green-solid: #17703a;
+  --color-triage-yellow-bg: #fcefc0;
+  --color-triage-yellow-ink: #553800;
+  --color-triage-yellow-solid: #8a5a00;
+  --color-triage-red-bg: #fde3df;
+  --color-triage-red-ink: #7a1512;
+  --color-triage-red-solid: #b3261e;
+  --color-triage-red-strong: #8f1d17;
+
+  --color-info-bg: #dfeafb;
+  --color-info-ink: #12366e;
+
+  /*
+   * Type scale. Body is 18px and nothing can be set below 16px: `text-xs`
+   * and `text-sm` both resolve to 16px on purpose. Sizes are in rem so a
+   * larger browser text size scales everything.
+   */
+  --text-xs: 1rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 1rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1.125rem;
+  --text-base--line-height: 1.6;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.5;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 1.35;
+  --text-2xl: 1.75rem;
+  --text-2xl--line-height: 1.25;
+  --text-3xl: 2.125rem;
+  --text-3xl--line-height: 1.2;
+  --text-4xl: 2.75rem;
+  --text-4xl--line-height: 1.1;
+  --text-5xl: 3.5rem;
+  --text-5xl--line-height: 1;
+
+  --radius-control: 0.75rem;
+  --radius-card: 1rem;
+
+  --shadow-card: 0 1px 2px rgb(15 31 29 / 0.08), 0 2px 6px rgb(15 31 29 / 0.06);
+  --shadow-raised: 0 6px 16px rgb(15 31 29 / 0.14), 0 2px 4px rgb(15 31 29 / 0.08);
+  --shadow-bar: 0 -2px 10px rgb(15 31 29 / 0.1);
+}
+
+@theme inline {
+  --font-sans: var(--font-atkinson), ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+}
+
+/*
+ * `hover:` also matches a forced preview state so the design preview page can
+ * show it without a pointer. Real hover stays behind `(hover: hover)`, so
+ * touch devices never get a stuck hover style.
+ */
+@custom-variant hover {
+  @media (hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+  &[data-preview~="hover"] {
+    @slot;
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    accent-color: var(--color-primary);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    overflow-wrap: break-word;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-on-solid);
+  }
+
+  input,
+  textarea {
+    caret-color: var(--color-primary);
+  }
+
+  /* One focus ring for every control: thick, offset, never removed. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible,
+  [data-preview~="focus"] {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+}
+
+/*
+ * Chips and choice cards hide their native input and draw the ring on the
+ * whole label instead.
+ */
+.choice:has(:focus-visible) {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+@supports not selector(:has(*)) {
+  .choice:focus-within {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* Motion only ever decorates a state change, so it can go entirely. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

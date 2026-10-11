@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "triage-table.schema.json",
+  "title": "TuntasTB triage table",
+  "type": "object",
+  "required": ["version", "review_status", "symptoms", "duration_rules", "unknown_level", "levels", "fallback_warning_id"],
+  "additionalProperties": true,
+  "properties": {
+    "version": { "type": "string", "minLength": 1 },
+    "review_status": { "type": "string", "minLength": 1 },
+    "symptoms": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["code", "level", "label_id"],
+        "additionalProperties": false,
+        "properties": {
+          "code": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "level": { "$ref": "#/$defs/level" },
+          "label_id": { "type": "string", "minLength": 1 },
+          "chip_only": { "type": "boolean" }
+        }
+      }
+    },
+    "duration_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["codes", "min_days", "level"],
+        "additionalProperties": false,
+        "properties": {
+          "codes": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+          "min_days": { "type": "integer", "minimum": 1 },
+          "level": { "$ref": "#/$defs/level" }
+        }
+      }
+    },
+    "unknown_level": { "$ref": "#/$defs/level" },
+    "levels": {
+      "type": "object",
+      "required": ["GREEN", "YELLOW", "RED"],
+      "properties": {
+        "GREEN": { "$ref": "#/$defs/levelText" },
+        "YELLOW": { "$ref": "#/$defs/levelText" },
+        "RED": { "$ref": "#/$defs/levelText" }
+      }
+    },
+    "fallback_warning_id": { "type": "string", "minLength": 1 }
+  },
+  "$defs": {
+    "level": { "type": "string", "enum": ["GREEN", "YELLOW", "RED"] },
+    "levelText": {
+      "type": "object",
+      "required": ["action_id", "message_id"],
+      "properties": {
+        "action_id": { "type": "string", "minLength": 1 },
+        "message_id": { "type": "string", "minLength": 1 },
+        "citation_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+#[a-z0-9-]+$",
+          "description": "Default source for the static template: a section id in corpus/manifest.json."
+        },
+        "action_variants": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": { "stop_intent": { "type": "string", "minLength": 1 } }
+        },
+        "message_variants": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "no_symptom": { "type": "string", "minLength": 1 },
+            "dose_missed": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    }
+  }
+}

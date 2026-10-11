@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "tuntastb-langflow": {
+      "type": "streamable-http",
+      "url": "http://localhost:7860/api/v1/mcp/project/<PROJECT_ID>/streamable",
+      "headers": { "x-api-key": "<LANGFLOW_API_KEY>" },
+      "alwaysAllow": []
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791707313480,
+      "tag": "0000_nebulous_thunderbolt_ross",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791714758576,
+      "tag": "0001_checkin_reply_columns",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791717187964,
+      "tag": "0002_nurse_override_and_open_pickup",
+      "breakpoints": true
+    }
+  ]
+}

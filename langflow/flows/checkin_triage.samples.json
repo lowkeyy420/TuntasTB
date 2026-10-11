@@ -1,0 +1,71 @@
+{
+  "description": "Shared samples for the checkin_triage contract. langflow/tests/test_flow_samples.py runs them through checkin_triage.schema.json (jsonschema) and web/src/lib/langflow/flowSchema.test.ts through the zod schemas; both must give `valid` for every sample, so the two schemas agree.",
+  "base_output": {
+    "extracted": {
+      "symptoms": [{ "code": "jaundice", "quote": "matanya agak kuning", "duration_days": null }],
+      "unknown_symptoms": [],
+      "dose_status": "yes",
+      "mood_flags": [],
+      "confidence": 0.86
+    },
+    "level": "RED",
+    "risk": { "score": 5, "band": "medium" },
+    "reasons": ["red_flag_keyword:jaundice"],
+    "family_message": "",
+    "nurse_line": "",
+    "citations": []
+  },
+  "base_input": {
+    "text": "mual terus, matanya agak kuning",
+    "chips": ["nausea_mild"],
+    "dose_status": "yes",
+    "treatment_day": 41,
+    "context": {
+      "persistence_days": { "nausea_mild": 7 },
+      "consecutive_missed_before": 0,
+      "missed_pickup": false,
+      "has_pmo": true,
+      "days_since_last_checkin": 0
+    },
+    "rules_version": "0.1.0-draft"
+  },
+  "output": [
+    { "id": "design-example", "valid": true, "set": [] },
+    { "id": "with-citation-and-message", "valid": true, "set": [[["citations"], [{ "id": "tanda-bahaya#mata-kulit-kuning", "label": "Panduan tanda yang perlu diperiksa hari ini, bagian mata atau kulit kuning" }]], [["family_message"], "Mata kuning perlu diperiksa hari ini."]] },
+    { "id": "mood-flags-and-duration", "valid": true, "set": [[["extracted", "mood_flags"], ["stop_intent", "stigma"]], [["extracted", "symptoms", 0, "duration_days"], 7]] },
+    { "id": "dose-null-confidence-bounds", "valid": true, "set": [[["extracted", "dose_status"], null], [["extracted", "confidence"], 0]] },
+    { "id": "confidence-one", "valid": true, "set": [[["extracted", "confidence"], 1]] },
+    { "id": "level-safe", "valid": false, "set": [[["level"], "SAFE"]] },
+    { "id": "missing-extracted", "valid": false, "delete": [["extracted"]] },
+    { "id": "missing-citations", "valid": false, "delete": [["citations"]] },
+    { "id": "score-string", "valid": false, "set": [[["risk", "score"], "5"]] },
+    { "id": "score-negative", "valid": false, "set": [[["risk", "score"], -1]] },
+    { "id": "score-float", "valid": false, "set": [[["risk", "score"], 2.5]] },
+    { "id": "confidence-above-one", "valid": false, "set": [[["extracted", "confidence"], 1.5]] },
+    { "id": "mood-flag-unknown", "valid": false, "set": [[["extracted", "mood_flags"], ["happy"]]] },
+    { "id": "mood-flag-duplicate", "valid": false, "set": [[["extracted", "mood_flags"], ["stigma", "stigma"]]] },
+    { "id": "model-level-in-extracted", "valid": false, "set": [[["extracted", "level"], "GREEN"]] },
+    { "id": "extra-top-level-key", "valid": false, "set": [[["extra"], true]] },
+    { "id": "band-none", "valid": false, "set": [[["risk", "band"], "none"]] },
+    { "id": "code-uppercase", "valid": false, "set": [[["extracted", "symptoms", 0, "code"], "Jaundice"]] },
+    { "id": "symptom-missing-quote", "valid": false, "delete": [["extracted", "symptoms", 0, "quote"]] },
+    { "id": "duration-string", "valid": false, "set": [[["extracted", "symptoms", 0, "duration_days"], "7"]] },
+    { "id": "citation-without-label", "valid": false, "set": [[["citations"], [{ "id": "tanda-bahaya#mata-kulit-kuning" }]]] },
+    { "id": "citation-extra-key", "valid": false, "set": [[["citations"], [{ "id": "x", "label": "y", "url": "z" }]]] },
+    { "id": "reasons-not-strings", "valid": false, "set": [[["reasons"], [1]]] },
+    { "id": "family-message-null", "valid": false, "set": [[["family_message"], null]] },
+    { "id": "dose-status-maybe", "valid": false, "set": [[["extracted", "dose_status"], "maybe"]] }
+  ],
+  "input": [
+    { "id": "design-example", "valid": true, "set": [] },
+    { "id": "empty-note-no-optional", "valid": true, "set": [[["text"], ""], [["context"], {}]], "delete": [["treatment_day"], ["rules_version"]] },
+    { "id": "dose-maybe", "valid": false, "set": [[["dose_status"], "maybe"]] },
+    { "id": "missing-text", "valid": false, "delete": [["text"]] },
+    { "id": "patient-code", "valid": false, "set": [[["patient_code"], "TB-0001"]] },
+    { "id": "puskesmas-in-context", "valid": false, "set": [[["context", "puskesmas"], "Puskesmas X"]] },
+    { "id": "chip-with-space", "valid": false, "set": [[["chips"], ["mual ringan"]]] },
+    { "id": "persistence-negative", "valid": false, "set": [[["context", "persistence_days", "nausea_mild"], -1]] },
+    { "id": "persistence-bad-key", "valid": false, "set": [[["context", "persistence_days"], { "Mual": 2 }]] },
+    { "id": "text-too-long", "valid": false, "set": [[["text"], "@2001"]] }
+  ]
+}

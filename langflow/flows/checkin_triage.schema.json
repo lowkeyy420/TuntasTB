@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tuntastb.local/langflow/flows/checkin_triage.schema.json",
+  "title": "checkin_triage flow contract",
+  "description": "Root schema = flow output (the chat output text, parsed as JSON). The flow input (the chat input value, a JSON string) is #/definitions/input. Parsing is strict: unknown keys and values outside the enums are invalid. The model never supplies `level`; it is copied from the rule component.",
+  "$ref": "#/definitions/output",
+  "definitions": {
+    "code": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+    "level": { "type": "string", "enum": ["GREEN", "YELLOW", "RED"] },
+    "dose_status": { "type": "string", "enum": ["yes", "no", "partial"] },
+    "count": { "type": "integer", "minimum": 0 },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "chips", "dose_status", "context"],
+      "properties": {
+        "text": { "type": "string", "maxLength": 2000, "description": "Redacted note; may be empty." },
+        "chips": { "type": "array", "items": { "$ref": "#/definitions/code" } },
+        "dose_status": { "$ref": "#/definitions/dose_status" },
+        "treatment_day": { "$ref": "#/definitions/count" },
+        "context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "persistence_days": {
+              "type": "object",
+              "propertyNames": { "pattern": "^[a-z][a-z0-9_]*$" },
+              "additionalProperties": { "$ref": "#/definitions/count" }
+            },
+            "consecutive_missed_before": { "$ref": "#/definitions/count" },
+            "missed_pickup": { "type": "boolean" },
+            "has_pmo": { "type": "boolean" },
+            "days_since_last_checkin": { "$ref": "#/definitions/count" }
+          }
+        },
+        "rules_version": { "type": "string" }
+      }
+    },
+    "extracted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symptoms", "unknown_symptoms", "dose_status", "mood_flags", "confidence"],
+      "properties": {
+        "symptoms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["code", "quote", "duration_days"],
+            "properties": {
+              "code": { "$ref": "#/definitions/code" },
+              "quote": { "type": "string" },
+              "duration_days": { "oneOf": [{ "$ref": "#/definitions/count" }, { "type": "null" }] }
+            }
+          }
+        },
+        "unknown_symptoms": { "type": "array", "items": { "type": "string" } },
+        "dose_status": { "oneOf": [{ "$ref": "#/definitions/dose_status" }, { "type": "null" }] },
+        "mood_flags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "enum": ["stop_intent", "stigma", "boredom"] }
+        },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["extracted", "level", "risk", "reasons", "family_message", "nurse_line", "citations"],
+      "properties": {
+        "extracted": { "$ref": "#/definitions/extracted" },
+        "level": { "$ref": "#/definitions/level" },
+        "risk": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["score", "band"],
+          "properties": {
+            "score": { "$ref": "#/definitions/count" },
+            "band": { "type": "string", "enum": ["low", "medium", "high"] }
+          }
+        },
+        "reasons": { "type": "array", "items": { "type": "string" } },
+        "family_message": { "type": "string" },
+        "nurse_line": { "type": "string" },
+        "citations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "label"],
+            "properties": {
+              "id": { "type": "string" },
+              "label": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

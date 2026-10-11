@@ -1,0 +1,606 @@
+{
+  "rules_version": "0.1.0-draft/0.1.0-draft",
+  "mode": "offline",
+  "results": {
+    "demo-green-001": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "demo-red-001": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "demo-yellow-001": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "duration-appetite-001": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "duration-appetite-002": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "duration-nausea-001": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "duration-nausea-002": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "duration-nausea-003": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "duration-nausea-004": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "duration-nausea-005": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "duration-nausea-006": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "duration-nausea-007": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-appetite-001": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-appetite-002": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-appetite-003": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-joint-001": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-joint-002": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-joint-003": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-joint-004": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-joint-005": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-nausea-001": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-nausea-002": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-nausea-003": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-nausea-004": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-nausea-005": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-none-001": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-none-002": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-none-003": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-none-004": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-none-005": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-urine-001": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-urine-002": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-urine-003": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-urine-004": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-urine-005": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "green-urine-006": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "red-confusion-001": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-confusion-002": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-confusion-003": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-confusion-004": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-confusion-005": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-confusion-006": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-confusion-007": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-confusion-008": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-jaundice-001": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-jaundice-002": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-jaundice-003": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-jaundice-004": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-jaundice-005": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-jaundice-006": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-jaundice-007": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-jaundice-008": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-jaundice-009": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-jaundice-010": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-jaundice-011": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-rash-001": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-rash-002": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-rash-003": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-rash-004": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-rash-005": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-rash-006": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-rash-007": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-rash-008": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-rash-009": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-team-001": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "red-team-002": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "red-team-003": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "red-team-004": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "red-team-005": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "red-team-006": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "red-team-007": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-team-008": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "red-team-009": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-team-010": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-team-011": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-team-012": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-team-013": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "red-team-014": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "red-team-015": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "red-team-016": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "red-team-017": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "red-team-018": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "red-vision-001": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vision-002": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vision-003": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vision-004": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vision-005": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vision-006": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vision-007": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vision-008": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vision-009": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vomit-001": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vomit-002": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vomit-003": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vomit-004": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vomit-005": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vomit-006": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vomit-007": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "red-vomit-008": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "redaction-001": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "redaction-002": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "redaction-003": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "redaction-004": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "redaction-005": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "redaction-006": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "redaction-007": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "redaction-008": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "slang-001": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "slang-002": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "slang-003": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "slang-004": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "slang-005": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "slang-006": {
+      "expected": "RED",
+      "actual": "RED"
+    },
+    "slang-007": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "slang-008": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "slang-009": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "stigma-001": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "stigma-002": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "stigma-003": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "stigma-004": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "stigma-005": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "stop-intent-001": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "stop-intent-002": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "stop-intent-003": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "stop-intent-004": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "stop-intent-005": {
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    "unknown-001": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "unknown-002": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "unknown-003": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "unknown-004": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "unknown-005": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "unknown-006": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "unknown-007": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "unknown-008": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "unknown-009": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "unknown-010": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "unknown-011": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "unknown-012": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "unknown-013": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "yellow-itching-001": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "yellow-itching-002": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "yellow-itching-003": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "yellow-itching-004": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "yellow-itching-005": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "yellow-tingling-001": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "yellow-tingling-002": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "yellow-tingling-003": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "yellow-tingling-004": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "yellow-tingling-005": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    },
+    "yellow-tingling-006": {
+      "expected": "YELLOW",
+      "actual": "YELLOW"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{"id":"chip-urine-orange","input":{"chips":["urine_orange"],"text":""},"expected":{"level":"GREEN","symptoms":["urine_orange"],"redFlags":[],"decidedBy":"table"}}
+{"id":"chip-nausea-mild","input":{"chips":["nausea_mild"],"text":""},"expected":{"level":"GREEN","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"chip-joint-ache-mild","input":{"chips":["joint_ache_mild"],"text":""},"expected":{"level":"GREEN","symptoms":["joint_ache_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"chip-appetite-loss","input":{"chips":["appetite_loss"],"text":""},"expected":{"level":"GREEN","symptoms":["appetite_loss"],"redFlags":[],"decidedBy":"table"}}
+{"id":"chip-tingling-feet","input":{"chips":["tingling_feet"],"text":""},"expected":{"level":"YELLOW","symptoms":["tingling_feet"],"redFlags":[],"decidedBy":"table"}}
+{"id":"chip-itching-no-rash","input":{"chips":["itching_no_rash"],"text":""},"expected":{"level":"YELLOW","symptoms":["itching_no_rash"],"redFlags":[],"decidedBy":"table"}}
+{"id":"chip-jaundice","input":{"chips":["jaundice"],"text":""},"expected":{"level":"RED","symptoms":["jaundice"],"redFlags":[],"decidedBy":"table"}}
+{"id":"chip-vision-change","input":{"chips":["vision_change"],"text":""},"expected":{"level":"RED","symptoms":["vision_change"],"redFlags":[],"decidedBy":"table"}}
+{"id":"chip-skin-rash","input":{"chips":["skin_rash"],"text":""},"expected":{"level":"RED","symptoms":["skin_rash"],"redFlags":[],"decidedBy":"table"}}
+{"id":"chip-vomiting-repeated","input":{"chips":["vomiting_repeated"],"text":""},"expected":{"level":"RED","symptoms":["vomiting_repeated"],"redFlags":[],"decidedBy":"table"}}
+{"id":"chip-confusion","input":{"chips":["confusion"],"text":""},"expected":{"level":"RED","symptoms":["confusion"],"redFlags":[],"decidedBy":"table"}}
+{"id":"empty","input":{"chips":[],"text":""},"expected":{"level":"GREEN","symptoms":[],"redFlags":[],"decidedBy":"no_symptoms"}}
+{"id":"punctuation-only","input":{"chips":[],"text":"???"},"expected":{"level":"GREEN","symptoms":[],"redFlags":[],"decidedBy":"no_symptoms"}}
+{"id":"highest-red-over-green","input":{"chips":["urine_orange","jaundice"],"text":""},"expected":{"level":"RED","symptoms":["jaundice","urine_orange"],"redFlags":[],"decidedBy":"table"}}
+{"id":"highest-yellow-over-green","input":{"chips":["nausea_mild","tingling_feet"],"text":""},"expected":{"level":"YELLOW","symptoms":["nausea_mild","tingling_feet"],"redFlags":[],"decidedBy":"table"}}
+{"id":"duplicate-chips","input":{"chips":["urine_orange","urine_orange"],"text":""},"expected":{"level":"GREEN","symptoms":["urine_orange"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-urine-demo","input":{"chips":[],"text":"kencingnya merah"},"expected":{"level":"GREEN","symptoms":["urine_orange"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-urine-pipis-oranye","input":{"chips":[],"text":"pipis oranye"},"expected":{"level":"GREEN","symptoms":["urine_orange"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-urine-air-seni","input":{"chips":[],"text":"air seni saya merah"},"expected":{"level":"GREEN","symptoms":["urine_orange"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-urine-with-filler","input":{"chips":[],"text":"kencing oranye tapi tidak ada keluhan lain"},"expected":{"level":"GREEN","symptoms":["urine_orange"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-nausea-stretched","input":{"chips":[],"text":"MUALLL banget"},"expected":{"level":"GREEN","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-nausea-repeated-letters","input":{"chips":[],"text":"mualllll"},"expected":{"level":"GREEN","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-nausea-with-comma-noise","input":{"chips":[],"text":"mual, , ,!"},"expected":{"level":"GREEN","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-nausea-with-stop-intent","input":{"chips":[],"text":"bosan minum obat, mual"},"expected":{"level":"GREEN","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-nausea-with-name-placeholder","input":{"chips":[],"text":"[NAMA] mual"},"expected":{"level":"GREEN","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-joint-nyeri-sendi","input":{"chips":[],"text":"nyeri sendi"},"expected":{"level":"GREEN","symptoms":["joint_ache_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-joint-linu-lutut","input":{"chips":[],"text":"linu di lutut"},"expected":{"level":"GREEN","symptoms":["joint_ache_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-appetite","input":{"chips":[],"text":"tidak nafsu makan"},"expected":{"level":"GREEN","symptoms":["appetite_loss"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-tingling-demo","input":{"chips":[],"text":"kakinya kesemutan terus"},"expected":{"level":"YELLOW","symptoms":["tingling_feet"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-tingling-suffix-ku","input":{"chips":[],"text":"kakiku kesemutan"},"expected":{"level":"YELLOW","symptoms":["tingling_feet"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-tingling-burning-sole","input":{"chips":[],"text":"telapak kaki panas"},"expected":{"level":"YELLOW","symptoms":["tingling_feet"],"redFlags":[],"decidedBy":"table"}}
+{"id":"text-itching-hyphen","input":{"chips":[],"text":"gatal-gatal"},"expected":{"level":"YELLOW","symptoms":["itching_no_rash"],"redFlags":[],"decidedBy":"table"}}
+{"id":"rf-jaundice-hedged-with-nausea","input":{"chips":[],"text":"mual terus, matanya agak kuning"},"expected":{"level":"RED","symptoms":["jaundice","nausea_mild"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-jaundice-negated","input":{"chips":[],"text":"matanya tidak kuning"},"expected":{"level":"RED","symptoms":["jaundice"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-jaundice-demo","input":{"chips":[],"text":"matanya kuning"},"expected":{"level":"RED","symptoms":["jaundice"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-jaundice-mata-kuning","input":{"chips":[],"text":"mata kuning"},"expected":{"level":"RED","symptoms":["jaundice"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-jaundice-kulit-kuning","input":{"chips":[],"text":"kulit kuning"},"expected":{"level":"RED","symptoms":["jaundice"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-jaundice-menguning-with-chip","input":{"chips":["nausea_mild"],"text":"kulit menguning"},"expected":{"level":"RED","symptoms":["jaundice","nausea_mild"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-jaundice-kekuningan-hedged","input":{"chips":[],"text":"mungkin matanya agak kekuningan"},"expected":{"level":"RED","symptoms":["jaundice"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-jaundice-typo","input":{"chips":[],"text":"matanya kunin"},"expected":{"level":"RED","symptoms":["jaundice"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-jaundice-suffix-mu","input":{"chips":[],"text":"matamu kuning"},"expected":{"level":"RED","symptoms":["jaundice"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-jaundice-comma-same-sentence","input":{"chips":[],"text":"mata, kuning"},"expected":{"level":"RED","symptoms":["jaundice"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-jaundice-uppercase","input":{"chips":[],"text":"MATANYA KUNING!!!"},"expected":{"level":"RED","symptoms":["jaundice"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-jaundice-mixed-with-urine-lines","input":{"chips":[],"text":"kencing merah\nmata kuning"},"expected":{"level":"RED","symptoms":["jaundice","urine_orange"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-jaundice-eyes-and-skin","input":{"chips":[],"text":"mata dan kulit saya menguning"},"expected":{"level":"RED","symptoms":["jaundice"],"redFlags":["jaundice"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-vision-hedged","input":{"chips":[],"text":"kayaknya penglihatannya buram"},"expected":{"level":"RED","symptoms":["vision_change"],"redFlags":["vision_change"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-vision-pandangan-kabur","input":{"chips":[],"text":"pandangan kabur"},"expected":{"level":"RED","symptoms":["vision_change"],"redFlags":["vision_change"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-vision-buram","input":{"chips":[],"text":"buram"},"expected":{"level":"RED","symptoms":["vision_change"],"redFlags":["vision_change"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-vision-penglihatan","input":{"chips":[],"text":"penglihatan"},"expected":{"level":"RED","symptoms":["vision_change"],"redFlags":["vision_change"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-vision-gelap","input":{"chips":[],"text":"pandangan gelap"},"expected":{"level":"RED","symptoms":["vision_change"],"redFlags":["vision_change"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-vision-tidak-bisa-melihat","input":{"chips":[],"text":"tidak bisa melihat jelas"},"expected":{"level":"RED","symptoms":["vision_change"],"redFlags":["vision_change"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-rash-ruam","input":{"chips":[],"text":"ada ruam di badan"},"expected":{"level":"RED","symptoms":["skin_rash"],"redFlags":["skin_rash"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-rash-bintik-merah","input":{"chips":[],"text":"bintik merah di tangan"},"expected":{"level":"RED","symptoms":["skin_rash"],"redFlags":["skin_rash"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-rash-with-itching-negated","input":{"chips":[],"text":"gatal gatal tapi tidak ada ruam"},"expected":{"level":"RED","symptoms":["itching_no_rash","skin_rash"],"redFlags":["skin_rash"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-rash-and-vision","input":{"chips":[],"text":"pandangan kabur, ada bintik merah"},"expected":{"level":"RED","symptoms":["skin_rash","vision_change"],"redFlags":["skin_rash","vision_change"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-vomiting-terus","input":{"chips":[],"text":"muntah terus"},"expected":{"level":"RED","symptoms":["vomiting_repeated"],"redFlags":["vomiting_repeated"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-vomiting-over-green-chip","input":{"chips":["urine_orange"],"text":"muntah terus dari pagi"},"expected":{"level":"RED","symptoms":["urine_orange","vomiting_repeated"],"redFlags":["vomiting_repeated"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-vomiting-hyphen","input":{"chips":[],"text":"muntah-muntah"},"expected":{"level":"RED","symptoms":["vomiting_repeated"],"redFlags":["vomiting_repeated"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-vomiting-combo-kali","input":{"chips":[],"text":"muntah 3 kali sehari"},"expected":{"level":"RED","symptoms":["vomiting_repeated"],"redFlags":["vomiting_repeated"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-confusion-linglung","input":{"chips":[],"text":"linglung"},"expected":{"level":"RED","symptoms":["confusion"],"redFlags":["confusion"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-confusion-bingung-ngelantur","input":{"chips":[],"text":"ibu bingung dan ngelantur"},"expected":{"level":"RED","symptoms":["confusion"],"redFlags":["confusion"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-confusion-kejang","input":{"chips":[],"text":"kejang"},"expected":{"level":"RED","symptoms":["confusion"],"redFlags":["confusion"],"decidedBy":"red_flag_keyword"}}
+{"id":"rf-confusion-pingsan","input":{"chips":[],"text":"pingsan"},"expected":{"level":"RED","symptoms":["confusion"],"redFlags":["confusion"],"decidedBy":"red_flag_keyword"}}
+{"id":"dur-text-seminggu","input":{"chips":[],"text":"mual terus seminggu"},"expected":{"level":"YELLOW","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"duration_rule"}}
+{"id":"dur-text-7-hari-appetite","input":{"chips":[],"text":"tidak nafsu makan sudah 7 hari"},"expected":{"level":"YELLOW","symptoms":["appetite_loss"],"redFlags":[],"decidedBy":"duration_rule"}}
+{"id":"dur-text-2-minggu","input":{"chips":[],"text":"mual sudah 2 minggu"},"expected":{"level":"YELLOW","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"duration_rule"}}
+{"id":"dur-text-1-minggu","input":{"chips":[],"text":"mual selama 1 minggu"},"expected":{"level":"YELLOW","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"duration_rule"}}
+{"id":"dur-text-sebulan","input":{"chips":[],"text":"mual sebulan"},"expected":{"level":"YELLOW","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"duration_rule"}}
+{"id":"dur-text-short-3-hari","input":{"chips":[],"text":"mual 3 hari"},"expected":{"level":"GREEN","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"dur-text-short-6-hari","input":{"chips":[],"text":"mual 6 hari"},"expected":{"level":"GREEN","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"dur-chip-with-text-only-duration","input":{"chips":["appetite_loss"],"text":"seminggu"},"expected":{"level":"YELLOW","symptoms":["appetite_loss"],"redFlags":[],"decidedBy":"duration_rule"}}
+{"id":"dur-history-8-days","input":{"chips":["nausea_mild"],"text":"","persistenceDays":{"nausea_mild":8}},"expected":{"level":"YELLOW","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"duration_rule"}}
+{"id":"dur-history-boundary-7","input":{"chips":["nausea_mild"],"text":"","persistenceDays":{"nausea_mild":7}},"expected":{"level":"YELLOW","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"duration_rule"}}
+{"id":"dur-history-short-3","input":{"chips":["nausea_mild"],"text":"","persistenceDays":{"nausea_mild":3}},"expected":{"level":"GREEN","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"dur-history-short-6","input":{"chips":["nausea_mild"],"text":"","persistenceDays":{"nausea_mild":6}},"expected":{"level":"GREEN","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"dur-history-other-code-ignored","input":{"chips":["urine_orange"],"text":"","persistenceDays":{"urine_orange":30}},"expected":{"level":"GREEN","symptoms":["urine_orange"],"redFlags":[],"decidedBy":"table"}}
+{"id":"dur-history-without-symptom-ignored","input":{"chips":[],"text":"","persistenceDays":{"nausea_mild":10}},"expected":{"level":"GREEN","symptoms":[],"redFlags":[],"decidedBy":"no_symptoms"}}
+{"id":"dur-extracted-appetite-7","input":{"chips":["appetite_loss"],"text":"","extracted":[{"code":"appetite_loss","durationDays":7}]},"expected":{"level":"YELLOW","symptoms":["appetite_loss"],"redFlags":[],"decidedBy":"duration_rule"}}
+{"id":"dur-extracted-nausea-over-green-chip","input":{"chips":["urine_orange"],"text":"","extracted":[{"code":"nausea_mild","durationDays":9}]},"expected":{"level":"YELLOW","symptoms":["nausea_mild","urine_orange"],"redFlags":[],"decidedBy":"duration_rule"}}
+{"id":"dur-extracted-without-duration","input":{"chips":[],"text":"","extracted":[{"code":"nausea_mild"}]},"expected":{"level":"GREEN","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"table"}}
+{"id":"unknown-text-demo","input":{"chips":[],"text":"badannya aneh rasanya"},"expected":{"level":"YELLOW","symptoms":[],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-bare-color","input":{"chips":[],"text":"kuning"},"expected":{"level":"YELLOW","symptoms":[],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-urine-yellow-dark","input":{"chips":[],"text":"kencingnya kuning pekat"},"expected":{"level":"YELLOW","symptoms":[],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-color-in-other-sentence","input":{"chips":[],"text":"mata saya baik saja. kuning"},"expected":{"level":"YELLOW","symptoms":[],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-chip-code","input":{"chips":["demam_tinggi"],"text":""},"expected":{"level":"YELLOW","symptoms":[],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-with-green-chip","input":{"chips":["urine_orange"],"text":"","unknownSymptoms":["rasa aneh di perut"]},"expected":{"level":"YELLOW","symptoms":["urine_orange"],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-extracted-code","input":{"chips":[],"text":"","extracted":[{"code":"foo_bar"}]},"expected":{"level":"YELLOW","symptoms":[],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-stop-intent-only","input":{"chips":[],"text":"capek minum obat"},"expected":{"level":"YELLOW","symptoms":[],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-stigma-only","input":{"chips":[],"text":"malu sama tetangga"},"expected":{"level":"YELLOW","symptoms":[],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-watch-sesak","input":{"chips":[],"text":"sesak napas"},"expected":{"level":"YELLOW","symptoms":[],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-watch-muntah-once","input":{"chips":[],"text":"sempat muntah sekali"},"expected":{"level":"YELLOW","symptoms":[],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-watch-with-green-nausea","input":{"chips":[],"text":"mual muntah"},"expected":{"level":"YELLOW","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-watch-berdarah","input":{"chips":[],"text":"kencing berdarah"},"expected":{"level":"YELLOW","symptoms":[],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-watch-with-nausea-pusing","input":{"chips":[],"text":"Pusing dan mual"},"expected":{"level":"YELLOW","symptoms":["nausea_mild"],"redFlags":[],"decidedBy":"unknown_symptom"}}
+{"id":"unknown-jalan-sempoyongan","input":{"chips":[],"text":"jalan sempoyongan"},"expected":{"level":"YELLOW","symptoms":[],"redFlags":[],"decidedBy":"unknown_symptom"}}

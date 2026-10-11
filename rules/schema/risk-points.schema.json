@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "risk-points.schema.json",
+  "title": "TuntasTB dropout risk point table",
+  "type": "object",
+  "required": ["version", "factors", "bands"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "minLength": 1 },
+    "factors": {
+      "type": "object",
+      "required": [
+        "missed_dose_today", "consecutive_missed_day", "partial_dose", "stop_intent", "stigma",
+        "unresolved_side_effect", "yellow_today", "red_today", "missed_pickup", "no_pmo", "no_checkin"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "missed_dose_today": { "$ref": "#/$defs/factor" },
+        "consecutive_missed_day": { "$ref": "#/$defs/factor" },
+        "partial_dose": { "$ref": "#/$defs/factor" },
+        "stop_intent": { "$ref": "#/$defs/factor" },
+        "stigma": { "$ref": "#/$defs/factor" },
+        "unresolved_side_effect": { "$ref": "#/$defs/factor" },
+        "yellow_today": { "$ref": "#/$defs/factor" },
+        "red_today": { "$ref": "#/$defs/factor" },
+        "missed_pickup": { "$ref": "#/$defs/factor" },
+        "no_pmo": { "$ref": "#/$defs/factor" },
+        "no_checkin": { "$ref": "#/$defs/factor" }
+      }
+    },
+    "bands": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["band"],
+        "additionalProperties": false,
+        "properties": {
+          "max": { "type": "integer", "minimum": 0 },
+          "band": { "type": "string", "enum": ["low", "medium", "high"] }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "factor": {
+      "type": "object",
+      "required": ["points", "text_id"],
+      "additionalProperties": false,
+      "properties": {
+        "points": { "type": "integer", "minimum": 0 },
+        "cap": { "type": "integer", "minimum": 0 },
+        "min_days": { "type": "integer", "minimum": 1 },
+        "text_id": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
