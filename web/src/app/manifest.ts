@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { copy } from "@/copy/family.id";
+import { colors } from "@/design/tokens";
 
 /**
  * Neutral PWA manifest. Served at /manifest.webmanifest.
@@ -13,8 +14,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: copy.description,
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#0d9488",
+    background_color: colors.canvas,
+    theme_color: colors.primary,
     icons: [
       {
         src: "/icon.svg",

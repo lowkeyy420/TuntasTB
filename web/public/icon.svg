@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Pengingat Harian">
-  <rect width="512" height="512" rx="96" fill="#0d9488"/>
+  <rect width="512" height="512" rx="96" fill="#0b5a54"/>
   <g fill="none" stroke="#ffffff" stroke-width="28" stroke-linecap="round" stroke-linejoin="round">
     <rect x="128" y="140" width="256" height="256" rx="32"/>
     <path d="M128 200 h256"/>

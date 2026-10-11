@@ -1,16 +1,17 @@
 import type { Metadata, Viewport } from "next";
+import { Atkinson_Hyperlegible_Next } from "next/font/google";
 import { copy } from "@/copy/family.id";
-import { Geist, Geist_Mono } from "next/font/google";
+import { colors } from "@/design/tokens";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Downloaded at build time and served from this app's own origin: no request
+// to a font CDN at runtime. Chosen for letterforms that stay distinct for
+// older eyes and in glare.
+const atkinson = Atkinson_Hyperlegible_Next({
+  variable: "--font-atkinson",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 // Neutral default: bystander-visible titles never name the illness.
@@ -22,6 +23,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: colors.primary,
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -30,12 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+    <html lang="id" className={atkinson.variable}>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
