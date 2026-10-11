@@ -83,6 +83,9 @@ export const copy = {
     send: "Kirim",
     sendBlocked: "Pilih dulu: sudah, belum, atau sebagian.",
     sending: "Mengirim...",
+    /** While the server checks the note (up to 15 s). */
+    checking: "Sedang memeriksa...",
+    checkingRed: "Sedang memeriksa... Jangan tunggu: lakukan langkah di bawah sekarang.",
     micHint: "Jangan sebut nama atau alamat.",
     sendFailed: "Catatan belum bisa dikirim. Coba lagi.",
     tooMany: "Hari ini sudah terlalu sering mengirim catatan. Hubungi Puskesmas kalau ada keluhan.",
@@ -160,6 +163,19 @@ export const copy = {
       "Warna merah atau oranye pada air kencing sering muncul karena obat ini. Warna itu hilang setelah pengobatan selesai.",
     abstain: "Saya belum bisa menjawab ini, tanyakan ke perawat",
     again: "Tanya lagi",
+    /** The card on the check-in screen that opens the Q&A screen. */
+    linkTitle: "Ada pertanyaan?",
+    linkBody: "Tanyakan tentang obat atau keluhan. Jawaban diambil dari panduan.",
+    sending: "Mencari jawaban...",
+    /** Fixed go-today text for a question that names a warning sign. No answer, no flow call. */
+    urgent:
+      "Keluhan ini perlu diperiksa hari ini. Segera ke Puskesmas atau IGD, lalu kirim laporan harian supaya perawat tahu.",
+    urgentTitle: "Perlu diperiksa hari ini",
+    sendCheckin: "Kirim laporan harian",
+    rateLimited: "Pertanyaan hari ini sudah terlalu banyak. Coba lagi nanti atau hubungi Puskesmas.",
+    failed: "Pertanyaan belum bisa dikirim. Coba lagi atau hubungi Puskesmas.",
+    offline: "Tidak ada sinyal, jadi pertanyaan belum bisa dikirim. Kalau mendesak, telepon Puskesmas.",
+    backToCheckin: "Kembali ke catatan harian",
   },
   loading: "Memuat...",
   loadFailed: "Halaman belum bisa dibuka. Coba lagi sebentar lagi.",

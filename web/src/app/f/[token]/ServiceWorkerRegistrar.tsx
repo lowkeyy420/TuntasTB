@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 /** Build files this page has loaded so far, for the worker to keep. */
 function loadedAssets(): string[] {
@@ -18,6 +19,9 @@ function loadedAssets(): string[] {
  * Background Sync wake-up where the browser supports it.
  */
 export function ServiceWorkerRegistrar() {
+  // Moving to another family screen (for example the question screen) without a full page load
+  // does not remount this component, so the address is handed over again when the path changes.
+  const pathname = usePathname();
   useEffect(() => {
     if (process.env.NODE_ENV !== "production" || !("serviceWorker" in navigator)) return;
     let cancelled = false;
@@ -45,6 +49,6 @@ export function ServiceWorkerRegistrar() {
       cancelled = true;
       window.removeEventListener("load", start);
     };
-  }, []);
+  }, [pathname]);
   return null;
 }

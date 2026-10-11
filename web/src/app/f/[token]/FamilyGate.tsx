@@ -17,6 +17,7 @@ import { copy } from "@/copy/family.id";
 import { daysBetween, todayJakarta, toJakartaDate } from "@/lib/time";
 import { loadSession, saveSession, type CachedSession } from "@/lib/offline/cache";
 import { Alert, Button, ButtonLink, Card, StepIndicator } from "@/components/ui";
+import { AskLink } from "@/components/ask/AskLink";
 import { CheckinScreen, telHref } from "./CheckinScreen";
 import { FamilyPickup } from "./FamilyPickup";
 
@@ -220,6 +221,7 @@ export function FamilyGate({ token }: { token: string }) {
           token={token}
           session={view.session}
           today={todayJakarta()}
+          footer={<AskLink token={token} />}
           pickup={
             <FamilyPickup
               token={token}

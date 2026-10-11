@@ -80,6 +80,8 @@ export interface CheckinFormProps {
   blocked?: boolean;
   /** The next-pickup card, between the day header and the dose question. */
   pickup?: ReactNode;
+  /** Extra content after the note, above the send bar (the link to the question screen). */
+  footer?: ReactNode;
 }
 
 /**
@@ -100,6 +102,7 @@ export function CheckinForm({
   symptomsStatus,
   blocked = false,
   pickup,
+  footer,
 }: CheckinFormProps) {
   const t = copy.checkin;
   const { dose, setDose, chosen, toggle, note, setNote } = draft;
@@ -177,6 +180,8 @@ export function CheckinForm({
           }
         />
       </div>
+
+      {footer && <div className="pb-6">{footer}</div>}
 
       <BottomActionBar>
         {notice}

@@ -39,10 +39,10 @@
 
 ## 6. Nurse digest flow
 
-- [ ] 6.1 Implement `langflow/components/queue_reader.py` (GET with `x-internal-token`, guarded Langflow import) with pytest tests on a mocked transport for success, 401 and timeout; verify the tests pass
-- [ ] 6.2 Implement the `Merge` component (line count check, forbidden-pattern check, fallback to application reasons, order preserved) with pytest tests for each branch; verify the tests pass
-- [ ] 6.3 Build `nurse_digest` in the Langflow UI, export to `langflow/flows/nurse_digest.json`, and extend the deploy script to set `TUNTAS_APP_URL` and `TUNTAS_INTERNAL_TOKEN` and enable the flow as an MCP tool; verify a deploy lists three tools
-- [ ] 6.4 Run `nurse_digest` for the seeded Puskesmas; verify the output lists the same codes in the same order as `GET /api/internal/queue`
+- [x] 6.1 Implement `langflow/components/queue_reader.py` (GET with `x-internal-token`, guarded Langflow import) with pytest tests on a mocked transport for success, 401 and timeout; verify the tests pass
+- [x] 6.2 Implement the `Merge` component (line count check, forbidden-pattern check, fallback to application reasons, order preserved) with pytest tests for each branch; verify the tests pass
+- [x] 6.3 Build `nurse_digest` in the Langflow UI, export to `langflow/flows/nurse_digest.json`, and extend the deploy script to set `TUNTAS_APP_URL` and `TUNTAS_INTERNAL_TOKEN` and enable the flow as an MCP tool; verify a deploy lists three tools
+- [x] 6.4 Run `nurse_digest` for the seeded Puskesmas; verify the output lists the same codes in the same order as `GET /api/internal/queue`
 
 ## 7. Integration check
 
