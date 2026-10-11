@@ -1,0 +1,33 @@
+{
+  "version": "0.1.0",
+  "factors": {
+    "missed_dose_today": { "points": 2, "text_id": "Tidak minum obat hari ini" },
+    "consecutive_missed_day": {
+      "points": 2,
+      "cap": 10,
+      "text_id": "Tidak minum obat {n} hari berturut-turut sebelumnya"
+    },
+    "partial_dose": { "points": 1, "text_id": "Obat hari ini hanya diminum sebagian" },
+    "stop_intent": { "points": 4, "text_id": "Mengatakan ingin berhenti atau merasa sudah sembuh" },
+    "stigma": { "points": 2, "text_id": "Menyebut rasa malu atau takut diketahui orang" },
+    "unresolved_side_effect": {
+      "points": 3,
+      "min_days": 7,
+      "text_id": "Keluhan yang sama sudah {n} hari"
+    },
+    "yellow_today": { "points": 1, "text_id": "Keluhan hari ini perlu dihubungi perawat" },
+    "red_today": { "points": 5, "text_id": "Ada tanda bahaya hari ini" },
+    "missed_pickup": { "points": 4, "text_id": "Jadwal ambil obat terlewat" },
+    "no_pmo": { "points": 2, "text_id": "Tidak ada pendamping minum obat" },
+    "no_checkin": {
+      "points": 3,
+      "min_days": 3,
+      "text_id": "Tidak ada laporan selama {n} hari"
+    }
+  },
+  "bands": [
+    { "max": 3, "band": "low" },
+    { "max": 7, "band": "medium" },
+    { "band": "high" }
+  ]
+}
