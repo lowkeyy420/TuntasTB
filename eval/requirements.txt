@@ -1,0 +1,6 @@
+# Eval harness (python eval/run_eval.py). Pinned; Python 3.11+.
+mcp==1.30.0
+httpx==0.28.1
+jsonschema==4.25.1
+pytest==9.1.1
+PyYAML==6.0.3

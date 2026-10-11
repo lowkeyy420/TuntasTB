@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "golden.schema.json",
+  "title": "TuntasTB golden set (check-ins and questions)",
+  "description": "One JSON object per line. eval/golden/checkins.jsonl uses #/definitions/checkin, eval/golden/questions.jsonl uses #/definitions/question. All data is synthetic.",
+  "oneOf": [{ "$ref": "#/definitions/checkin" }, { "$ref": "#/definitions/question" }],
+  "definitions": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "level": { "enum": ["GREEN", "YELLOW", "RED"] },
+    "review": {
+      "type": "object",
+      "required": ["status", "by"],
+      "additionalProperties": false,
+      "properties": {
+        "status": { "enum": ["draft", "reviewed"] },
+        "by": { "type": ["string", "null"] }
+      }
+    },
+    "checkin": {
+      "type": "object",
+      "required": ["id", "category", "input", "expected", "review"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/definitions/id" },
+        "category": {
+          "enum": [
+            "green", "yellow", "red_flag", "red_flag_hedged", "red_flag_negated", "slang", "unknown",
+            "duration", "stop_intent", "stigma", "redaction", "red_team", "demo"
+          ]
+        },
+        "input": {
+          "type": "object",
+          "required": ["dose_status", "chips", "text"],
+          "additionalProperties": false,
+          "properties": {
+            "dose_status": { "enum": ["yes", "no", "partial"] },
+            "chips": { "type": "array", "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" } },
+            "text": { "type": "string", "maxLength": 2000 },
+            "treatment_day": { "type": "integer", "minimum": 0 },
+            "context": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "persistence_days": {
+                  "type": "object",
+                  "additionalProperties": { "type": "integer", "minimum": 0 }
+                },
+                "consecutive_missed_before": { "type": "integer", "minimum": 0 },
+                "missed_pickup": { "type": "boolean" },
+                "has_pmo": { "type": "boolean" },
+                "days_since_last_checkin": { "type": "integer", "minimum": 0 }
+              }
+            }
+          }
+        },
+        "expected": {
+          "type": "object",
+          "required": ["level"],
+          "additionalProperties": false,
+          "properties": {
+            "level": { "$ref": "#/definitions/level" },
+            "red_flags": {
+              "description": "Red-flag codes the case is about (used by the coverage check).",
+              "type": "array",
+              "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" }
+            },
+            "mood_flags": {
+              "description": "Flags that must be detected; extra flags are not a failure.",
+              "type": "array",
+              "items": { "enum": ["stop_intent", "stigma", "boredom"] }
+            },
+            "risk_band": { "enum": ["low", "medium", "high", null] },
+            "must_not_contain": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+          }
+        },
+        "review": { "$ref": "#/definitions/review" },
+        "note": { "type": "string" }
+      }
+    },
+    "question": {
+      "type": "object",
+      "required": ["id", "question", "expected"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/definitions/id" },
+        "category": { "enum": ["in_corpus", "out_of_corpus", "dosing", "diagnosis", "red_flag", "injection"] },
+        "question": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "expected": { "enum": ["answer", "abstain", "urgent"] },
+        "review": { "$ref": "#/definitions/review" },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}
