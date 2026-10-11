@@ -10,7 +10,9 @@ import {
   bigserial,
   unique,
   index,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 
 /**
  * Base schema for TuntasTB.
@@ -106,6 +108,15 @@ export const checkins = pgTable(
     replyTemplateUsed: boolean("reply_template_used").notNull().default(true),
     replyReplaceReason: text("reply_replace_reason"),
     replyAction: text("reply_action"),
+    // Nurse override (nurse-queue): the original `triage_level` is never changed.
+    // The effective level is `override_level ?? triage_level`.
+    overrideLevel: text("override_level"),
+    // Stored redacted, like every free text.
+    overrideNote: text("override_note"),
+    overriddenBy: uuid("overridden_by").references(() => nurses.id, {
+      onDelete: "set null",
+    }),
+    overriddenAt: timestamp("overridden_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -157,7 +168,13 @@ export const pickups = pgTable(
       .notNull()
       .defaultNow(),
   },
-  (t) => [index("pickups_patient_idx").on(t.patientId)],
+  (t) => [
+    index("pickups_patient_idx").on(t.patientId),
+    // A patient has at most one open pickup at any time (pickup-planner).
+    uniqueIndex("pickups_one_open_per_patient")
+      .on(t.patientId)
+      .where(sql`${t.doneAt} IS NULL`),
+  ],
 );
 
 export const auditLog = pgTable(

@@ -15,6 +15,13 @@
       "when": 1791714758576,
       "tag": "0001_checkin_reply_columns",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791717187964,
+      "tag": "0002_nurse_override_and_open_pickup",
+      "breakpoints": true
     }
   ]
 }

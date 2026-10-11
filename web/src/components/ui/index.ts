@@ -12,6 +12,7 @@ export {
 export { Card } from "./Card";
 export { Chip, ChipGroup, ToggleChip, type ToggleChipProps } from "./Chip";
 export { DateTile, formatLongDate } from "./DateTile";
+export { Dialog } from "./Dialog";
 export { EmptyState } from "./EmptyState";
 export { Field, FieldError, Select, TextArea, TextInput, controlClasses } from "./Field";
 export { PageHeader } from "./PageHeader";

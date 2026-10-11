@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BellRing, ChevronRight, ListOrdered, UserPlus, Users, type LucideIcon } from "lucide-react";
+import { BellRing, ChevronRight, ListOrdered, UserPlus, Users } from "lucide-react";
 import { copy } from "@/copy/nurse.id";
 import { todayJakarta } from "@/lib/time";
 import { ButtonLink, DateTile } from "@/components/ui";
@@ -7,17 +7,8 @@ import { ButtonLink, DateTile } from "@/components/ui";
 // The date tile must show today, not the day the image was built.
 export const dynamic = "force-dynamic";
 
-function Soon({ icon: Icon, title, children }: { icon: LucideIcon; title: string; children: string }) {
-  return (
-    <li className="flex items-start gap-3 py-4 first:pt-0 last:pb-0">
-      <Icon aria-hidden className="mt-1 size-7 shrink-0 text-ink-muted" />
-      <div className="min-w-0 flex-1">
-        <p className="text-lg font-semibold text-ink">{title}</p>
-        <p className="text-base text-ink-muted">{children}</p>
-      </div>
-    </li>
-  );
-}
+const row =
+  "flex min-h-16 items-center gap-3 rounded-control border-2 border-line-strong bg-surface px-4 py-3 transition-colors duration-150 hover:bg-primary-soft";
 
 export default function NurseConsolePage() {
   const t = copy.console;
@@ -33,16 +24,32 @@ export default function NurseConsolePage() {
 
       <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
         <section className="flex flex-col gap-4">
+          <Link href="/nurse/queue" className={row}>
+            <ListOrdered aria-hidden className="size-7 shrink-0 text-primary" />
+            <span className="min-w-0 flex-1">
+              <span className="block text-lg font-semibold text-ink">{t.queueLink}</span>
+              <span className="block text-base text-ink-muted">{t.queueBody}</span>
+            </span>
+            <ChevronRight aria-hidden className="size-6 shrink-0 text-ink-muted" />
+          </Link>
+          <Link href="/nurse/alerts" className={row}>
+            <BellRing aria-hidden className="size-7 shrink-0 text-triage-red-ink" />
+            <span className="min-w-0 flex-1">
+              <span className="block text-lg font-semibold text-ink">{t.alertsLink}</span>
+              <span className="block text-base text-ink-muted">{t.alertsBody}</span>
+            </span>
+            <ChevronRight aria-hidden className="size-6 shrink-0 text-ink-muted" />
+          </Link>
+        </section>
+
+        <section className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <ButtonLink block icon={UserPlus} href="/nurse/patients/new">
               {t.newPatientLink}
             </ButtonLink>
             <p className="text-base text-ink-muted">{t.newPatientBody}</p>
           </div>
-          <Link
-            href="/nurse/patients"
-            className="flex min-h-16 items-center gap-3 rounded-control border-2 border-line-strong bg-surface px-4 py-3 transition-colors duration-150 hover:bg-primary-soft"
-          >
+          <Link href="/nurse/patients" className={row}>
             <Users aria-hidden className="size-7 shrink-0 text-primary" />
             <span className="min-w-0 flex-1">
               <span className="block text-lg font-semibold text-ink">{t.patientsLink}</span>
@@ -50,24 +57,6 @@ export default function NurseConsolePage() {
             </span>
             <ChevronRight aria-hidden className="size-6 shrink-0 text-ink-muted" />
           </Link>
-        </section>
-
-        <section
-          aria-labelledby="soon-title"
-          className="flex flex-col gap-4 rounded-card border-2 border-dashed border-line-strong p-4 sm:p-5"
-        >
-          <h2 id="soon-title" className="text-xl font-bold text-ink">
-            {t.soonTitle}
-          </h2>
-          <p className="text-base text-ink">{t.soonBody}</p>
-          <ul className="divide-y divide-line">
-            <Soon icon={ListOrdered} title={t.soonQueue}>
-              {t.soonQueueBody}
-            </Soon>
-            <Soon icon={BellRing} title={t.soonAlerts}>
-              {t.soonAlertsBody}
-            </Soon>
-          </ul>
           <ButtonLink block variant="secondary" size="md" href="/design#mockup">
             {t.designLink}
           </ButtonLink>
