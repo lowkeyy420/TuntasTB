@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   Activity,
@@ -14,10 +15,11 @@ import {
   Users,
 } from "lucide-react";
 import { copy } from "@/copy/nurse.id";
-import { Alert, Button, ButtonLink, Card, EmptyState, StatusPill } from "@/components/ui";
+import { Alert, Button, ButtonLink, Card, EmptyState, StatusPill, cx } from "@/components/ui";
 import { LinkModal } from "./LinkModal";
+import { PickupPanel, type PickupFields } from "./PickupPanel";
 
-interface PatientRow {
+interface PatientRow extends PickupFields {
   id: string;
   code: string;
   treatmentDay: number;
@@ -35,6 +37,8 @@ export function PatientList() {
   const [error, setError] = useState<string | null>(null);
   const [link, setLink] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  // `?fokus=<patient id>` (from the "ambil obat" action in the queue) highlights one card.
+  const [focus, setFocus] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     try {
@@ -55,6 +59,14 @@ export function PatientList() {
   useEffect(() => {
     void load();
   }, [load]);
+
+  useEffect(() => {
+    setFocus(new URLSearchParams(window.location.search).get("fokus"));
+  }, []);
+
+  useEffect(() => {
+    if (focus && rows) document.getElementById(`patient-${focus}`)?.scrollIntoView({ block: "center" });
+  }, [focus, rows]);
 
   async function rotate(id: string) {
     if (!window.confirm(t.actions.confirmRotate)) return;
@@ -124,9 +136,15 @@ export function PatientList() {
       )}
       <ul className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
         {rows?.map((p) => (
-          <Card as="li" key={p.id} className="flex flex-col gap-4">
+          <Card as="li" key={p.id} id={`patient-${p.id}`} className={cx("flex flex-col gap-4", focus === p.id && "ring-4 ring-focus")}>
             <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-              <span className="text-2xl font-bold tabular-nums text-ink">{p.code}</span>
+              <Link
+                href={`/nurse/patients/${p.id}`}
+                className="rounded-control text-2xl font-bold tabular-nums text-primary underline decoration-2 underline-offset-4"
+              >
+                {p.code}
+                <span className="sr-only"> {copy.queue.history}</span>
+              </Link>
               <span className="text-base font-semibold text-ink-muted">
                 {t.columns.day} {p.treatmentDay}
               </span>
@@ -153,6 +171,7 @@ export function PatientList() {
                     : t.status.linkNone}
               </StatusPill>
             </div>
+            <PickupPanel patient={p} onChanged={load} />
             <div className="mt-auto flex flex-col gap-3 sm:flex-row">
               <Button
                 block
