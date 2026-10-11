@@ -55,7 +55,25 @@
       "required": ["action_id", "message_id"],
       "properties": {
         "action_id": { "type": "string", "minLength": 1 },
-        "message_id": { "type": "string", "minLength": 1 }
+        "message_id": { "type": "string", "minLength": 1 },
+        "citation_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+#[a-z0-9-]+$",
+          "description": "Default source for the static template: a section id in corpus/manifest.json."
+        },
+        "action_variants": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": { "stop_intent": { "type": "string", "minLength": 1 } }
+        },
+        "message_variants": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "no_symptom": { "type": "string", "minLength": 1 },
+            "dose_missed": { "type": "string", "minLength": 1 }
+          }
+        }
       }
     }
   }

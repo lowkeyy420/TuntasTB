@@ -111,6 +111,17 @@ function validateTable(table: unknown, errors: string[]): Set<string> {
     const text = isRecord(levels) ? levels[level] : undefined;
     if (!isRecord(text) || !isText(text.action_id) || !isText(text.message_id)) {
       errors.push(`triage-table.levels.${level}: perlu action_id dan message_id`);
+      continue;
+    }
+    if (text.citation_id !== undefined && !isText(text.citation_id)) {
+      errors.push(`triage-table.levels.${level}.citation_id: harus teks`);
+    }
+    for (const group of ["action_variants", "message_variants"] as const) {
+      const variants = text[group];
+      if (variants === undefined) continue;
+      if (!isRecord(variants) || !Object.values(variants).every(isText)) {
+        errors.push(`triage-table.levels.${level}.${group}: harus objek berisi teks`);
+      }
     }
   }
   return codes;

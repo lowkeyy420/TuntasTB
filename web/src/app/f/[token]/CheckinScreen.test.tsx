@@ -175,7 +175,8 @@ describe("online reply (4.5)", () => {
     fireEvent.change(screen.getByLabelText(copy.checkin.noteLabel), { target: { value: "matanya kuning" } });
     fireEvent.click(send());
 
-    await screen.findByText(copy.triage.RED.label);
+    await screen.findByText(copy.checkin.statusSent);
+    expect(screen.getByText(copy.triage.RED.label)).toBeTruthy();
     expect(container.querySelector('[data-level="RED"] svg')).not.toBeNull();
     expect(screen.getByText(rules.table.levels.RED.action_id)).toBeTruthy();
     expect(screen.getByText(rules.table.levels.RED.message_id)).toBeTruthy();
@@ -206,6 +207,49 @@ describe("online reply (4.5)", () => {
     await screen.findByText(copy.checkin.tooMany);
     expect(screen.getByRole("radio", { name: "Sudah" })).toBeTruthy();
     expect(await countQueued()).toBe(0);
+  });
+});
+
+describe("while the server checks (add-symptom-extraction 6.5)", () => {
+  /** The server's answer is held until `release()`, like a slow flow. */
+  function holdPosts() {
+    let release!: () => void;
+    const gate = new Promise<void>((r) => (release = r));
+    fetchSpy.mockImplementation(async (url: string) => {
+      if (url === "/api/family/rules") return jsonRes(rulesBundle);
+      await gate;
+      return jsonRes(serverReply(postedLevel));
+    });
+    return () => release();
+  }
+
+  it('shows "Sedang memeriksa..." and then the server reply', async () => {
+    const release = holdPosts();
+    await open();
+    pick("Sudah");
+    fireEvent.change(screen.getByLabelText(copy.checkin.noteLabel), { target: { value: "kencingnya merah" } });
+    fireEvent.click(send());
+    expect((await screen.findByRole("status")).textContent).toBe(copy.checkin.checking);
+    expect(screen.queryByText(copy.triage.GREEN.label)).toBeNull(); // nothing decided on the device
+    await act(async () => release());
+    await screen.findByText(copy.checkin.statusSent);
+    expect(screen.queryByText(copy.checkin.checking)).toBeNull();
+  });
+
+  it("a RED found by the device's rules is shown at once, with the call link", async () => {
+    postedLevel = "RED";
+    const release = holdPosts();
+    await open();
+    pick("Sudah");
+    fireEvent.change(screen.getByLabelText(copy.checkin.noteLabel), { target: { value: "matanya kuning" } });
+    fireEvent.click(send());
+    await screen.findByText(copy.checkin.checkingRed);
+    expect(screen.getByText(copy.triage.RED.label)).toBeTruthy();
+    expect(screen.getByText(copy.reply.offline.redAction)).toBeTruthy();
+    expect(screen.getByRole("link", { name: copy.call }).getAttribute("href")).toBe("tel:0215550100");
+    await act(async () => release());
+    await screen.findByText(copy.checkin.statusSent);
+    expect(screen.getByText(rules.table.levels.RED.action_id)).toBeTruthy();
   });
 });
 

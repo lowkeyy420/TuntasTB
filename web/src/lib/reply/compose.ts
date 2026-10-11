@@ -26,6 +26,8 @@ export interface ComposeInput {
   doseMissed?: boolean;
   /** No known or unknown symptom at all. */
   noSymptom?: boolean;
+  /** Symptom codes of the check-in; pick the static template's source section. */
+  symptoms?: readonly string[];
   manifest?: SourceManifest;
   forbidden?: ForbiddenOutput;
 }
@@ -55,7 +57,9 @@ export function actionFor(
   table: Pick<TriageTable, "levels">,
   stopIntent: boolean,
 ): string {
-  if (level === "YELLOW" && stopIntent) return copy.reply.variants.stopIntentAction;
+  if (level === "YELLOW" && stopIntent) {
+    return table.levels.YELLOW.action_variants?.stop_intent ?? copy.reply.variants.stopIntentAction;
+  }
   return table.levels[level].action_id;
 }
 
@@ -66,7 +70,10 @@ export function templateFor(
   opts: { noSymptom?: boolean; doseMissed?: boolean },
 ): string {
   if (level === "GREEN" && opts.noSymptom) {
-    return opts.doseMissed ? copy.reply.variants.doseMissed : copy.reply.variants.noSymptom;
+    const v = table.levels.GREEN.message_variants;
+    return opts.doseMissed
+      ? (v?.dose_missed ?? copy.reply.variants.doseMissed)
+      : (v?.no_symptom ?? copy.reply.variants.noSymptom);
   }
   return table.levels[level].message_id;
 }
@@ -90,7 +97,12 @@ export function composeReply(input: ComposeInput): ComposedReply {
   let templateUsed = true;
   let replaceReason: ReplaceReason | null = "no_generated";
   let explanation = templateFor(input.level, input.table, input);
-  let citations: Citation[] = [defaultCitation(input.level, manifest)];
+  let citations: Citation[] = [
+    defaultCitation(input.level, manifest, {
+      tableId: input.table.levels[input.level].citation_id,
+      symptoms: input.symptoms,
+    }),
+  ];
 
   if (input.generated) {
     const verdict = checkGenerated(input.generated.text, {

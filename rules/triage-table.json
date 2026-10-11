@@ -21,15 +21,25 @@
   "levels": {
     "GREEN": {
       "action_id": "Tetap minum obat sesuai jadwal.",
-      "message_id": "Keluhan ini umum terjadi dan biasanya berkurang dalam 2 sampai 4 minggu."
+      "message_id": "Keluhan ini umum terjadi dan biasanya berkurang dalam 2 sampai 4 minggu.",
+      "message_variants": {
+        "no_symptom": "Terima kasih sudah melapor hari ini.",
+        "dose_missed": "Terima kasih sudah jujur melapor. Kalau ada kesulitan minum obat, ceritakan ke perawat."
+      },
+      "citation_id": "peran-pendamping#laporan-harian"
     },
     "YELLOW": {
       "action_id": "Tetap minum obat sesuai jadwal. Perawat akan menghubungi Anda dalam 1 hari kerja.",
-      "message_id": "Keluhan ini perlu diperiksa oleh perawat."
+      "message_id": "Keluhan ini perlu diperiksa oleh perawat.",
+      "action_variants": {
+        "stop_intent": "Jangan berhenti dulu. Tetap minum obat sesuai jadwal. Perawat akan menghubungi Anda dalam 1 hari kerja."
+      },
+      "citation_id": "peran-pendamping#laporan-harian"
     },
     "RED": {
       "action_id": "Berhenti dulu dan segera ke Puskesmas atau IGD hari ini.",
-      "message_id": "Keluhan ini perlu diperiksa petugas kesehatan hari ini. Perawat sudah diberi tahu."
+      "message_id": "Keluhan ini perlu diperiksa petugas kesehatan hari ini. Perawat sudah diberi tahu.",
+      "citation_id": "tanda-bahaya#yang-dilakukan"
     }
   },
   "fallback_warning_id": "Kalau ada mata/kulit kuning, ruam, atau gangguan penglihatan, segera ke Puskesmas."

@@ -9,7 +9,7 @@ import { symptomIcon } from "@/components/checkin/symptomIcons";
 import { useDictation } from "@/lib/voice/useDictation";
 import { loadRulesForScreen } from "@/lib/offline/rules";
 import { countQueued, getEntry } from "@/lib/offline/outbox";
-import { displayFromServer, type DisplayReply } from "@/lib/offline/provisional";
+import { displayFromServer, provisionalReply, type DisplayReply } from "@/lib/offline/provisional";
 import { onOutboxChange, submit } from "@/lib/offline/sync";
 import { useOutboxFlush } from "@/lib/offline/useOutboxFlush";
 import type { Rules } from "@/lib/triage/types";
@@ -22,6 +22,8 @@ export interface CheckinSession {
 
 type Screen =
   | { kind: "form" }
+  /** Waiting for the server (up to 15 s). provisional is set when the device's own rules say RED. */
+  | { kind: "checking"; provisional: DisplayReply | null }
   /** `clientId` is set while the report is still on the device, so the screen can follow it. */
   | { kind: "reply"; reply: DisplayReply; delivery: "sent" | "queued"; clientId: string | null };
 
@@ -57,6 +59,7 @@ export function CheckinScreen({
   session,
   today,
   pickup,
+  footer,
 }: {
   token: string;
   session: CheckinSession;
@@ -64,6 +67,8 @@ export function CheckinScreen({
   today: string;
   /** The next-pickup card, shown above the dose question. */
   pickup?: ReactNode;
+  /** Shown below the note, above the send bar. */
+  footer?: ReactNode;
 }) {
   const t = copy.checkin;
   const draft = useCheckinDraft();
@@ -126,13 +131,19 @@ export function CheckinScreen({
     if (!draft.dose || !rules) return;
     setSubmitting(true);
     setError(null);
+    const contact = { name: session.puskesmasName, phone: session.puskesmasPhone };
+    const text = draft.note.trim();
+    // While the server checks the note, a RED found by the device's rules is
+    // shown at once; nothing else is decided on the device.
+    const local = provisionalReply({ doseStatus: draft.dose, chips: [...draft.chosen], text }, rules, contact);
+    setScreen({ kind: "checking", provisional: local.level === "RED" ? local : null });
     const outcome = await submit({
       token,
       doseStatus: draft.dose,
       chips: [...draft.chosen],
-      text: draft.note.trim(),
+      text,
       rules,
-      contact: { name: session.puskesmasName, phone: session.puskesmasPhone },
+      contact,
     });
     setSubmitting(false);
     switch (outcome.kind) {
@@ -143,9 +154,11 @@ export function CheckinScreen({
         setScreen({ kind: "reply", reply: outcome.provisional, delivery: "queued", clientId: outcome.clientId });
         break;
       case "rejected":
+        setScreen({ kind: "form" });
         setError(outcome.reason === "too_many" ? t.tooMany : t.sendFailed);
         break;
       case "failed":
+        setScreen({ kind: "form" });
         setError(t.sendFailed);
         break;
     }
@@ -155,6 +168,31 @@ export function CheckinScreen({
     draft.reset();
     setError(null);
     setScreen({ kind: "form" });
+  }
+
+  if (screen.kind === "checking") {
+    if (screen.provisional) {
+      return (
+        <ReplyView
+          level={screen.provisional.level}
+          explanation={screen.provisional.explanation}
+          action={screen.provisional.action}
+          sourceLabel={screen.provisional.sourceLabel}
+          contactLine={screen.provisional.contactLine}
+          warning={screen.provisional.warning}
+          phoneHref={telHref(session.puskesmasPhone)}
+          delivery="checking"
+          onDone={done}
+        />
+      );
+    }
+    return (
+      <main className="flex flex-1 flex-col items-center justify-center gap-4 pt-6">
+        <p role="status" aria-live="polite" className="text-xl font-semibold text-ink">
+          {t.checking}
+        </p>
+      </main>
+    );
   }
 
   if (screen.kind === "reply") {
@@ -204,6 +242,7 @@ export function CheckinScreen({
       notice={notice}
       symptomsStatus={symptomsStatus}
       pickup={pickup}
+      footer={footer}
       blocked={!rules}
     />
   );

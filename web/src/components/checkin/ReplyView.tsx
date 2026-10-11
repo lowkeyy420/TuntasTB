@@ -25,7 +25,7 @@ export interface ReplyViewProps {
   /** `tel:` link for the call button; without it the button does nothing (design mockups). */
   phoneHref?: string;
   /** Whether the server has the report. Omitted in the design mockups. */
-  delivery?: "sent" | "queued";
+  delivery?: "sent" | "queued" | "checking";
   onDone?: () => void;
 }
 
@@ -65,6 +65,11 @@ export function ReplyView({
       {delivery === "queued" && (
         <Alert tone="warning" role="status" title={copy.checkin.queued}>
           {t.offline.bannerBody}
+        </Alert>
+      )}
+      {delivery === "checking" && (
+        <Alert tone="warning" role="status">
+          {copy.checkin.checkingRed}
         </Alert>
       )}
       {delivery === "sent" && (

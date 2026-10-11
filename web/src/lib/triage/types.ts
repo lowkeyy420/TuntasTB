@@ -25,6 +25,12 @@ export interface DurationRule {
 export interface LevelText {
   action_id: string;
   message_id: string;
+  /** Default source of the static template: a section id in `corpus/manifest.json`. */
+  citation_id?: string;
+  /** YELLOW: the action when a stop-intent flag is present. */
+  action_variants?: { stop_intent?: string };
+  /** GREEN: the explanation of a check-in with no symptom at all. */
+  message_variants?: { no_symptom?: string; dose_missed?: string };
 }
 
 export interface TriageTable {
