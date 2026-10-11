@@ -18,10 +18,10 @@
 
 ## 3. Flow
 
-- [ ] 3.1 Implement `Relevance Gate` and `Build Answer` in `langflow/components/ask_parts.py` with pytest tests for below-threshold abstain, citation mapping and `retrieved_ids`; verify the tests pass without Langflow installed
-- [ ] 3.2 Write `langflow/prompts/ask.id.md` with the rules from design.md; verify a pytest check finds the abstain rule, the "only from the sections" rule and the dosing and diagnosis abstain rule
-- [ ] 3.3 Build `ask_guideline` in the Langflow UI, export to `langflow/flows/ask_guideline.json`, and extend the deploy script to set `min_score` and enable the flow as an MCP tool; verify a deploy lists the tool
-- [ ] 3.4 In the playground ask five in-corpus questions and five out-of-corpus questions (including a dosing and a diagnosis question); verify in-corpus answers cite a retrieved section and all others abstain, and record the chosen `min_score` in `langflow/README.md`
+- [x] 3.1 Implement `Relevance Gate` and `Build Answer` in `langflow/components/ask_parts.py` with pytest tests for below-threshold abstain, citation mapping and `retrieved_ids`; verify the tests pass without Langflow installed
+- [x] 3.2 Write `langflow/prompts/ask.id.md` with the rules from design.md; verify a pytest check finds the abstain rule, the "only from the sections" rule and the dosing and diagnosis abstain rule
+- [x] 3.3 Build `ask_guideline` in the Langflow UI, export to `langflow/flows/ask_guideline.json`, and extend the deploy script to set `min_score` and enable the flow as an MCP tool; verify a deploy lists the tool
+- [x] 3.4 In the playground ask five in-corpus questions and five out-of-corpus questions (including a dosing and a diagnosis question); verify in-corpus answers cite a retrieved section and all others abstain, and record the chosen `min_score` in `langflow/README.md`
 
 ## 4. Screen
 
