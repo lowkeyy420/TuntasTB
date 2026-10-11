@@ -3,7 +3,7 @@
 ## 1. Point table
 
 - [x] 1.1 Write `rules/risk-points.json` and its JSON Schema with the eleven factors and three bands from design.md; verify it validates and a unit test asserts each point value equals the plan's list
-- [ ] 1.2 Add the reason texts to `web/src/copy/nurse.id.ts` keyed by factor; verify a unit test finds a text for every factor in the point table
+- [x] 1.2 Add the reason texts to `web/src/copy/nurse.id.ts` keyed by factor; verify a unit test finds a text for every factor in the point table
 
 ## 2. Scoring engine (TypeScript)
 
@@ -11,7 +11,7 @@
 - [x] 2.2 Implement word, side-effect, triage-level and program factors with unit tests for each scenario in the spec; verify the tests pass
 - [x] 2.3 Implement the total, banding and ordered reasons with unit tests for the boundaries 3, 4, 7, 8, the demo day 41 case (score 8, high) and the zero case; verify the tests pass
 - [x] 2.4 Add tests that reason points sum to the score for 200 generated snapshots and that 100 repeated evaluations are identical; verify the tests pass
-- [ ] 2.5 Set coverage thresholds for `web/src/lib/risk/score.ts` to 100% lines and branches; verify `npm run test:coverage` passes
+- [x] 2.5 Set coverage thresholds for `web/src/lib/risk/score.ts` to 100% lines and branches; verify `npm run test:coverage` passes
 
 ## 3. Mood flags
 
@@ -33,4 +33,4 @@
 
 ## 6. Documentation
 
-- [ ] 6.1 Add `docs/risk-score.md` with the point table, bands, the readings from design.md and the demo example, generated from `rules/risk-points.json` by a script; verify the script output matches the committed file
+- [x] 6.1 Add `docs/risk-score.md` with the point table, bands, the readings from design.md and the demo example, generated from `rules/risk-points.json` by a script; verify the script output matches the committed file

@@ -14,7 +14,10 @@
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/lib/db/migrate.ts",
-    "db:seed": "tsx src/lib/db/seed.ts"
+    "db:seed": "tsx src/lib/db/seed.ts",
+    "pickups:backfill": "tsx src/lib/pickups/backfill-cli.ts",
+    "docs:generate": "tsx scripts/generate-docs.ts",
+    "docs:check": "tsx scripts/generate-docs.ts --check"
   },
   "dependencies": {
     "bcryptjs": "3.0.2",

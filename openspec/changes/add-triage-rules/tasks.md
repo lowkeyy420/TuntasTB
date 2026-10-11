@@ -15,7 +15,7 @@
 - [x] 2.4 Implement the duration parser with unit tests for "seminggu", "3 hari" and "2 minggu"; verify the tests pass
 - [x] 2.5 Implement `triage` (table lookup, highest wins, duration rule, unknown handling, red-flag override, reasons) with one unit test per scenario in the spec; verify the tests pass
 - [x] 2.6 Implement `maxLevel` with unit tests for all nine level pairs; verify the tests pass
-- [ ] 2.7 Set Vitest coverage thresholds for `web/src/lib/triage/` to 100% lines and branches; verify `npm run test:coverage` passes
+- [x] 2.7 Set Vitest coverage thresholds for `web/src/lib/triage/` to 100% lines and branches; verify `npm run test:coverage` passes
 
 ## 3. Parity fixture and table coverage
 
@@ -37,6 +37,6 @@
 
 ## 6. Wiring and CI
 
-- [ ] 6.1 Validate the rule files at web application start and stop the server on failure; verify by starting with a corrupted copy of the table in a test
-- [ ] 6.2 Add a pytest step to `.github/workflows/ci.yml` with `langflow/requirements-dev.txt`; verify the workflow runs both the Vitest and the pytest suites
-- [ ] 6.3 Add `docs/triage-table.md` generated from the JSON as a human-readable table for the clinician review, with a script to regenerate it; verify the script output matches the committed file
+- [x] 6.1 Validate the rule files at web application start and stop the server on failure; verify by starting with a corrupted copy of the table in a test
+- [x] 6.2 Add a pytest step to `.github/workflows/ci.yml` with `langflow/requirements-dev.txt`; verify the workflow runs both the Vitest and the pytest suites
+- [x] 6.3 Add `docs/triage-table.md` generated from the JSON as a human-readable table for the clinician review, with a script to regenerate it; verify the script output matches the committed file

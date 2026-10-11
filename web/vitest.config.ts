@@ -11,9 +11,20 @@ export default defineConfig({
     globals: true,
     coverage: {
       provider: "v8",
-      // The reply filter is the last line of defence against unsafe generated
-      // text: every line and branch must be exercised (family-reply 3.5).
-      include: ["src/lib/reply/filter.ts"],
+      // Safety-critical code must be fully exercised:
+      //  - the reply filter, the last line of defence against unsafe generated
+      //    text (family-reply 3.5);
+      //  - the triage rules (add-triage-rules 2.7) and the risk score
+      //    (add-dropout-risk-score 2.5), including the database-backed
+      //    snapshot builder (needs TEST_DATABASE_URL);
+      //  - the pickup date logic (add-pickup-planner 1.3).
+      include: [
+        "src/lib/reply/filter.ts",
+        "src/lib/triage/**",
+        "src/lib/risk/**",
+        "src/lib/pickups/dates.ts",
+      ],
+      exclude: ["**/*.test.ts", "**/*.test.tsx"],
       thresholds: { lines: 100, branches: 100, functions: 100, statements: 100 },
     },
   },
