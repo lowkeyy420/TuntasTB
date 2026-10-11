@@ -1,0 +1,43 @@
+schema: spec-driven
+
+# Project context: constraints an agent cannot infer from the code.
+context: |
+  TuntasTB is a side-effect triage and dropout early-warning system for adult drug-sensitive TB
+  (TB SO, first-line regimen) patients in Jakarta. Source plan: docs/build-plan.md.
+  Users: family PMO (primary), patient, Puskesmas TB nurse (customer, only one who acts clinically),
+  community TB companion (uses nurse view).
+  Stack: Next.js (App Router, TypeScript) PWA + API routes in web/, Postgres, the LLM work runs in
+  Langflow flows (an EXISTING self-hosted Langflow at http://localhost:7860, reached from containers via
+  host.docker.internal). The browser never calls Langflow directly. Gemini via Langflow global variable
+  GOOGLE_API_KEY. Everything runs with Docker Compose.
+  Safety rules (non-negotiable, every spec):
+    - Rules decide the triage level, never the LLM. The LLM only extracts fields and writes explanations.
+    - The system may only make escalation more likely, never less. Unknown/low-confidence -> YELLOW,
+      any red-flag keyword (even uncertain) -> RED. Langflow down -> deterministic app-side rules + static fallback.
+    - Never output "aman", never dosing advice, never diagnosis. Every family message ends with the Puskesmas contact.
+    - RED recall on the golden set must be 100% (release gate).
+  Cross-cutting requirements for every design.md: redaction of free text before any LLM call
+  (phone numbers, names, addresses, NIK), audit logging of reads and writes, neutral wording (no "TB"/"TBC"
+  in notifications, app name or page titles visible to bystanders), user-facing copy in plain Bahasa Indonesia.
+  Privacy: UU PDP 27/2022 (health data is specific personal data): explicit consent, data minimization,
+  no patient names stored (patient code only), PMO contact stored as a hash.
+  Out of scope: diagnosis, dose changes, TB RO, children, TB-HIV, real SITB integration, WhatsApp API.
+
+rules:
+  proposal:
+    - State what is explicitly out of scope
+    - Reference the plan spec id (S01..S10) the change implements
+  specs:
+    - Every requirement uses SHALL/MUST and has at least one Scenario with WHEN/THEN
+    - Acceptance criteria from the plan become scenarios and are treated as tests
+  design:
+    - Include a "Cross-cutting" section covering redaction, audit logging, neutral wording and Bahasa copy
+  tasks:
+    - Each task is small enough to finish and verify in under 2 hours
+    - Include test tasks next to the implementation tasks they verify
+
+operations:
+  apply:
+    guidance:
+      - Do not create git commits; the maintainer commits with Conventional Commit messages
+      - Run unit tests after each task group and mark tasks done only when they pass
