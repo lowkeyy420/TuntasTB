@@ -187,6 +187,20 @@ describe.skipIf(!url)("POST /api/checkins", () => {
     expect(alerts).toHaveLength(1);
   });
 
+  it.each([
+    "rumah di Jalan Mawar mata kuning",
+    "nama saya Budi mata kuning",
+    "Jl. Mawar 3, pandangan buram",
+  ])("a note with an address or name next to a red flag stays RED and is stored redacted: %s", async (text) => {
+    const { id, token } = await newPatient();
+    const res = await post(token, { clientId: uuid(), doseStatus: "yes", text });
+    expect((await res.json()).level).toBe("RED");
+    const [row] = await d.select().from(schema.checkins).where(eq(schema.checkins.patientId, id));
+    expect(row.triageLevel).toBe("RED");
+    expect(row.textRedacted).not.toMatch(/Mawar|Budi/);
+    expect(await d.select().from(schema.alerts).where(eq(schema.alerts.patientId, id))).toHaveLength(1);
+  });
+
   describe("GET /api/family/rules", () => {
     it("returns the triage table and lexicon to a valid link, 404 otherwise", async () => {
       const { token } = await newPatient();

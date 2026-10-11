@@ -5,6 +5,13 @@ import { audit } from "@/lib/audit/audit";
 import { scopedPatientWhere } from "@/lib/auth/requireNurse";
 import { generateFamilyToken, hashFamilyToken } from "@/lib/family-token";
 import { todayJakarta, treatmentDay } from "@/lib/time";
+import {
+  createFirstPickup,
+  openPickupFor,
+  openPickupsByPatient,
+  type PickupInfo,
+} from "@/lib/pickups/service";
+import type { PickupState } from "@/lib/pickups/dates";
 import { hashPmoContact } from "./pmo";
 import type { RegistrationInput, UpdateInput } from "./schema";
 
@@ -33,6 +40,12 @@ export interface PatientView {
   hasPmo: boolean;
   consented: boolean;
   linkStatus: LinkStatus;
+  /** Next pickup (pickup-planner): null when none is scheduled yet. */
+  pickupId: string | null;
+  nextPickupDue: string | null;
+  pickupState: PickupState | null;
+  /** Days a missed pickup is overdue; 0 otherwise. */
+  daysOverdue: number;
 }
 
 export class DuplicateCodeError extends Error {
@@ -44,7 +57,7 @@ export class DuplicateCodeError extends Error {
 
 type PatientRow = typeof patients.$inferSelect;
 
-export function toView(row: PatientRow, today: string): PatientView {
+export function toView(row: PatientRow, today: string, pickup?: PickupInfo | null): PatientView {
   return {
     id: row.id,
     code: row.code,
@@ -60,6 +73,10 @@ export function toView(row: PatientRow, today: string): PatientView {
         : row.tokenRevokedAt !== null
           ? "revoked"
           : "active",
+    pickupId: pickup?.pickupId ?? null,
+    nextPickupDue: pickup?.dueDate ?? null,
+    pickupState: pickup?.state ?? null,
+    daysOverdue: pickup?.daysOverdue ?? 0,
   };
 }
 
@@ -101,6 +118,7 @@ export async function createPatient(
           familyTokenHash: hashFamilyToken(token),
         })
         .returning();
+      await createFirstPickup(tx, created, todayJakarta(now));
       await audit(tx, {
         actor: actorOf(session),
         action: "patient.create",
@@ -109,7 +127,8 @@ export async function createPatient(
       });
       return created;
     });
-    return { patient: toView(row, todayJakarta(now)), token };
+    const today = todayJakarta(now);
+    return { patient: toView(row, today, await openPickupFor(db, row.id, today)), token };
   } catch (e) {
     if (isUniqueViolation(e)) throw new DuplicateCodeError();
     throw e;
@@ -133,7 +152,8 @@ export async function listPatients(
     meta: { count: rows.length },
   });
   const today = todayJakarta(now);
-  return rows.map((r) => toView(r, today));
+  const open = await openPickupsByPatient(db, session.puskesmasId, today);
+  return rows.map((r) => toView(r, today, open.get(r.id)));
 }
 
 export async function getPatient(
@@ -152,7 +172,8 @@ export async function getPatient(
     action: "patient.read",
     target: row.id,
   });
-  return toView(row, todayJakarta(now));
+  const today = todayJakarta(now);
+  return toView(row, today, await openPickupFor(db, row.id, today));
 }
 
 export async function updatePatient(
@@ -185,7 +206,8 @@ export async function updatePatient(
         ],
       },
     });
-    return toView(row, todayJakarta(now));
+    const today = todayJakarta(now);
+    return toView(row, today, await openPickupFor(tx, row.id, today));
   });
 }
 

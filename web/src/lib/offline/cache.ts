@@ -69,3 +69,22 @@ export async function loadSession(
   if (!row) return null;
   return { ...row.value, treatmentDay: row.value.treatmentDay + Math.max(0, daysSinceSaved(row.savedAt)) };
 }
+
+const pickupKey = (token: string) => `pickup:${token}`;
+
+/** The last known due date of the next pickup (null: none was scheduled). */
+export interface CachedPickup {
+  dueDate: string | null;
+}
+
+export const savePickup = (token: string, dueDate: string | null, now = Date.now()) =>
+  put<CachedPickup>(pickupKey(token), { dueDate }, now);
+
+/**
+ * The pickup kept on the device. Only the due date is kept: the countdown and
+ * the state are worked out again from it against the device's date, so the
+ * offline card is never a stale "5 hari lagi".
+ */
+export async function loadPickup(token: string): Promise<CachedPickup | null> {
+  return (await get<CachedPickup>(pickupKey(token)))?.value ?? null;
+}

@@ -137,6 +137,7 @@ export const copy = {
     tomorrow: "Ambil obat besok",
     today: "Ambil obat hari ini",
     overdue: "Jadwal ambil obat sudah lewat",
+    overdueDays: (days: number) => `Sudah lewat ${days} hari`,
     daysLeft: "hari lagi",
     dueOn: (date: string) => `Jadwal: ${date}`,
     place: (name: string) => `Tempat: Puskesmas ${name}`,

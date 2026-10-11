@@ -2,6 +2,7 @@ import { and, eq, sql } from "drizzle-orm";
 import type { Database } from "@/lib/db";
 import { alerts, checkins } from "@/lib/db/schema";
 import { audit } from "@/lib/audit/audit";
+import { notifyAlert } from "@/lib/alerts/notify";
 import type { HistoryCheckin } from "@/lib/risk/history";
 import { symptomCodesFromJson } from "@/lib/risk/history";
 import type { Level } from "@/lib/triage/types";
@@ -131,12 +132,17 @@ export async function saveCheckin(db: Database, args: SaveArgs): Promise<SaveRes
       .returning();
 
     if (draft.level === "RED") {
-      await tx.insert(alerts).values({
-        checkinId: row.id,
-        patientId: args.patientId,
-        puskesmasId: args.puskesmasId,
-        level: "RED",
-      });
+      const [alert] = await tx
+        .insert(alerts)
+        .values({
+          checkinId: row.id,
+          patientId: args.patientId,
+          puskesmasId: args.puskesmasId,
+          level: "RED",
+        })
+        .returning({ id: alerts.id });
+      // Delivered by Postgres only when this transaction commits.
+      await notifyAlert(tx, { type: "alert.created", alertId: alert.id, puskesmasId: args.puskesmasId });
     }
 
     await audit(tx, {

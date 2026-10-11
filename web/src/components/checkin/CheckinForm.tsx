@@ -78,6 +78,8 @@ export interface CheckinFormProps {
   symptomsStatus?: ReactNode;
   /** Keeps "Kirim" disabled even after a dose is chosen (rules not available yet). */
   blocked?: boolean;
+  /** The next-pickup card, between the day header and the dose question. */
+  pickup?: ReactNode;
 }
 
 /**
@@ -97,6 +99,7 @@ export function CheckinForm({
   notice,
   symptomsStatus,
   blocked = false,
+  pickup,
 }: CheckinFormProps) {
   const t = copy.checkin;
   const { dose, setDose, chosen, toggle, note, setNote } = draft;
@@ -110,6 +113,8 @@ export function CheckinForm({
           <p className="text-lg font-semibold text-ink-muted">{copy.home.dayLabel(treatmentDay)}</p>
         </div>
       </header>
+
+      {pickup}
 
       <RadioCardGroup
         legend={t.doseQuestion}

@@ -1,5 +1,6 @@
 import { detectMoodFlags, type MoodFlags } from "./mood";
 import { addDays, dayDiff } from "./dates";
+import { pickupState } from "../pickups/dates";
 import type { Level, Rules } from "../triage/types";
 import type { DoseStatus, RiskSnapshot } from "./types";
 
@@ -129,7 +130,7 @@ export function deriveSnapshot({ asOf, history, patient, rules, today }: DeriveA
     stigma: flags.stigma,
     maxPersistenceDays,
     level,
-    missedPickup: patient.pickups.some((p) => !p.done && p.dueDate < asOf),
+    missedPickup: patient.pickups.some((p) => pickupState(p.dueDate, p.done, asOf) === "missed"),
     hasPmo: patient.hasPmo,
     daysSinceLastCheckin,
   };

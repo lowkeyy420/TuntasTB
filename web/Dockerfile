@@ -47,6 +47,8 @@ COPY --from=builder /app/package.json ./package.json
 
 # Shared rule data (read by the TS engine). Copied from the repo root context.
 COPY rules/ ./rules/
+# Review status of the guideline corpus, shown in the nurse console footer.
+COPY corpus/manifest.json ./corpus/manifest.json
 
 COPY web/docker-entrypoint.sh ./docker-entrypoint.sh
 RUN chmod +x ./docker-entrypoint.sh

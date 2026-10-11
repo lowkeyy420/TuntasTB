@@ -18,6 +18,7 @@ import { daysBetween, todayJakarta, toJakartaDate } from "@/lib/time";
 import { loadSession, saveSession, type CachedSession } from "@/lib/offline/cache";
 import { Alert, Button, ButtonLink, Card, StepIndicator } from "@/components/ui";
 import { CheckinScreen, telHref } from "./CheckinScreen";
+import { FamilyPickup } from "./FamilyPickup";
 
 type Session = CachedSession;
 
@@ -214,6 +215,20 @@ export function FamilyGate({ token }: { token: string }) {
         </main>
       );
     case "home":
-      return <CheckinScreen token={token} session={view.session} today={todayJakarta()} />;
+      return (
+        <CheckinScreen
+          token={token}
+          session={view.session}
+          today={todayJakarta()}
+          pickup={
+            <FamilyPickup
+              token={token}
+              puskesmasName={view.session.puskesmasName}
+              puskesmasPhone={view.session.puskesmasPhone}
+              today={todayJakarta()}
+            />
+          }
+        />
+      );
   }
 }

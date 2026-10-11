@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { copy } from "@/copy/family.id";
 import { Alert } from "@/components/ui";
 import { CheckinForm, useCheckinDraft, type SymptomOption } from "@/components/checkin/CheckinForm";
@@ -56,11 +56,14 @@ export function CheckinScreen({
   token,
   session,
   today,
+  pickup,
 }: {
   token: string;
   session: CheckinSession;
   /** Today's date in Jakarta, `YYYY-MM-DD`. */
   today: string;
+  /** The next-pickup card, shown above the dose question. */
+  pickup?: ReactNode;
 }) {
   const t = copy.checkin;
   const draft = useCheckinDraft();
@@ -200,6 +203,7 @@ export function CheckinScreen({
       error={error}
       notice={notice}
       symptomsStatus={symptomsStatus}
+      pickup={pickup}
       blocked={!rules}
     />
   );

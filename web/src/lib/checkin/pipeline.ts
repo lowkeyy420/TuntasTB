@@ -49,8 +49,8 @@ export interface CheckinDraft {
   occurredOn: string;
   treatmentDay: number;
   doseStatus: CheckinBody["doseStatus"];
-  /** Stored as `symptoms_json`: chips as sent, symptoms found, unknown codes. */
-  symptoms: { chips: string[]; symptoms: string[]; unknown: string[] };
+  /** Stored as `symptoms_json`: chips as sent, symptoms found, red-flag codes found (the nurse alert lists them), unknown codes. */
+  symptoms: { chips: string[]; symptoms: string[]; redFlags: string[]; unknown: string[] };
   /** The only form of the note that leaves this function. */
   textRedacted: string;
   localLevel: Level;
@@ -153,7 +153,7 @@ export async function runPipeline(input: PipelineInput, deps: PipelineDeps): Pro
     occurredOn,
     treatmentDay: day,
     doseStatus: body.doseStatus,
-    symptoms: { chips, symptoms: local.symptoms, unknown: local.unknown },
+    symptoms: { chips, symptoms: local.symptoms, redFlags: local.redFlags, unknown: local.unknown },
     textRedacted,
     localLevel: local.level,
     flowLevel: flow?.level ?? null,

@@ -26,9 +26,18 @@ export type AuditAction =
   | "family_token.revoke"
   | "family.open"
   | "checkin.create"
-  | "checkin.read";
+  | "checkin.read"
+  | "checkin.override"
+  | "queue.read"
+  | "internal_queue.read"
+  | "alert.list"
+  | "alert.ack"
+  | "alert.stream_open"
+  | "pickup.read"
+  | "pickup.done"
+  | "pickup.reschedule";
 
-export type AuditActor = `nurse:${string}` | `family:${string}` | "system";
+export type AuditActor = `nurse:${string}` | `family:${string}` | "system" | `system:${string}`;
 
 export interface AuditEntry {
   actor: AuditActor;
