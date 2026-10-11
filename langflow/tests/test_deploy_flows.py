@@ -283,7 +283,15 @@ def test_flow_files_load_and_have_expected_nodes():
     types = lambda ep: sorted(n["data"]["type"] for n in flows[ep]["data"]["nodes"])  # noqa: E731
     assert types("checkin_triage") == sorted([
         "ChatInput", "TuntasParseInput", "Prompt Template", "LanguageModelComponent", "TuntasExtractionGuard",
-        "TriageRules", "TuntasRiskSnapshot", "RiskScore", "TuntasBuildOutput", "ChatOutput"])
+        "TriageRules", "TuntasRiskSnapshot", "RiskScore", "TuntasBuildOutput", "ChatOutput",
+        # explain stage (add-family-reply 5.4)
+        "TuntasBuildQuery", "EmbeddingModel", "ext:chroma:ChromaVectorStoreComponent@official",
+        "TuntasExplainSections", "Prompt Template", "TuntasExplainGuard"])
+    # Build Output receives the explanation; the retrieval query never sees the note.
+    edges = flows["checkin_triage"]["data"]["edges"]
+    assert any(e["source"] == "TuntasExplainGuard-explain" and e["target"] == "TuntasBuildOutput-output" for e in edges)
+    query_inputs = {e["source"] for e in edges if e["target"] == "TuntasBuildQuery-query"}
+    assert query_inputs == {"TriageRules-triage", "TuntasExtractionGuard-guard"}
     assert {"ext:chroma:ChromaVectorStoreComponent@official", "EmbeddingModel", "TuntasRelevanceGate",
             "TuntasBuildAnswer"} <= set(types("ask_guideline"))
     assert {"TuntasQueueReader", "TuntasDigestMerge", "LanguageModelComponent"} <= set(types("nurse_digest"))
@@ -330,6 +338,27 @@ def test_load_config_env_beats_dotenv(tmp_path):
     assert cfg["base_url"] == "http://from-env:7860"
     assert cfg["api_key"] == "file-key"
     assert cfg["model"] == d.DEFAULT_MODEL and cfg["app_url"] == d.DEFAULT_APP_URL
+
+
+def test_model_name_comes_from_tuntas_llm_model(tmp_path):
+    env_file = tmp_path / ".env"
+    env_file.write_text("LANGFLOW_LLM_MODEL=from-old-name\n", encoding="utf-8")
+    assert d.load_config(env={}, dotenv=env_file)["model"] == "from-old-name"
+    assert d.load_config(env={"TUNTAS_LLM_MODEL": "gemini-x"}, dotenv=env_file)["model"] == "gemini-x"
+    assert d.load_config(env={}, dotenv=tmp_path / "none")["model"] == "gemini-3.5-flash-lite"
+
+
+def test_only_updates_the_named_flows_and_keeps_the_mcp_tools():
+    fake = FakeLangflow()
+    first, _ = deploy(fake)
+    n_calls = len(fake.calls)
+    second, _ = deploy(fake, only={"checkin_triage"}, ingest=False)
+    repeat = [c for c in fake.calls[n_calls:] if c[0] != "GET"]
+    flow_patches = [p for m, p, _ in repeat if m == "PATCH" and p.startswith("/api/v1/flows/")]
+    assert flow_patches == [d.P_FLOW.format(id=first["flows"]["checkin_triage"])]
+    assert second["flows"] == first["flows"]  # the others keep their ids (and MCP settings)
+    tools = {s["action_name"]: s["mcp_enabled"] for s in fake.mcp[first["project_id"]]}
+    assert tools == {"checkin_triage": True, "ask_guideline": True, "nurse_digest": True, "ingest_corpus": False}
 
 
 def test_missing_api_key_is_an_error():

@@ -36,7 +36,7 @@ MOOD_FLAGS = ("stop_intent", "stigma", "boredom")
 LEVELS = ("GREEN", "YELLOW", "RED")
 BANDS = ("low", "medium", "high")
 MIN_CONFIDENCE = 0.6
-MODEL_TIMEOUT_S = 10.0
+MODEL_TIMEOUT_S = 6.5  # + explain stage (6 s) stays inside the app's 15 s budget
 MAX_TEXT = 2000
 MAX_UNKNOWN_LEN = 120
 
@@ -96,7 +96,14 @@ def invoke_model(llm: Any, prompt: str, timeout: float) -> tuple[str, str | None
     except TimeoutError:
         return "", "model_timeout"
     except Exception as e:  # noqa: BLE001 - provider errors vary
-        return "", f"model_error:{type(e).__name__}"
+        # Only a status token is kept (diagnosis of quota vs. unknown model), never the
+        # message itself, which could echo the prompt.
+        status = next((s for s in _PROVIDER_STATUSES if s in str(e)), None)
+        return "", f"model_error:{type(e).__name__}" + (f":{status}" if status else "")
+
+
+_PROVIDER_STATUSES = ("RESOURCE_EXHAUSTED", "NOT_FOUND", "PERMISSION_DENIED", "INVALID_ARGUMENT",
+                      "UNAVAILABLE", "DEADLINE_EXCEEDED", "UNAUTHENTICATED")
 
 
 # --------------------------------------------------------------------------
@@ -424,11 +431,14 @@ def build_output(
     triage: dict[str, Any],
     risk: dict[str, Any],
     snapshot: dict[str, Any] | None = None,
+    explanation: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Assemble the flow output (exact schema of ``checkin_triage.schema.json``).
 
     ``level`` comes from the triage result only. Missing or malformed triage data
-    yields YELLOW, never GREEN.
+    yields YELLOW, never GREEN. ``explanation`` is the Explain Guard result
+    (``family_message``, ``nurse_line``, ``citation: {id, label}``); its citation becomes
+    ``citations: [{id, label}]``, and a message without a citation is dropped.
     """
     level = triage.get("level")
     if level not in LEVELS:
@@ -462,6 +472,7 @@ def build_output(
 
     score = risk.get("score")
     band = risk.get("band")
+    family_message, nurse_line, citations = explanation_fields(explanation)
     return {
         "extracted": extracted,
         "level": level,
@@ -470,10 +481,25 @@ def build_output(
             "band": band if band in BANDS else "low",
         },
         "reasons": list(dict.fromkeys(reasons)),
-        "family_message": "",
-        "nurse_line": "",
-        "citations": [],
+        "family_message": family_message,
+        "nurse_line": nurse_line,
+        "citations": citations,
     }
+
+
+def explanation_fields(explanation: dict[str, Any] | None) -> tuple[str, str, list[dict[str, str]]]:
+    """``(family_message, nurse_line, citations)`` from an Explain Guard result."""
+    if not isinstance(explanation, dict):
+        return "", "", []
+    nurse = explanation.get("nurse_line")
+    nurse = nurse.strip() if isinstance(nurse, str) else ""
+    cite = explanation.get("citation")
+    msg = explanation.get("family_message")
+    msg = msg.strip() if isinstance(msg, str) else ""
+    if not (isinstance(cite, dict) and isinstance(cite.get("id"), str) and cite["id"].strip()):
+        return "", nurse, []
+    label = cite.get("label") if isinstance(cite.get("label"), str) else ""
+    return msg, nurse, ([{"id": cite["id"].strip(), "label": label}] if msg else [])
 
 
 def _data_dict(value: Any) -> dict[str, Any]:
@@ -644,6 +670,7 @@ if _HAS_LANGFLOW:
             DataInput(name="triage", display_name="Triage"),
             DataInput(name="risk", display_name="Risk"),
             MessageTextInput(name="snapshot", display_name="Risk snapshot", advanced=True),
+            DataInput(name="explanation", display_name="Explanation", required=False),
         ]
         outputs = [Output(display_name="Output", name="output", method="output_out")]
 
@@ -659,6 +686,7 @@ if _HAS_LANGFLOW:
                 _data_dict(self.triage),
                 _data_dict(self.risk),
                 snap,
+                _data_dict(self.explanation) or None,
             )
             self.status = result["level"]
             return Message(text=json.dumps(result, ensure_ascii=False))

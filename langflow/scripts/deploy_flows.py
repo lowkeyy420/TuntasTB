@@ -22,13 +22,15 @@ Steps:
 
 Configuration (environment first, then the repository ``.env``):
 ``LANGFLOW_BASE_URL`` (default http://localhost:7860), ``LANGFLOW_API_KEY`` (required),
-``LANGFLOW_LLM_MODEL`` (default gemini-3.5-flash-lite), ``LANGFLOW_LLM_TEMPERATURE``
+``TUNTAS_LLM_MODEL`` (or the older ``LANGFLOW_LLM_MODEL``; default gemini-3.5-flash-lite),
+``LANGFLOW_LLM_TEMPERATURE``
 (default 0), ``ASK_MIN_SCORE`` (default from ask_parts.MIN_SCORE), ``TUNTAS_APP_URL``
 (default http://host.docker.internal:3000), ``INTERNAL_API_TOKEN``.
 
 Usage::
 
     python langflow/scripts/deploy_flows.py [--dry-run] [--skip-ingest] [--export]
+                                            [--only checkin_triage[,ingest_corpus]]
 """
 
 from __future__ import annotations
@@ -83,7 +85,7 @@ FLOWS: dict[str, dict[str, Any]] = {
             "treatment_day, context}. Output: JSON {extracted, level, risk, reasons, "
             "family_message, nurse_line, citations}. Rules decide the level."
         ),
-        "prompts": {"Prompt Template-extract": "extract.id.md"},
+        "prompts": {"Prompt Template-extract": "extract.id.md", "Prompt Template-explain": "explain.id.md"},
     },
     "ask_guideline": {
         "name": "ask_guideline",
@@ -160,7 +162,9 @@ def load_config(env: dict[str, str] | None = None, dotenv: Path | None = None) -
     return {
         "base_url": get("LANGFLOW_BASE_URL", DEFAULT_BASE_URL).rstrip("/"),
         "api_key": get("LANGFLOW_API_KEY"),
-        "model": get("LANGFLOW_LLM_MODEL", DEFAULT_MODEL),
+        # TUNTAS_LLM_MODEL wins (switch model per deploy, e.g. when a quota is spent);
+        # LANGFLOW_LLM_MODEL is the older name, kept as a fallback.
+        "model": get("TUNTAS_LLM_MODEL", get("LANGFLOW_LLM_MODEL", DEFAULT_MODEL)),
         "temperature": float(get("LANGFLOW_LLM_TEMPERATURE", "0")),
         "ask_min_score": get("ASK_MIN_SCORE"),
         "app_url": get("TUNTAS_APP_URL", DEFAULT_APP_URL).rstrip("/"),
@@ -521,8 +525,13 @@ def deploy(
     bundle: tuple[str, list[str]] | None = None,
     registry: dict[str, tuple[Path, str]] | None = None,
     log: Callable[[str], None] = print,
+    only: set[str] | None = None,
 ) -> dict[str, Any]:
-    """Run the deploy. With ``dry_run`` only GETs are made and planned writes are printed."""
+    """Run the deploy. With ``dry_run`` only GETs are made and planned writes are printed.
+
+    ``only`` limits the flow create/update step to those endpoint names; the other
+    existing flows keep their server copy (and their MCP settings).
+    """
     result: dict[str, Any] = {"project_id": None, "flows": {}, "planned": [], "ingest": None}
 
     def plan(action: str) -> None:
@@ -586,6 +595,9 @@ def deploy(
 
     # 4. Flows
     for endpoint, settings in FLOWS.items():
+        if only is not None and endpoint not in only:
+            result["flows"][endpoint] = existing.get(endpoint, {}).get("id")
+            continue
         data = inject(flows[endpoint], endpoint, config, registry=registry)
         body = {
             "name": settings["name"],
@@ -682,13 +694,19 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--dry-run", action="store_true", help="print the planned calls; only GET requests are made")
     ap.add_argument("--skip-ingest", action="store_true", help="do not run ingest_corpus")
     ap.add_argument("--export", action="store_true", help="after deploying, write the server copies back to langflow/flows/")
+    ap.add_argument("--only", default="", help="comma-separated endpoint names to create/update (default: all)")
     args = ap.parse_args(argv)
+    only = {s.strip() for s in args.only.split(",") if s.strip()} or None
+    if only and not only <= set(FLOWS):
+        print(f"deploy failed: unknown endpoint(s) {sorted(only - set(FLOWS))}", file=sys.stderr)
+        return 1
     config = load_config()
     try:
         client = LangflowClient(config["base_url"], config["api_key"])
-        result = deploy(client, config, load_flow_files(), dry_run=args.dry_run, ingest=not args.skip_ingest)
+        result = deploy(client, config, load_flow_files(), dry_run=args.dry_run, ingest=not args.skip_ingest,
+                        only=only)
         if args.export and not args.dry_run:
-            export_flows(client, result["flows"])
+            export_flows(client, {ep: fid for ep, fid in result["flows"].items() if only is None or ep in only})
     except (DeployError, httpx.HTTPError) as e:
         print(f"deploy failed: {e}", file=sys.stderr)
         return 1

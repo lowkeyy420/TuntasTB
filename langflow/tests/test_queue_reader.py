@@ -96,6 +96,7 @@ def test_merge_uses_model_lines_in_order():
     json.dumps(["satu baris saja"]),
     json.dumps(["a", "b", "c"]),
     json.dumps(["Kurangi obatnya.", "ok"]),
+    json.dumps(["Ini aman saja.", "ok"]),
     json.dumps(["Anda menderita hepatitis.", "ok"]),
     json.dumps(["x" * 200, "ok"]),
     "",

@@ -64,7 +64,7 @@ How the model is kept from lowering a level: the extraction prompt asks for no l
 the Extraction Guard discards any `level` key, moves a symptom whose `quote` is not in
 the note, or whose code is not in the triage table, to `unknown_symptoms`; Build Output
 copies `level` from Triage Rules only. The guard calls the model only when there is a
-note, with a 10 s timeout, and never raises.
+note, with a 6.5 s timeout, and never raises.
 
 **ask_guideline** — input `{"question": "..."}` (or plain text). Output
 `{"answer", "citations": [{"id", "label"}], "retrieved_ids", "abstained"}`. Abstains
@@ -261,6 +261,13 @@ Re-tune when the embedding model changes (`ASK_MIN_SCORE`).
   entries → `ok: true`, `summary_source: "model"`, codes in the app's order
   `TB-0041, TB-0007, TB-0013`, e.g. reason "mual 7 hari dan merasa sudah sembuh".
   The variable was restored to `http://host.docker.internal:3000` afterwards.
+- Against the seeded Puskesmas (`GET /api/internal/queue?puskesmas_id=<uuid>&date=<today>`, task 6.4):
+  `ok: true`, 7 entries, codes and order identical to the app's list
+  (`DEMO-001, DEMO-002, DEMO-005, DEMO-004, DEMO-003, ...`), reasons and
+  `suggested_action` copied from the app. `summary_source` was `"app"`: the model call
+  timed out (free-tier quota spent that day), so the app's own reasons were kept, which is the
+  documented fallback. Re-run after the quota resets to see `"model"`.
+  `deploy_flows.py --only nurse_digest --skip-ingest` set both variables and listed the three MCP tools.
 
 ## Privacy
 

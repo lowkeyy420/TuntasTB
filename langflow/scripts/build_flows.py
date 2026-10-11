@@ -15,7 +15,7 @@ flows and write the server's copies back to ``langflow/flows/``.
 
 Usage::
 
-    python langflow/scripts/build_flows.py
+    python langflow/scripts/build_flows.py [endpoint ...]   # e.g. checkin_triage only
 """
 
 from __future__ import annotations
@@ -182,6 +182,13 @@ def checkin_triage(b: Builder) -> dict[str, Any]:
     risk = f.add("RiskScore", "risk", 2400, 450)
     out = f.add("TuntasBuildOutput", "output", 2750, 300)
     co = f.chat_output("co", 3100, 300)
+    # Explain stage (add-family-reply): query from symptom labels -> Chroma -> prompt -> guard.
+    query = f.add("TuntasBuildQuery", "query", 2050, 750)
+    emb = f.embedding("explain", 2050, 1100)
+    chroma = f.chroma("explain", 2400, 900)
+    secs = f.add("TuntasExplainSections", "sections", 2750, 900)
+    eprompt = f.prompt("explain", 3100, 750, ["level", "symptoms", "sections"])
+    explain = f.add("TuntasExplainGuard", "explain", 3450, 650)
     f.connect(ci, "message", parse, "input_value")
     f.connect(parse, "note", prompt, "note")
     f.connect(prompt, "prompt", guard, "prompt")
@@ -199,6 +206,18 @@ def checkin_triage(b: Builder) -> dict[str, Any]:
     f.connect(triage, "triage", out, "triage")
     f.connect(risk, "risk", out, "risk")
     f.connect(snap, "snapshot", out, "snapshot")
+    f.connect(triage, "triage", query, "triage")
+    f.connect(guard, "extracted", query, "extracted")
+    f.connect(query, "query", chroma, "search_query")
+    f.connect(emb, "embeddings", chroma, "embedding")
+    f.connect(chroma, "search_results", secs, "search_results")
+    f.connect(query, "level", eprompt, "level")
+    f.connect(query, "symptoms", eprompt, "symptoms")
+    f.connect(secs, "sections", eprompt, "sections")
+    f.connect(eprompt, "prompt", explain, "prompt")
+    f.connect(llm, "model_output", explain, "model")
+    f.connect(secs, "retrieved", explain, "retrieved")
+    f.connect(explain, "explanation", out, "explanation")
     f.connect(out, "output", co, "input_value")
     return f.export("checkin_triage")
 
@@ -272,11 +291,14 @@ def ingest_corpus(b: Builder) -> dict[str, Any]:
     return f.export("ingest_corpus")
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    only = set((argv if argv is not None else sys.argv[1:]) or [])  # e.g. checkin_triage
     config = d.load_config()
     client = d.LangflowClient(config["base_url"], config["api_key"])
     b = Builder(client)
     for build in (checkin_triage, ask_guideline, nurse_digest, ingest_corpus):
+        if only and build.__name__ not in only:
+            continue
         flow = build(b)
         path = d.FLOWS_DIR / f"{flow['endpoint_name']}.json"
         path.write_text(json.dumps(d.strip_for_export(flow), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
