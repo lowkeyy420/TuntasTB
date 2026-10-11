@@ -56,3 +56,26 @@ jobs:
 
       - name: Unit tests
         run: npm test
+
+      - name: Unit tests with coverage thresholds (triage, risk, pickups, reply filter)
+        run: npm run test:coverage
+
+      - name: Generated docs are up to date
+        run: npm run docs:check
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: langflow/requirements-dev.txt
+
+      - name: Install test dependencies
+        run: pip install -r langflow/requirements-dev.txt
+
+      - name: Python rule components (parity with the TypeScript engines)
+        run: python -m pytest langflow/tests -q

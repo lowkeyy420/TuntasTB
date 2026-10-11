@@ -47,6 +47,13 @@ curl -i -X POST localhost:3000/api/auth/login \
 Open http://localhost:3000/login and sign in with `perawat@demo.id` / `demo12345`.
 The family area lives under `/f/<token>` and is titled "Pengingat Harian".
 
+The seed builds a demo morning relative to today (re-running it rebuilds it): DEMO-001 day 41
+YELLOW with risk 8, DEMO-002 day 23 RED waiting to be acknowledged, DEMO-003 GREEN, DEMO-004 with
+a missed pickup, DEMO-005 silent for 4 days. It prints a family link for each (demo links derived
+from `HASH_PEPPER`). Nurse console: `/nurse/queue`, `/nurse/alerts`, `/nurse/patients`. Patients
+registered before the pickup planner can get their first pickup with `npm run pickups:backfill`.
+Rule documents for review are generated: `cd web; npm run docs:generate` (CI runs `docs:check`).
+
 Migrations run automatically when the `web` container starts. Langflow is **not**
 part of this stack; containers reach a Langflow you run on the host at
 `http://host.docker.internal:7860`. To run Langflow in Compose instead, enable
