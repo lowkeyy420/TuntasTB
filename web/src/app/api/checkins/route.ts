@@ -7,6 +7,7 @@ import {
 import { json, notFound, readJson } from "@/lib/patients/http";
 import { checkinBodySchema } from "@/lib/checkin/schema";
 import { submitCheckin } from "@/lib/checkin/service";
+import { liveServiceDeps } from "@/lib/checkin/live";
 
 export const dynamic = "force-dynamic";
 
@@ -37,7 +38,7 @@ export async function POST(request: Request) {
   if (!parsed.success) return json({ error: "validation" }, 400);
 
   try {
-    const result = await submitCheckin(db, patient, parsed.data);
+    const result = await submitCheckin(db, patient, parsed.data, liveServiceDeps());
     if (result.kind === "limit") return json({ error: "too_many" }, 429);
     return json(result.reply);
   } catch {

@@ -96,7 +96,8 @@ describe.skipIf(!url)("POST /api/checkins", () => {
     expect(reply).toMatchObject({
       level: "GREEN",
       contact: { name: `${tag} Puskesmas`, phone: "021-888" },
-      fallbackUsed: true,
+      // Chips only: nothing for the flow to read, so no flow call and no fallback.
+      fallbackUsed: false,
     });
     expect(typeof reply.checkinId).toBe("string");
     expect(reply.message).not.toBe("");

@@ -6,7 +6,7 @@ import { notifyAlert } from "@/lib/alerts/notify";
 import type { HistoryCheckin } from "@/lib/risk/history";
 import { symptomCodesFromJson } from "@/lib/risk/history";
 import type { Level } from "@/lib/triage/types";
-import type { CheckinDraft } from "./pipeline";
+import type { CheckinDraft, EnrichMeta } from "./pipeline";
 
 /** At most this many check-ins per patient per calendar day (Asia/Jakarta). */
 export const DAILY_LIMIT = 20;
@@ -154,5 +154,94 @@ export async function saveCheckin(db: Database, args: SaveArgs): Promise<SaveRes
     });
 
     return { kind: "created", row };
+  });
+}
+
+const RANK: Record<Level, number> = { GREEN: 0, YELLOW: 1, RED: 2 };
+
+/** Phase B tried to store a lower level than the row holds. Never expected; refused. */
+export class LowerLevelError extends Error {
+  constructor(from: Level, to: Level) {
+    super(`refusing to lower triage_level from ${from} to ${to}`);
+    this.name = "LowerLevelError";
+  }
+}
+
+export interface EnrichArgs {
+  checkinId: string;
+  patientId: string;
+  puskesmasId: string;
+  draft: CheckinDraft;
+  meta: EnrichMeta;
+}
+
+/**
+ * Phase B update (add-symptom-extraction 6.2/6.4), in one transaction:
+ * the flow level, final level, merged symptoms, recomputed risk, reply and
+ * fallback mark; an alert when the level has just become RED; and the
+ * `checkin.enrich` audit entry (enums only, no text). The guard refuses any
+ * update that would lower `triage_level`.
+ */
+export async function applyEnrichment(db: Database, args: EnrichArgs): Promise<StoredCheckin> {
+  const { draft, meta } = args;
+  return db.transaction(async (tx) => {
+    const [current] = await tx
+      .select()
+      .from(checkins)
+      .where(eq(checkins.id, args.checkinId))
+      .for("update");
+    if (!current) throw new Error(`check-in not found: ${args.checkinId}`);
+    const before = asLevel(current.triageLevel) ?? "YELLOW";
+    if (RANK[draft.level] < RANK[before]) throw new LowerLevelError(before, draft.level);
+
+    const [row] = await tx
+      .update(checkins)
+      .set({
+        flowLevel: draft.flowLevel,
+        triageLevel: draft.level,
+        symptomsJson: draft.symptoms,
+        riskScore: draft.risk.score,
+        riskBand: draft.risk.band,
+        riskReasonsJson: draft.risk.reasons,
+        familyMessage: draft.reply.explanation,
+        nurseLine: draft.nurseLine,
+        citationsJson: draft.reply.citations,
+        fallbackUsed: draft.fallbackUsed,
+        replyTemplateUsed: draft.reply.templateUsed,
+        replyReplaceReason: draft.reply.replaceReason,
+        replyAction: draft.reply.action,
+      })
+      .where(eq(checkins.id, args.checkinId))
+      .returning();
+
+    if (draft.level === "RED" && before !== "RED") {
+      const [existing] = await tx
+        .select({ id: alerts.id })
+        .from(alerts)
+        .where(eq(alerts.checkinId, args.checkinId));
+      if (!existing) {
+        const [alert] = await tx
+          .insert(alerts)
+          .values({ checkinId: args.checkinId, patientId: args.patientId, puskesmasId: args.puskesmasId, level: "RED" })
+          .returning({ id: alerts.id });
+        await notifyAlert(tx, { type: "alert.created", alertId: alert.id, puskesmasId: args.puskesmasId });
+      }
+    }
+
+    await audit(tx, {
+      actor: `family:${args.patientId}`,
+      action: "checkin.enrich",
+      target: `checkin:${args.checkinId}`,
+      meta: {
+        flow_called: meta.called,
+        flow_level: meta.flowLevel,
+        final_level: meta.finalLevel,
+        fallback_reason: meta.fallbackReason,
+        reply_template_used: draft.reply.templateUsed,
+        reply_replace_reason: draft.reply.replaceReason,
+      },
+    });
+
+    return row;
   });
 }
